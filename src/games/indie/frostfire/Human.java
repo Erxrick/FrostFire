@@ -1,5 +1,7 @@
 package games.indie.frostfire;
 
+import java.util.HashMap;
+
 import games.indie.frostfire.drawing.Sprite;
 
 public class Human extends Creature {
@@ -9,9 +11,11 @@ public class Human extends Creature {
 	// TODO temperature affects thirst change rate
 	private Sprite head;
 	private int strength;
+	private HashMap<BodyPart, Item> gear;
 	
 	public Human() {
 		super(100, 100);
+		gear = new HashMap<>();
 		maxHunger = 100;
 		hunger = maxHunger;
 		maxThirst = 100;
