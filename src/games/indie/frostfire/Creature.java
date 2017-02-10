@@ -36,7 +36,7 @@ public abstract class Creature extends Entity {
 	
 	public void setCurrentHealth(int health) {
 		this.health = health;
-		if (this.health < 0) {
+		if (this.health <= 0) {
 			die();
 		}
 	}
