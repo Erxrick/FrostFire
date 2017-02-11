@@ -11,7 +11,7 @@ public class FrostFire extends StateBasedGame {
 	private boolean running;
 	public static final int FPS = 60;
 	public static final int NATIVE_WIDTH = 320, NATIVE_HEIGHT = 180;
-	public static int SCALE = 4;
+	public static int SCALE = 3;
 	
 	FrostFire() throws SlickException {
 		super("FrostFire");

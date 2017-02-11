@@ -12,7 +12,7 @@ public class Human extends Creature {
 	private HashMap<BodyPart, Item> gear;
 	
 	public Human() {
-		super(100, 100);
+		super("res/images/body0.png", 100, 100);
 		gear = new HashMap<>();
 		maxHunger = 100;
 		hunger = maxHunger;
