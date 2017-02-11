@@ -8,8 +8,8 @@ import org.newdawn.slick.Input;
 
 public abstract class Entity implements Drawable {
 	
-	private Coord location;	// TODO collision
-	
+	protected Coord location;	// TODO collision
+	protected int width, height;
 	public Entity() {
 		location = new Coord();
 	}
