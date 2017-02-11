@@ -1,6 +1,5 @@
 package games.indie.frostfire;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,7 +11,7 @@ public class FrostFire extends StateBasedGame {
 	private boolean running;
 	public static final int FPS = 60;
 	public static final int NATIVE_WIDTH = 320, NATIVE_HEIGHT = 180;
-	public static int SCALE = 6;
+	public static int SCALE = 4;
 	
 	FrostFire() throws SlickException {
 		super("FrostFire");

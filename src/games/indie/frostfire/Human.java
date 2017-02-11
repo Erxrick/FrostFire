@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 
 public class Human extends Creature {
 	
@@ -23,18 +24,23 @@ public class Human extends Creature {
 	protected HashMap<BodyPart, Item> gear;
 	
 	private Image body = Resources.loadImage("res/images/body0.png");
+	private Head head = new Head("res/images/head0.png");
 	
 	private class Head implements Drawable {
 		
 		protected double sightAngle;
-		private Image image;
+		private SpriteSheet sprites;
+		private int x_offset, y_offset;
 		
 		Head(String path) {
-			this.image = Resources.loadImage(path);
+			sprites = new SpriteSheet(Resources.loadImage(path), 16, 16);
+			x_offset = 0;
+			y_offset = -7;
 		}
 
 		public void draw() {
-			
+			// TODO determine sprite to draw based on sightAngle
+			sprites.getSubImage(0, 0).draw(location.getX() + x_offset, location.getY() + y_offset);
 		}
 	}
 	
@@ -59,6 +65,7 @@ public class Human extends Creature {
 
 	public void draw() {
 		body.draw(location.getX(), location.getY());
+		head.draw();
 	}
 
 }

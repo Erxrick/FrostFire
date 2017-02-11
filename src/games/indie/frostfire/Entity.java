@@ -2,12 +2,13 @@ package games.indie.frostfire;
 
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 public abstract class Entity implements Drawable {
 	
-	private Coord location;	// TODO collision
+	protected Coord location;
+	protected int width, height;
+	// TODO collision
 	
 	public Entity() {
 		location = new Coord();
