@@ -2,35 +2,35 @@ package games.indie.frostfire;
 
 public class Coord {
 	
-	private int x, y;
+	private float x, y;
 	
 	public Coord() {
 		this.x = 0;
 		this.y = 0;
 	}
 	
-	public Coord(int x, int y) {
+	public Coord(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 	
-	public void setLocation(int x, int y) {
+	public void setLocation(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}

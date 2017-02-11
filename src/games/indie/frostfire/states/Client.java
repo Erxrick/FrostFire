@@ -24,7 +24,7 @@ public class Client extends GameState {
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-	
+		player.updatePosition(gc);
 	}
 
 	public int getID() {
