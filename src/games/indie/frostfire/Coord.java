@@ -35,4 +35,8 @@ public class Coord {
 		this.y = y;
 	}
 	
+	public Coord midpoint(Coord coord) {
+		return new Coord((this.x + coord.x)/2, (this.y + coord.y)/2);
+	}
+	
 }

@@ -1,20 +1,17 @@
 package games.indie.frostfire;
 
-import org.newdawn.slick.Image;
-
 public abstract class Entity implements Drawable {
 	
-	private Image sprite;
-	private Coord location;
+	protected Coord location;
+	private int width, height;
 	// TODO collision
 	
-	public Entity(String path) {
-		sprite = Resources.loadImage(path);
+	public Entity() {
 		location = new Coord();
 	}
-
-	public void draw() {
-		sprite.draw(location.getX(), location.getY());
+	
+	public Coord center() {
+		return location.midpoint(new Coord(location.getX() + width, location.getY() + height));
 	}
 
 }

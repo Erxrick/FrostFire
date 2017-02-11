@@ -24,8 +24,8 @@ public class FrostFire extends StateBasedGame {
 		gc.setShowFPS(false);
 		gc.setVSync(true);
 		
-		this.addState(new Menu());
 		this.addState(new Client());
+		this.addState(new Menu());
 	}
 
 	public static void main(String[] args) throws SlickException {
