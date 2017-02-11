@@ -8,17 +8,14 @@ import org.newdawn.slick.Input;
 
 public abstract class Entity implements Drawable {
 	
-	private Image sprite;
-	protected Coord location;
-	// TODO collision
+	private Coord location;	// TODO collision
 	
-	public Entity(String path) {
-		sprite = Resources.loadImage(path);
+	public Entity() {
 		location = new Coord();
 	}
-
-	public void draw() {
-		sprite.draw(location.getX(), location.getY());
+	
+	public Coord center() {
+		return location.midpoint(new Coord(location.getX() + width, location.getY() + height));
 	}
 
 	

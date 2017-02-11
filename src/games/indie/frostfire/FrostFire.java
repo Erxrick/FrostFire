@@ -27,8 +27,8 @@ public class FrostFire extends StateBasedGame {
 //		gc.setFullscreen(true);
 	//	gc.setMouseCursor("String", Mouse.getX(), Mouse.getY());
 		
-		this.addState(new Menu());
 		this.addState(new Client());
+		this.addState(new Menu());
 	}
 
 	public static void main(String[] args) throws SlickException {
