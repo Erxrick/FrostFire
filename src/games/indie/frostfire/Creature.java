@@ -8,7 +8,8 @@ public abstract class Creature extends Entity {
 	private int defence;
 	protected Inventory inventory;
 	
-	public Creature(int maxHealth, int maxEnergy) {
+	public Creature(String path, int maxHealth, int maxEnergy) {
+		super(path);
 		this.maxHealth = maxHealth;
 		this.maxEnergy = maxEnergy;
 		this.coldBound = 0; // Celcius
