@@ -1,7 +1,10 @@
 package games.indie.frostfire;
 
+import org.newdawn.slick.Image;
+
 public abstract class Item {
 	
+	private Image sprite;
 	private int weight;
 	
 	public Item(int weight) {
