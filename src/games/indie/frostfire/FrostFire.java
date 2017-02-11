@@ -10,6 +10,8 @@ public class FrostFire extends StateBasedGame {
 	private String title;
 	private boolean running;
 	public static final int FPS = 60;
+	public static final int NATIVE_WIDTH = 320, NATIVE_HEIGHT = 180;
+	public static int SCALE = 4;
 	
 	FrostFire() throws SlickException {
 		super("FrostFire");
@@ -28,7 +30,7 @@ public class FrostFire extends StateBasedGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new FrostFire());
-		game.setDisplayMode(640, 320, false);
+		game.setDisplayMode(NATIVE_WIDTH * SCALE, NATIVE_HEIGHT * SCALE, false);
 		game.start();
 	}
 
