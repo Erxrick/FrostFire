@@ -3,7 +3,7 @@ package games.indie.frostfire;
 public abstract class Entity implements Drawable {
 	
 	protected Coord location;
-	// TODO collision
+	protected Box collision;
 	protected int width, height;
 	
 	public Entity() {
@@ -14,8 +14,8 @@ public abstract class Entity implements Drawable {
 		return getLocation().midpoint(new Coord(getLocation().getX() + width, getLocation().getY() + height));
 	}
 
-	public void move(double angle, float distance) {
-		setLocation(new Coord(((float)(this.getLocation().getX() + distance *Math.cos(Math.toRadians(angle)))), (float) (this.getLocation().getY() + -distance * Math.sin(Math.toRadians(angle)))));
+	public void move(double degrees, float distance) {
+		setLocation(new Coord(((float)(this.getLocation().getX() + distance *Math.cos(Math.toRadians(degrees)))), (float) (this.getLocation().getY() + -distance * Math.sin(Math.toRadians(degrees)))));
 	}
 
 	public Coord getLocation() {

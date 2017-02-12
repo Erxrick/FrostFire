@@ -25,8 +25,7 @@ public class Client extends GameState {
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-		player.updatePosition(gc);
-		player.updateHead();
+		player.control(gc.getInput());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 	}

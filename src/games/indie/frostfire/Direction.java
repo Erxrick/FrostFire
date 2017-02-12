@@ -26,5 +26,12 @@ public enum Direction {
 		return EAST;
 	}
 	
+	public static Direction fit(double degrees) {
+		for (Direction d : values())
+			if (degrees < d.angle + 22.5 && degrees > d.angle - 22.5)
+				return d;
+		return WEST;
+	}
+	
 	
 }

@@ -2,7 +2,6 @@ package games.indie.frostfire;
 
 import java.util.HashMap;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
@@ -30,9 +29,9 @@ public class Human extends Creature {
 	protected HashMap<BodyPart, Item> gear;
 	
 	private Body body = new Body("res/images/player/move-forward.png");
-	private Head head = new Head("res/images/player/head-sprites.png");
+	protected Head head = new Head("res/images/player/head-sprites.png");
 	
-	private class Body implements Drawable {
+	class Body implements Drawable {
 
 		private SpriteSheet sprites;
 		private Animation moveSouth;
@@ -72,9 +71,9 @@ public class Human extends Creature {
 		}
 	}
 	
-	private class Head implements Drawable {
+	class Head implements Drawable {
 		
-		private double sightAngle;
+		double sightAngle;
 		private HashMap<Direction, Image> states;
 		private Image currentState;
 		private int x_offset, y_offset;
@@ -119,17 +118,6 @@ public class Human extends Creature {
 	public void draw() {
 		body.draw();
 		head.draw();
-	}
-	
-	public void setLocation(Coord location) {
-		this.location = location;
-		if (head != null)
-			updateHead();
-	}
-	
-	public void updateHead() {
-		head.sightAngle = this.location.directionTo(
-		new Coord(Mouse.getX()/FrostFire.SCALE, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE));
 	}
 
 }
