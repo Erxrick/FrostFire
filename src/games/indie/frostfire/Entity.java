@@ -1,27 +1,36 @@
 package games.indie.frostfire;
 
-
-
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
+import games.indie.frostfire.Action.ActionType;
 
 public abstract class Entity implements Drawable {
 	
-	protected Coord location;	// TODO collision
+	protected Coord location;
+	protected Box collision;
 	protected int width, height;
+	
 	public Entity() {
-		location = new Coord();
+		setLocation(new Coord());
 	}
 	
 	public Coord center() {
-		return location.midpoint(new Coord(location.getX() + width, location.getY() + height));
+		return getLocation().midpoint(new Coord(getLocation().getX() + width, getLocation().getY() + height));
+	}
+	
+	public void move(Direction direction, float distance) {
+		((Human) this).setAction(ActionType.MOVE, direction);
+		move(direction.getAngle(), distance);
 	}
 
-	
+	public void move(double degrees, float distance) {
+		setLocation(new Coord(((float)(this.getLocation().getX() + distance *Math.cos(Math.toRadians(degrees)))), (float) (this.getLocation().getY() + -distance * Math.sin(Math.toRadians(degrees)))));
+	}
 
-	public void move(double angle, float distance) {
-		this.location.setLocation(((float)(this.location.getX() + distance *Math.cos(Math.toRadians(angle)))), (float) (this.location.getY() + -distance * Math.sin(Math.toRadians(angle))));
+	public Coord getLocation() {
+		return location;
+	}
+
+	public void setLocation(Coord location) {
+		this.location = location;
 	}
 
 }

@@ -3,11 +3,11 @@ package games.indie.frostfire.states;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.*;
-import javafx.scene.Camera;
 
 public class Client extends GameState {
 	
@@ -18,7 +18,6 @@ public class Client extends GameState {
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
-		debug(screen);
 		screen.setBackground(new Color(44, 141, 144));
 		screen.scale(FrostFire.SCALE, FrostFire.SCALE);
 		
@@ -26,7 +25,10 @@ public class Client extends GameState {
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-		player.updatePosition(gc);
+		player.control(gc.getInput());
+		player.updateHead();
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
+			gc.exit();
 	}
 
 	public int getID() {
