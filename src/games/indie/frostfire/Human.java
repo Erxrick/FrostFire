@@ -23,8 +23,48 @@ public class Human extends Creature {
 	private int strength;
 	protected HashMap<BodyPart, Item> gear;
 	
-	private Image body = Resources.loadImage("res/images/body0.png");
+	private Body body = new Body("res/images/player/move-forward.png");
 	private Head head = new Head("res/images/head0.png");
+	
+	private class Body implements Drawable {
+
+		private SpriteSheet sprites;
+		private Animation moveSouth;
+//		private HashMap<Action, Animation> animations;
+		
+		Body(String path) {
+			moveSouth = new Animation(new SpriteSheet(Resources.loadImage(path), 16, 16), 100);
+			moveSouth.addFrame(moveSouth.getImage(1), 100);
+			moveSouth.addFrame(moveSouth.getImage(0), 100);
+			moveSouth.addFrame(moveSouth.getImage(1).getFlippedCopy(true, false), 100);
+			moveSouth.addFrame(moveSouth.getImage(2).getFlippedCopy(true, false), 100);
+			moveSouth.addFrame(moveSouth.getImage(5), 100);
+		}
+
+		public void draw() {
+			switch (moveSouth.getFrame()) {
+			case 1:
+			case 3:
+			case 5:
+			case 7:
+				head.x_offset = 0;
+				head.y_offset = -7;
+				break;
+			case 2:
+				head.x_offset = 1;
+				head.y_offset = -6;
+				break;
+			case 6:
+				head.x_offset = -1;
+				head.y_offset = -6;
+				break;
+			default:
+				head.x_offset = 0;
+				head.y_offset = -8;
+			}
+			moveSouth.draw(location.getX(), location.getY());
+		}
+	}
 	
 	private class Head implements Drawable {
 		
@@ -35,7 +75,7 @@ public class Human extends Creature {
 		Head(String path) {
 			sprites = new SpriteSheet(Resources.loadImage(path), 16, 16);
 			x_offset = 0;
-			y_offset = -7;
+			y_offset = -8;
 		}
 
 		public void draw() {
@@ -64,7 +104,7 @@ public class Human extends Creature {
 	}
 
 	public void draw() {
-		body.draw(location.getX(), location.getY());
+		body.draw();
 		head.draw();
 	}
 

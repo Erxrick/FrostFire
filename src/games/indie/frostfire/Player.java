@@ -12,7 +12,7 @@ public class Player extends Human {
 	}
 
 	public void updatePosition(GameContainer gc) {	
-		float speed = 1.6f;
+		float speed = 0.8f;
 		if (gc.getInput().isKeyDown(Input.KEY_W)) {
 			if(gc.getInput().isKeyDown(Input.KEY_W) && gc.getInput().isKeyDown(Input.KEY_A)) {
 				move((180-45),speed);
