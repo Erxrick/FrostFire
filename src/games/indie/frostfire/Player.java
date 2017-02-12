@@ -7,12 +7,13 @@ import games.indie.frostfire.Action.ActionType;
 
 public class Player extends Human {
 	
+	private static Input input;
+	private float speed;
+	
 	public Player() {
 		setLocation(new Coord(FrostFire.NATIVE_WIDTH/2 - 8, FrostFire.NATIVE_HEIGHT/2 - 8));
+		speed = 0.8f;
 	}
-	
-	private static Input input;
-	private float speed = 0.8f;
 	
 	enum Control {
 		MOVE_UP		(Input.KEY_UP, Input.KEY_W),
@@ -57,7 +58,7 @@ public class Player extends Human {
 		} else if (Control.MOVE_DOWN.isPressed()) {
 			move(Direction.SOUTH, speed);
 		} else {
-			setAction(ActionType.IDLE, Direction.NORTH);
+			setAction(ActionType.IDLE, body.direction);
 		}
 	}
 	

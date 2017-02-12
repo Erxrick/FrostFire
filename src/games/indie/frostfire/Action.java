@@ -25,4 +25,12 @@ public class Action {
 		return this.type == type && Arrays.asList(directions).contains(direction);
 	}
 	
+	public boolean points(Direction...directions) {
+		for (Direction d : directions) {
+			if (Arrays.asList(this.directions).contains(d))
+				return true;
+		}
+		return false;
+	}
+	
 }

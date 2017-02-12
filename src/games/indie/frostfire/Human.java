@@ -27,14 +27,13 @@ public class Human extends Creature {
 	
 	protected Action currentAction;
 	
-	private Body body = new Body();
+	protected Body body = new Body();
 	protected Head head = new Head("res/images/player/head-sprites.png");
 	private Action[] actions;
 		
 	class Body implements Drawable {
-
-		private SpriteSheet sprites;
-		private Animation moveSouth, moveNorth, moveEast, moveWest;
+		
+		protected Direction direction;
 		
 		Body() {
 			
@@ -44,12 +43,24 @@ public class Human extends Creature {
 			Animation moveUp = Resources.build("res/images/player/move-north.png", 16, vertical);
 			Animation moveDown = Resources.build("res/images/player/move-south.png", 16, vertical);
 			Animation moveRight = Resources.build(s, 16, horizonal);
-			Animation moveLeft = Resources.build(new SpriteSheet(s.getFlippedCopy(true, false), 16, 16), 16, horizonal);
+			Animation moveLeft = new Animation();
+			for (int i = 0; i < moveRight.getFrameCount(); i++) {
+				moveLeft.addFrame(moveRight.getImage(i).getFlippedCopy(true, false), 100);
+			}
 			
 			actions = new Action[] {
 					new Action (new Animation(),
 							ActionType.IDLE,
-							Direction.values()),
+							Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST),
+					new Action (new Animation(),
+							ActionType.IDLE,
+							Direction.NORTH, Direction.NORTH_EAST, Direction.NORTH_WEST),
+					new Action (new Animation(),
+							ActionType.IDLE,
+							Direction.EAST),
+					new Action (new Animation(),
+							ActionType.IDLE,
+							Direction.WEST),
 					new Action(moveDown,
 							ActionType.MOVE,
 							Direction.SOUTH, Direction.SOUTH_EAST, Direction.SOUTH_WEST),
@@ -64,6 +75,9 @@ public class Human extends Creature {
 							Direction.WEST)
 			};
 			actions[0].animation.addFrame(moveDown.getImage(0), 100);
+			actions[1].animation.addFrame(moveUp.getImage(0), 100);
+			actions[2].animation.addFrame(moveRight.getImage(0), 100);
+			actions[3].animation.addFrame(moveLeft.getImage(0), 100);
 		}
 
 		public void draw() {
@@ -87,12 +101,36 @@ public class Human extends Creature {
 			headMap.put(Direction.WEST, headSprites.getSprite(2, 0).getFlippedCopy(true, false));
 			headMap.put(Direction.SOUTH_WEST, headSprites.getSprite(1, 0).getFlippedCopy(true, false));
 			x_offset = 0;
-			y_offset = -8;
+			y_offset = 0;
 		}
 
 		public void draw() {
-			headMap.get(Direction.towards(sightAngle))
-			.draw(getLocation().getX() + x_offset, getLocation().getY() + y_offset);
+			switch (currentAction.animation.getFrame()) {
+  			case 1:
+  			case 3:
+  			case 5:
+  			case 7:
+  				head.x_offset = 0;
+  				head.y_offset =  -7;
+  				break;
+  			case 2:
+  				head.x_offset = 1;
+  				head.y_offset =  -6;
+  				break;
+  			case 6:
+  				head.x_offset =  -1;
+  				head.y_offset =  -6;
+  				break;
+  			default:
+  				head.x_offset = 0;
+  				head.y_offset =  -8;
+  			}
+			if (currentAction == actions[2] || currentAction == actions[6])
+				head.x_offset += 1;
+			else if (currentAction == actions[3] || currentAction == actions[7])
+				head.x_offset -= 1;
+			
+			headMap.get(Direction.towards(sightAngle)).draw(getLocation().getX() + x_offset, getLocation().getY() + y_offset);
 		}
 	}
 	
@@ -104,7 +142,7 @@ public class Human extends Creature {
 		maxThirst = 100;
 		thirst = maxThirst;
 		strength = 100;
-		setAction(ActionType.MOVE, Direction.NORTH);
+		setAction(ActionType.MOVE, Direction.SOUTH);
 	}
 	
 	public void pickup(Item i) {
@@ -117,11 +155,17 @@ public class Human extends Creature {
 		for (Action action : actions)
 			if (action.is(type, direction))
 				currentAction = action;
+				body.direction = direction;
 	}
 
 	public void draw() {
-		body.draw();
-		head.draw();
+		if (currentAction.points(Direction.NORTH, Direction.NORTH_WEST, Direction.NORTH_EAST)) {
+			head.draw();
+			body.draw();
+		} else {
+			body.draw();
+			head.draw();
+		}
 	}
 
 }
