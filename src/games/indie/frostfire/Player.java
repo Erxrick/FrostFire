@@ -3,7 +3,13 @@ package games.indie.frostfire;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Input;
 
+import games.indie.frostfire.Action.ActionType;
+
 public class Player extends Human {
+	
+	public Player() {
+		setLocation(new Coord(FrostFire.NATIVE_WIDTH/2 - 8, FrostFire.NATIVE_HEIGHT/2 - 8));
+	}
 	
 	private static Input input;
 	private float speed = 0.8f;
@@ -38,21 +44,20 @@ public class Player extends Human {
 				move(Direction.SOUTH_EAST, speed);
 			else
 				move(Direction.EAST, speed);
-		}
-		else if (Control.MOVE_UP.isPressed()) {
+		} else if (Control.MOVE_UP.isPressed()) {
 			if (Control.MOVE_LEFT.isPressed())
 				move(Direction.NORTH_WEST, speed);
 			else
 				move(Direction.NORTH, speed);
-		}
-		else if (Control.MOVE_LEFT.isPressed()) {
+		} else if (Control.MOVE_LEFT.isPressed()) {
 			if (Control.MOVE_DOWN.isPressed())
 				move(Direction.SOUTH_WEST, speed);
 			else
 				move(Direction.WEST, speed);
-		}
-		else if (Control.MOVE_DOWN.isPressed()) {
+		} else if (Control.MOVE_DOWN.isPressed()) {
 			move(Direction.SOUTH, speed);
+		} else {
+			setAction(ActionType.IDLE, Direction.NORTH);
 		}
 	}
 	

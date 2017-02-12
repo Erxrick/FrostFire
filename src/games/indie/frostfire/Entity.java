@@ -1,5 +1,7 @@
 package games.indie.frostfire;
 
+import games.indie.frostfire.Action.ActionType;
+
 public abstract class Entity implements Drawable {
 	
 	protected Coord location;
@@ -15,6 +17,7 @@ public abstract class Entity implements Drawable {
 	}
 	
 	public void move(Direction direction, float distance) {
+		((Human) this).setAction(ActionType.MOVE, direction);
 		move(direction.getAngle(), distance);
 	}
 

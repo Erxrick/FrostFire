@@ -21,17 +21,13 @@ public class Resources {
 		return build(sprites, sprite_size, frames);
 	}
 	
-	/**
-	 * A utility for building animations out of reflected images
-	 */
 	public static Animation build(SpriteSheet sprites, int sprite_size, String...frames) {
 		Animation animation = new Animation();
 		for (int i = 0; i < frames.length; i++) {
-			if (frames[i].charAt(frames[i].length() - 1) == 'f') {
+			if (frames[i].charAt(frames[i].length() - 1) == 'f')
 				animation.addFrame(sprites.getSprite(
 						Integer.parseInt(frames[i].substring(0, frames[i].length() - 1)), 0)
 						.getFlippedCopy(true, false), 100);
-			}
 			else
 				animation.addFrame(sprites.getSprite(Integer.parseInt(frames[i]), 0), 100);
 		}
