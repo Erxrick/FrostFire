@@ -13,6 +13,10 @@ public abstract class Entity implements Drawable {
 	public Coord center() {
 		return getLocation().midpoint(new Coord(getLocation().getX() + width, getLocation().getY() + height));
 	}
+	
+	public void move(Direction direction, float distance) {
+		move(direction.getAngle(), distance);
+	}
 
 	public void move(double degrees, float distance) {
 		setLocation(new Coord(((float)(this.getLocation().getX() + distance *Math.cos(Math.toRadians(degrees)))), (float) (this.getLocation().getY() + -distance * Math.sin(Math.toRadians(degrees)))));

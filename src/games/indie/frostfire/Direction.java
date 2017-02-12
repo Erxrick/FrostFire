@@ -16,6 +16,10 @@ public enum Direction {
 		this.angle = angle;
 	}
 	
+	public double getAngle() {
+		return this.angle;
+	}
+	
 	public static Direction towards(double degrees) {
 		degrees -= 180;
 	    if (degrees < 0)

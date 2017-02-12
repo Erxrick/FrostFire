@@ -28,23 +28,24 @@ public class Human extends Creature {
 	private int strength;
 	protected HashMap<BodyPart, Item> gear;
 	
-	private Body body = new Body("res/images/player/move-forward.png");
+	private Body body = new Body();
 	protected Head head = new Head("res/images/player/head-sprites.png");
 	
 	class Body implements Drawable {
 
 		private SpriteSheet sprites;
-		private Animation moveSouth;
+		private Animation moveSouth, moveNorth, moveEast, moveWest;
 //		private HashMap<Action, Animation> animations;
 		
-		Body(String path) {
-			moveSouth = new Animation(new SpriteSheet(Resources.loadImage(path), 16, 16), 100);
-			moveSouth.addFrame(moveSouth.getImage(1), 100);
-			moveSouth.addFrame(moveSouth.getImage(0), 100);
-			moveSouth.addFrame(moveSouth.getImage(1).getFlippedCopy(true, false), 100);
-			moveSouth.addFrame(moveSouth.getImage(2).getFlippedCopy(true, false), 100);
-			moveSouth.addFrame(moveSouth.getImage(5), 100);
-		}
+		Body() {
+			String[] vertical = {"0", "1", "2", "1", "0", "1f", "2f", "1f"};
+			moveSouth = Resources.build("res/images/player/move-south.png", 16, vertical);
+			moveNorth = Resources.build("res/images/player/move-north.png", 16, vertical);
+			String[] horizonal = {"0", "1", "2", "3", "0", "4", "5", "6"};
+			SpriteSheet s = new SpriteSheet(Resources.loadImage("res/images/player/move-side.png"), 16, 16);
+			moveEast = Resources.build(s, 16, horizonal);
+			moveWest = Resources.build(new SpriteSheet(s.getFlippedCopy(true, false), 16, 16), 16, horizonal);
+			}
 
 		public void draw() {
 			switch (moveSouth.getFrame()) {

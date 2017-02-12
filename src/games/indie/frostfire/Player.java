@@ -33,35 +33,39 @@ public class Player extends Human {
 		Player.input = input;
 		if (Control.MOVE_RIGHT.isPressed()) {
 			if (Control.MOVE_UP.isPressed())
-				move(45 ,speed);
+				move(Direction.NORTH_EAST ,speed);
 			else if (Control.MOVE_DOWN.isPressed())
-				move(315, speed);
+				move(Direction.SOUTH_EAST, speed);
 			else
-				move(0, speed);
+				move(Direction.EAST, speed);
 		}
 		else if (Control.MOVE_UP.isPressed()) {
 			if (Control.MOVE_LEFT.isPressed())
-				move(135, speed);
+				move(Direction.NORTH_WEST, speed);
 			else
-				move(90, speed);
+				move(Direction.NORTH, speed);
 		}
 		else if (Control.MOVE_LEFT.isPressed()) {
 			if (Control.MOVE_DOWN.isPressed())
-				move(225, speed);
+				move(Direction.SOUTH_WEST, speed);
 			else
-				move(180, speed);
+				move(Direction.WEST, speed);
 		}
 		else if (Control.MOVE_DOWN.isPressed()) {
-			move(270, speed);
+			move(Direction.SOUTH, speed);
 		}
 	}
 	
 	public void setLocation(Coord location) {
 		this.location = location;
 		if (head != null) {
-			head.sightAngle = this.location.directionTo(
-			new Coord(Mouse.getX()/FrostFire.SCALE, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE));
+			updateHead();
 		}
+	}
+	
+	public void updateHead() {
+		head.sightAngle = this.location.directionTo(
+		new Coord(Mouse.getX()/FrostFire.SCALE, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE));
 	}
 	
 }
