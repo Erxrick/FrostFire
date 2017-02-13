@@ -1,4 +1,4 @@
-package games.indie.frostfire;
+package games.indie.frostfire.world;
 
 public class Coord {
 	
@@ -37,6 +37,17 @@ public class Coord {
 	
 	public Coord midpoint(Coord coord) {
 		return new Coord((this.x + coord.x)/2, (this.y + coord.y)/2);
+	}
+	
+	public double directionTo(Coord coord) {
+		double angle = Math.atan2(-(this.y - coord.y), this.x - coord.x);
+	    if (angle < 0)
+	        angle = 2 * Math.PI + angle;
+	    return Math.toDegrees(angle);
+	}
+	
+	public String toString() {
+		return "(" + x + ", " + y + ")";
 	}
 	
 }

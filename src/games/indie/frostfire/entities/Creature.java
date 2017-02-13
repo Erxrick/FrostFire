@@ -1,4 +1,7 @@
-package games.indie.frostfire;
+package games.indie.frostfire.entities;
+
+import games.indie.frostfire.items.Inventory;
+import games.indie.frostfire.items.Item;
 
 public abstract class Creature extends Entity {
 	

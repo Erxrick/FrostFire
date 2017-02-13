@@ -1,6 +1,5 @@
 package games.indie.frostfire;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,7 +11,8 @@ public class FrostFire extends StateBasedGame {
 	private boolean running;
 	public static final int FPS = 60;
 	public static final int NATIVE_WIDTH = 320, NATIVE_HEIGHT = 180;
-	public static int SCALE = 8;
+	public static int SCALE = 4;
+	public static boolean debug = false;
 	
 	FrostFire() throws SlickException {
 		super("FrostFire");
@@ -24,8 +24,6 @@ public class FrostFire extends StateBasedGame {
 		gc.setAlwaysRender(true);
 		gc.setShowFPS(false);
 		gc.setVSync(true);
-		gc.setFullscreen(true);
-	//	gc.setMouseCursor("String", Mouse.getX(), Mouse.getY());
 		
 		this.addState(new Client());
 		this.addState(new Menu());
