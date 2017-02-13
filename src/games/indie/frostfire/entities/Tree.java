@@ -10,6 +10,8 @@ public class Tree extends Entity {
 	
 	public Tree() {
 		sprite = Resources.loadImage("res/images/tree.png");
+		setHeight(32);
+		setWidth(32);
 	}
 
 	public void draw() {

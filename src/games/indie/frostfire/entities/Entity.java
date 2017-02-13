@@ -1,11 +1,12 @@
 package games.indie.frostfire.entities;
 
 import games.indie.frostfire.Drawable;
+import games.indie.frostfire.Layer;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.world.Coord;
 import games.indie.frostfire.world.Direction;
 
-public abstract class Entity implements Drawable {
+public abstract class Entity implements Drawable, Comparable<Entity> {
 	
 	protected Coord location;
 	protected Box collision;
@@ -51,6 +52,14 @@ public abstract class Entity implements Drawable {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	public Layer getLayer() {
+		return Layer.ENTITY;
+	}
+	
+	public int compareTo(Entity entity) {
+		return (int) ((location.getY() + height) - (entity.getLocation().getY() + entity.getHeight()));
 	}
 
 }

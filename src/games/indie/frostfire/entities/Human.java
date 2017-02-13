@@ -7,7 +7,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.openal.Audio;
 
-import games.indie.frostfire.Drawable;
 import games.indie.frostfire.Resources;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.items.Item;
@@ -38,7 +37,7 @@ public class Human extends Creature {
 	protected Head head = new Head("res/images/player/head-sprites.png");
 	private Action[] actions;
 		
-	public class Body implements Drawable {
+	public class Body {
 		
 		private Direction direction;
 		
@@ -100,7 +99,7 @@ public class Human extends Creature {
 		}
 	}
 	
-	public class Head implements Drawable {
+	public class Head {
 		
 		private double sightAngle;
 		private HashMap<Direction, Image> headMap;
@@ -165,6 +164,8 @@ public class Human extends Creature {
 		maxThirst = 100;
 		thirst = maxThirst;
 		strength = 100;
+		setWidth(16);
+		setHeight(16);
 		setAction(ActionType.MOVE, Direction.SOUTH);
 	}
 	
