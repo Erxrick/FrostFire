@@ -1,8 +1,10 @@
-package games.indie.frostfire;
+package games.indie.frostfire.entities;
 
 import java.util.Arrays;
 
 import org.newdawn.slick.Animation;
+
+import games.indie.frostfire.world.Direction;
 
 public class Action {
 	
@@ -11,12 +13,14 @@ public class Action {
 		MOVE
 	}
 	
-	protected Animation animation;
+	private Animation animation;
 	private ActionType type;
 	private Direction[] directions;
 	
-	Action(Animation animation, ActionType type, Direction...directions) {
-		this.animation = animation;
+	public Action(Animation animation, ActionType type, Direction...directions) {
+		this.setAnimation(animation);
+		// TODO Update animation based on Entity speed
+		// TODO Notify Human of frame change
 		this.type = type;
 		this.directions = directions;
 	}
@@ -31,6 +35,14 @@ public class Action {
 				return true;
 		}
 		return false;
+	}
+
+	public Animation getAnimation() {
+		return animation;
+	}
+
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
 	}
 	
 }

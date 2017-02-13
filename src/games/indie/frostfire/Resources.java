@@ -1,12 +1,17 @@
 package games.indie.frostfire;
 
+import java.io.IOException;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 public class Resources {
-	
+		
 	public static Image loadImage(String path) {
 		try {
 			return new Image(path, false, Image.FILTER_NEAREST);
@@ -14,6 +19,15 @@ public class Resources {
 			// TODO load placeholder image
 			return null;
 		}
+	}
+	
+	public static Audio loadSound(String string) {
+		try {
+			return AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/step.wav"));
+		} catch (IOException e) {
+			System.out.println("Unable to load audio file :(");
+		}
+		return null;
 	}
 	
 	public static Animation build(String path, int sprite_size, String...frames) {
@@ -33,5 +47,6 @@ public class Resources {
 		}
 		return animation;
 	}
+
 
 }

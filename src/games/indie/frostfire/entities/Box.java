@@ -1,4 +1,6 @@
-package games.indie.frostfire;
+package games.indie.frostfire.entities;
+
+import games.indie.frostfire.world.Coord;
 
 public class Box {
 	
@@ -7,8 +9,8 @@ public class Box {
 	
 	public Box(Entity entity) {
 		this.location = entity.getLocation();
-		this.width = entity.width;
-		this.height = entity.height;
+		this.width = entity.getWidth();
+		this.height = entity.getHeight();
 	}
 	
 	public Box(Entity entity, int width, int height) {

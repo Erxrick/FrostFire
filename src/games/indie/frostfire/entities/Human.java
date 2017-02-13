@@ -1,14 +1,21 @@
-package games.indie.frostfire;
+package games.indie.frostfire.entities;
 
 import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.openal.Audio;
 
-import games.indie.frostfire.Action.ActionType;
+import games.indie.frostfire.Drawable;
+import games.indie.frostfire.Resources;
+import games.indie.frostfire.entities.Action.ActionType;
+import games.indie.frostfire.items.Item;
+import games.indie.frostfire.world.Direction;
 
 public class Human extends Creature {
+	
+	protected static Audio step = Resources.loadSound("res/audio/step.wav");
 	
 	public enum BodyPart {
 		HEAD,
@@ -31,9 +38,9 @@ public class Human extends Creature {
 	protected Head head = new Head("res/images/player/head-sprites.png");
 	private Action[] actions;
 		
-	class Body implements Drawable {
+	public class Body implements Drawable {
 		
-		protected Direction direction;
+		private Direction direction;
 		
 		Body() {
 			
@@ -74,20 +81,28 @@ public class Human extends Creature {
 							ActionType.MOVE,
 							Direction.WEST)
 			};
-			actions[0].animation.addFrame(moveDown.getImage(0), 100);
-			actions[1].animation.addFrame(moveUp.getImage(0), 100);
-			actions[2].animation.addFrame(moveRight.getImage(0), 100);
-			actions[3].animation.addFrame(moveLeft.getImage(0), 100);
+			actions[0].getAnimation().addFrame(moveDown.getImage(0), 100);
+			actions[1].getAnimation().addFrame(moveUp.getImage(0), 100);
+			actions[2].getAnimation().addFrame(moveRight.getImage(0), 100);
+			actions[3].getAnimation().addFrame(moveLeft.getImage(0), 100);
 		}
 
 		public void draw() {
-			currentAction.animation.draw(location.getX(), location.getY());
+			currentAction.getAnimation().draw(location.getX(), location.getY());
+		}
+
+		public Direction getDirection() {
+			return direction;
+		}
+
+		public void setDirection(Direction direction) {
+			this.direction = direction;
 		}
 	}
 	
-	class Head implements Drawable {
+	public class Head implements Drawable {
 		
-		double sightAngle;
+		private double sightAngle;
 		private HashMap<Direction, Image> headMap;
 		private Image currentState;
 		private int x_offset, y_offset;
@@ -105,7 +120,7 @@ public class Human extends Creature {
 		}
 
 		public void draw() {
-			switch (currentAction.animation.getFrame()) {
+			switch (currentAction.getAnimation().getFrame()) {
   			case 1:
   			case 3:
   			case 5:
@@ -130,7 +145,15 @@ public class Human extends Creature {
 			else if (currentAction == actions[3] || currentAction == actions[7])
 				head.x_offset -= 1;
 			
-			headMap.get(Direction.towards(sightAngle)).draw(getLocation().getX() + x_offset, getLocation().getY() + y_offset);
+			headMap.get(Direction.towards(getSightAngle())).draw(getLocation().getX() + x_offset, getLocation().getY() + y_offset);
+		}
+
+		public double getSightAngle() {
+			return sightAngle;
+		}
+
+		public void setSightAngle(double sightAngle) {
+			this.sightAngle = sightAngle;
 		}
 	}
 	
@@ -155,7 +178,7 @@ public class Human extends Creature {
 		for (Action action : actions)
 			if (action.is(type, direction))
 				currentAction = action;
-				body.direction = direction;
+				body.setDirection(direction);
 	}
 
 	public void draw() {

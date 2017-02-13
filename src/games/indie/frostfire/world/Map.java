@@ -1,4 +1,4 @@
-package games.indie.frostfire;
+package games.indie.frostfire.world;
 
 public class Map {
 	

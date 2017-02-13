@@ -1,9 +1,13 @@
-package games.indie.frostfire;
+package games.indie.frostfire.user;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Input;
 
-import games.indie.frostfire.Action.ActionType;
+import games.indie.frostfire.FrostFire;
+import games.indie.frostfire.entities.Human;
+import games.indie.frostfire.entities.Action.ActionType;
+import games.indie.frostfire.world.Coord;
+import games.indie.frostfire.world.Direction;
 
 public class Player extends Human {
 	
@@ -58,7 +62,7 @@ public class Player extends Human {
 		} else if (Control.MOVE_DOWN.isPressed()) {
 			move(Direction.SOUTH, speed);
 		} else {
-			setAction(ActionType.IDLE, body.direction);
+			setAction(ActionType.IDLE, body.getDirection());
 		}
 	}
 	
@@ -70,8 +74,8 @@ public class Player extends Human {
 	}
 	
 	public void updateHead() {
-		head.sightAngle = this.location.directionTo(
-		new Coord(Mouse.getX()/FrostFire.SCALE, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE));
+		head.setSightAngle(this.location.directionTo(
+		new Coord(Mouse.getX()/FrostFire.SCALE, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE)));
 	}
 	
 }

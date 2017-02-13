@@ -1,19 +1,23 @@
-package games.indie.frostfire;
+package games.indie.frostfire.entities;
 
-import games.indie.frostfire.Action.ActionType;
+import games.indie.frostfire.Drawable;
+import games.indie.frostfire.entities.Action.ActionType;
+import games.indie.frostfire.world.Coord;
+import games.indie.frostfire.world.Direction;
 
 public abstract class Entity implements Drawable {
 	
 	protected Coord location;
 	protected Box collision;
-	protected int width, height;
+	private int width;
+	private int height;
 	
 	public Entity() {
 		setLocation(new Coord());
 	}
 	
 	public Coord center() {
-		return getLocation().midpoint(new Coord(getLocation().getX() + width, getLocation().getY() + height));
+		return getLocation().midpoint(new Coord(getLocation().getX() + getWidth(), getLocation().getY() + getHeight()));
 	}
 	
 	public void move(Direction direction, float distance) {
@@ -31,6 +35,22 @@ public abstract class Entity implements Drawable {
 
 	public void setLocation(Coord location) {
 		this.location = location;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
 }
