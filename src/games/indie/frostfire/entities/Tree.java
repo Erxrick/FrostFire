@@ -13,9 +13,7 @@ public class Tree extends Entity {
 		sprite = Resources.loadImage("res/images/tree.png");
 		setHeight(32);
 		setWidth(32);
-		collision = new Box(24, 8);
-		collision.setOffset_x(4);
-		collision.setOffset_y(23);
+		collision = new Box(this, 24, 8, 4, -23);
 	}
 
 	public void draw() {

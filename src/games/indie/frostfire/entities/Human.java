@@ -167,9 +167,7 @@ public class Human extends Creature {
 		strength = 100;
 		setWidth(16);
 		setHeight(16);
-		collision = new Box(12, 4);
-		collision.setOffset_x(2);
-		collision.setOffset_y(12);
+		collision = new Box(this, 12, 4, 2, -12);
 		setAction(ActionType.MOVE, Direction.SOUTH);
 	}
 	

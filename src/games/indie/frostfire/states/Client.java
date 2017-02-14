@@ -25,6 +25,7 @@ public class Client extends GameState {
 		player = new Player();
 		world = new World();
 		world.place(player);
+		player.setWorld(world);
 		Camera.setCenter(player.center());
 		ui = new UI();
 	}

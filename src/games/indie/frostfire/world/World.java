@@ -25,6 +25,9 @@ public class World implements Drawable {
 		Tree tree = new Tree();
 		tree.setLocation(new Coord(80, 80));
 		entities.add(tree);
+		Tree tree2 = new Tree();
+		tree2.setLocation(new Coord(-48, 0));
+		entities.add(tree2);
 	}
 	
 	public void place(Entity e) {
@@ -50,9 +53,21 @@ public class World implements Drawable {
 			screen.setColor(new Color(212, 57, 78, 150));
 			screen.fill(new Rectangle(
 					position.getX() + entity.getCollision().getOffset_x(),
-					position.getY() + entity.getCollision().getOffset_y(), 
+					position.getY() - entity.getCollision().getOffset_y(), 
 					entity.getCollision().getWidth(), entity.getCollision().getHeight()));
 		}
 	}
-
+	
+	public boolean testMove(Entity entity, Coord simulatedLocation) {
+		Coord[] points = entity.getCollision().getEdges(simulatedLocation);
+		for (Entity e : entities) {
+			if (e == entity)
+				continue;
+			for (Coord point : points) {
+				if (e.getCollision().contains(point))
+					return false;
+			}
+		}
+		return true;
+	}
 }
