@@ -6,6 +6,7 @@ import org.newdawn.slick.Input;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Human;
 import games.indie.frostfire.entities.Action.ActionType;
+import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Coord;
 import games.indie.frostfire.world.Direction;
 
@@ -15,7 +16,6 @@ public class Player extends Human {
 	private float speed;
 	
 	public Player() {
-		setLocation(new Coord(FrostFire.NATIVE_WIDTH/2 - 8, FrostFire.NATIVE_HEIGHT/2 - 8));
 		speed = 0.8f;
 	}
 	
@@ -68,13 +68,14 @@ public class Player extends Human {
 	
 	public void setLocation(Coord location) {
 		this.location = location;
+		Camera.setCenter(this.location);
 		if (head != null) {
 			updateHead();
 		}
 	}
 	
 	public void updateHead() {
-		head.setSightAngle(this.location.directionTo(
+		head.setSightAngle(Camera.onScreen(location).directionTo(
 		new Coord(Mouse.getX()/FrostFire.SCALE, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE)));
 	}
 	

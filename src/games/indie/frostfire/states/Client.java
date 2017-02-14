@@ -13,6 +13,7 @@ import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.entities.Tree;
 import games.indie.frostfire.user.Player;
+import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Coord;
 
 public class Client extends GameState {
@@ -26,6 +27,7 @@ public class Client extends GameState {
 		tree = new Tree();
 		tree.setLocation(new Coord(80, 80));
 		entities = new ArrayList<>();
+		entities.add(new Tree());
 		entities.add(player);
 		entities.add(tree);
 	}
@@ -35,6 +37,10 @@ public class Client extends GameState {
 		screen.scale(FrostFire.SCALE, FrostFire.SCALE);
 		for (Entity entity : entities) {
 			entity.draw();
+			if (FrostFire.debug) {
+				Coord position = Camera.onScreen(entity.getLocation());
+				screen.drawRect(position.getX(), position.getY(), entity.getWidth(), entity.getHeight());
+			}
 		}
 	}
 
@@ -42,6 +48,8 @@ public class Client extends GameState {
 		player.control(gc.getInput());
 		player.updateHead();
 		entities.sort(null);
+		if (gc.getInput().isKeyPressed(Input.KEY_TAB))
+			FrostFire.debug = (FrostFire.debug) ? false : true;
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 	}

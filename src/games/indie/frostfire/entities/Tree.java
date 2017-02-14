@@ -3,6 +3,7 @@ package games.indie.frostfire.entities;
 import org.newdawn.slick.Image;
 
 import games.indie.frostfire.Resources;
+import games.indie.frostfire.world.Camera;
 
 public class Tree extends Entity {
 	
@@ -15,7 +16,7 @@ public class Tree extends Entity {
 	}
 
 	public void draw() {
-		sprite.draw(location.getX(), location.getY());
+		Camera.draw(sprite, location);
 	}
 
 }

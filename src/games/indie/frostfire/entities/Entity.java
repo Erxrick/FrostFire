@@ -22,12 +22,15 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	}
 	
 	public void move(Direction direction, float distance) {
+		// TODO temporary ActionListener --improve this hacky code
 		((Human) this).setAction(ActionType.MOVE, direction);
 		move(direction.getAngle(), distance);
 	}
 
 	public void move(double degrees, float distance) {
-		setLocation(new Coord(((float)(this.getLocation().getX() + distance *Math.cos(Math.toRadians(degrees)))), (float) (this.getLocation().getY() + -distance * Math.sin(Math.toRadians(degrees)))));
+		float x_component = (float) (Math.cos(Math.toRadians(degrees)) * distance);
+		float y_component = (float) (Math.sin(Math.toRadians(degrees)) * distance);
+		setLocation(new Coord(location.getX() + x_component, location.getY() + y_component));
 	}
 
 	public Coord getLocation() {
@@ -59,7 +62,7 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	}
 	
 	public int compareTo(Entity entity) {
-		return (int) ((location.getY() + height) - (entity.getLocation().getY() + entity.getHeight()));
+		return (int) ((entity.getLocation().getY() - entity.getHeight()) - (location.getY() - height));
 	}
 
 }

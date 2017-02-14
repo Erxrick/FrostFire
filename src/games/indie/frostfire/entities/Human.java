@@ -10,6 +10,7 @@ import org.newdawn.slick.openal.Audio;
 import games.indie.frostfire.Resources;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.items.Item;
+import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
 public class Human extends Creature {
@@ -87,7 +88,7 @@ public class Human extends Creature {
 		}
 
 		public void draw() {
-			currentAction.getAnimation().draw(location.getX(), location.getY());
+			Camera.draw(currentAction.getAnimation(), location);
 		}
 
 		public Direction getDirection() {
@@ -125,26 +126,26 @@ public class Human extends Creature {
   			case 5:
   			case 7:
   				head.x_offset = 0;
-  				head.y_offset =  -7;
+  				head.y_offset =  7;
   				break;
   			case 2:
   				head.x_offset = 1;
-  				head.y_offset =  -6;
+  				head.y_offset =  6;
   				break;
   			case 6:
   				head.x_offset =  -1;
-  				head.y_offset =  -6;
+  				head.y_offset =  6;
   				break;
   			default:
   				head.x_offset = 0;
-  				head.y_offset =  -8;
+  				head.y_offset =  8;
   			}
 			if (currentAction == actions[2] || currentAction == actions[6])
 				head.x_offset += 1;
 			else if (currentAction == actions[3] || currentAction == actions[7])
 				head.x_offset -= 1;
 			
-			headMap.get(Direction.towards(getSightAngle())).draw(getLocation().getX() + x_offset, getLocation().getY() + y_offset);
+			Camera.draw(headMap.get(Direction.towards(sightAngle)), location.getX() + x_offset, location.getY() + y_offset);
 		}
 
 		public double getSightAngle() {
@@ -191,5 +192,5 @@ public class Human extends Creature {
 			head.draw();
 		}
 	}
-
+	
 }
