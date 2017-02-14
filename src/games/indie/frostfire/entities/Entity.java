@@ -18,7 +18,7 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	}
 	
 	public Coord center() {
-		return getLocation().midpoint(new Coord(getLocation().getX() + getWidth(), getLocation().getY() + getHeight()));
+		return new Coord(location.getX() + width/2, location.getY() + height/2);
 	}
 	
 	public void move(Direction direction, float distance) {

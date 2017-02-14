@@ -16,7 +16,7 @@ public class Player extends Human {
 	private float speed;
 	
 	public Player() {
-		speed = 0.8f;
+		speed = 0.9f;
 	}
 	
 	enum Control {
@@ -68,7 +68,7 @@ public class Player extends Human {
 	
 	public void setLocation(Coord location) {
 		this.location = location;
-		Camera.setCenter(this.location);
+		Camera.setCenter(center());
 		if (head != null) {
 			updateHead();
 		}
