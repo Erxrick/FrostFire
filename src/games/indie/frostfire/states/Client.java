@@ -7,6 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
@@ -42,9 +43,16 @@ public class Client extends GameState {
 			entity.draw();
 		}
 		if (FrostFire.debug) {
+			
 			for (Entity entity : entities) {
 				Coord position = Camera.onScreen(entity.getLocation());
-				screen.drawRect(position.getX(), position.getY(), entity.getWidth(), entity.getHeight());
+				screen.setColor(new Color(255, 255, 255, 50));
+				screen.fill(new Rectangle(position.getX(), position.getY(), entity.getWidth(), entity.getHeight()));
+				screen.setColor(new Color(212, 57, 78, 150));
+				screen.fill(new Rectangle(
+						position.getX() + entity.getCollision().getOffset_x(),
+						position.getY() + entity.getCollision().getOffset_y(), 
+						entity.getCollision().getWidth(), entity.getCollision().getHeight()));
 			}
 		}
 		display.draw();

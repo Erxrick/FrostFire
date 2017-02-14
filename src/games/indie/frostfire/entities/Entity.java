@@ -1,7 +1,6 @@
 package games.indie.frostfire.entities;
 
 import games.indie.frostfire.Drawable;
-import games.indie.frostfire.Layer;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.world.Coord;
 import games.indie.frostfire.world.Direction;
@@ -30,6 +29,7 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	public void move(double degrees, float distance) {
 		float x_component = (float) (Math.cos(Math.toRadians(degrees)) * distance);
 		float y_component = (float) (Math.sin(Math.toRadians(degrees)) * distance);
+		// TODO check for collisions
 		setLocation(new Coord(location.getX() + x_component, location.getY() + y_component));
 	}
 
@@ -57,8 +57,8 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 		this.height = height;
 	}
 	
-	public Layer getLayer() {
-		return Layer.ENTITY;
+	public Box getCollision() {
+		return collision;
 	}
 	
 	public int compareTo(Entity entity) {

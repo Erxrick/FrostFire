@@ -25,9 +25,9 @@ public class UI implements Drawable {
 				new BodySlot(screen_midpoint + 16, lift, BodyPart.FEET),
 				"res/images/ui/lower-slots.png");
 		
-		Stat health = new Stat(screen_midpoint - 32, lift - 11, "res/images/ui/heart.png");
-		Stat thirst = new Stat(screen_midpoint - 22, lift - 11, "res/images/ui/water.png");
-		Stat hunger = new Stat(screen_midpoint - 12, lift - 11, "res/images/ui/food.png");
+		Stat health = new Stat(screen_midpoint - 32, lift - 10, "res/images/ui/heart.png");
+		Stat thirst = new Stat(screen_midpoint - 22, lift - 10, "res/images/ui/water.png");
+		Stat hunger = new Stat(screen_midpoint - 12, lift - 10, "res/images/ui/food.png");
 		
 		components = new Drawable[] {
 				right_hand,
