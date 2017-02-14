@@ -1,5 +1,7 @@
 package games.indie.frostfire.entities;
 
+import java.util.ArrayList;
+
 import games.indie.frostfire.Drawable;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.world.Coord;
@@ -11,8 +13,10 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	protected Box collision;
 	private int width;
 	private int height;
+	private ArrayList<EntityMoveListener> listeners;
 	
 	public Entity() {
+		listeners = new ArrayList<>();
 		setLocation(new Coord());
 	}
 	
@@ -29,8 +33,14 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	public void move(double degrees, float distance) {
 		float x_component = (float) (Math.cos(Math.toRadians(degrees)) * distance);
 		float y_component = (float) (Math.sin(Math.toRadians(degrees)) * distance);
-		// TODO check for collisions
-		setLocation(new Coord(location.getX() + x_component, location.getY() + y_component));
+		boolean move_causes_collision = false;
+		
+		if (!move_causes_collision) {
+			setLocation(new Coord(location.getX() + x_component, location.getY() + y_component));
+			for (EntityMoveListener listener : listeners) {
+				listener.moved(this);
+			}
+		}
 	}
 
 	public Coord getLocation() {
@@ -59,6 +69,19 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	
 	public Box getCollision() {
 		return collision;
+	}
+	
+	public Coord[] getEdges(Coord location) {
+		return new Coord[] {
+				new Coord(location.getX() + collision.getOffset_x(),
+						location.getY() + collision.getOffset_y()),
+				new Coord(location.getX() + collision.getOffset_x() + collision.getWidth(), 
+						location.getY() + collision.getOffset_y()),
+				new Coord(location.getX() + collision.getOffset_x(), 
+						location.getY() + collision.getOffset_y() + collision.getHeight()),
+				new Coord(location.getX() + collision.getOffset_x() + collision.getWidth(), 
+						location.getY() + collision.getOffset_y() + collision.getHeight()),
+		};
 	}
 	
 	public int compareTo(Entity entity) {
