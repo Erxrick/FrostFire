@@ -1,5 +1,6 @@
 package games.indie.frostfire.states;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -8,7 +9,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
-import games.indie.frostfire.entities.Tree;
 import games.indie.frostfire.user.Player;
 import games.indie.frostfire.user.UI;
 import games.indie.frostfire.world.Camera;
@@ -17,7 +17,6 @@ import games.indie.frostfire.world.World;
 public class Client extends GameState {
 	
 	private Player player;
-	private Tree tree;
 	private UI ui;
 	private World world;
 
@@ -34,8 +33,14 @@ public class Client extends GameState {
 		screen.setBackground(new Color(44, 141, 144));
 		screen.scale(FrostFire.SCALE, FrostFire.SCALE);
 		world.draw();
-		if (FrostFire.debug)
+		if (FrostFire.debug) {
 			world.debug_draw(screen);
+			screen.setColor(Color.cyan);
+			screen.drawLine(Camera.onScreen(player.center()).getX(), 
+					Camera.onScreen(player.center()).getY(),
+					Mouse.getX()/FrostFire.SCALE, 
+					FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE);
+		}
 		ui.draw();
 	}
 

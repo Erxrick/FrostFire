@@ -23,7 +23,7 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	}
 	
 	public Coord center() {
-		return new Coord(location.getX() + width/2, location.getY() + height/2);
+		return new Coord(location.getX() + width/2, location.getY() - height/2);
 	}
 	
 	public boolean move(Direction direction, float distance) {

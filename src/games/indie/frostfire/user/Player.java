@@ -22,8 +22,10 @@ public class Player extends Human {
 	enum Control {
 		MOVE_UP		(Input.KEY_UP, Input.KEY_W),
 		MOVE_RIGHT	(Input.KEY_RIGHT, Input.KEY_D),
-		MOVE_DOWN	(Input.KEY_DOWN, Input.KEY_S),
-		MOVE_LEFT	(Input.KEY_LEFT, Input.KEY_A);
+		MOVE_DOWN	(Input.KEY_DOWN, Input.KEY_S), 
+		MOVE_LEFT	(Input.KEY_LEFT, Input.KEY_A),
+		INTERACT_RIGHT	(Input.KEY_E),
+		INTERACT_LEFT	(Input.KEY_Q);
 		
 		private int[] keys;
 		
@@ -63,6 +65,12 @@ public class Player extends Human {
 			move(Direction.SOUTH, speed);
 		} else {
 			setAction(ActionType.IDLE, body.getDirection());
+		}
+		if (Control.INTERACT_LEFT.isPressed()) {
+			System.out.println("Punch with LEFT_HAND");
+		}
+		if (Control.INTERACT_RIGHT.isPressed()) {
+			System.out.println("Purnch with RIGHT_HAND");
 		}
 	}
 	

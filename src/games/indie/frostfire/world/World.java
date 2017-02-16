@@ -7,8 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
 import games.indie.frostfire.Drawable;
-import games.indie.frostfire.entities.Entity;
-import games.indie.frostfire.entities.Tree;
+import games.indie.frostfire.entities.*;
 
 public class World implements Drawable {
 	
@@ -28,6 +27,9 @@ public class World implements Drawable {
 		Tree tree2 = new Tree();
 		tree2.setLocation(new Coord(-48, 0));
 		entities.add(tree2);
+		CocoPlant c = new CocoPlant();
+		c.setLocation(new Coord(0, -30));
+		entities.add(c);
 	}
 	
 	public void place(Entity e) {
@@ -50,18 +52,20 @@ public class World implements Drawable {
 			Coord position = Camera.onScreen(entity.getLocation());
 			screen.setColor(new Color(255, 255, 255, 50));
 			screen.fill(new Rectangle(position.getX(), position.getY(), entity.getWidth(), entity.getHeight()));
-			screen.setColor(new Color(212, 57, 78, 150));
-			screen.fill(new Rectangle(
-					position.getX() + entity.getCollision().getOffset_x(),
-					position.getY() - entity.getCollision().getOffset_y(), 
-					entity.getCollision().getWidth(), entity.getCollision().getHeight()));
+			if (entity.getCollision() != null) {
+				screen.setColor(new Color(212, 57, 78, 150));
+				screen.fill(new Rectangle(
+						position.getX() + entity.getCollision().getOffset_x(),
+						position.getY() - entity.getCollision().getOffset_y(), 
+						entity.getCollision().getWidth(), entity.getCollision().getHeight()));
+			}
 		}
 	}
 	
 	public boolean testMove(Entity entity, Coord simulatedLocation) {
 		Coord[] points = entity.getCollision().getEdges(simulatedLocation);
 		for (Entity e : entities) {
-			if (e == entity)
+			if (e == entity || e.getCollision() == null)
 				continue;
 			for (Coord point : points) {
 				if (e.getCollision().contains(point))

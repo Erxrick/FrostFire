@@ -1,23 +1,10 @@
 package games.indie.frostfire.entities;
 
-import org.newdawn.slick.Image;
-
-import games.indie.frostfire.Resources;
-import games.indie.frostfire.world.Camera;
-
-public class Tree extends Entity {
-	
-	private Image sprite;
-	
+public class Tree extends Prop {
+		
 	public Tree() {
-		sprite = Resources.loadImage("res/images/tree.png");
-		setHeight(32);
-		setWidth(32);
+		super("res/images/entities/tree.png");
 		collision = new Box(this, 24, 8, 4, -23);
-	}
-
-	public void draw() {
-		Camera.draw(sprite, location);
 	}
 
 }
