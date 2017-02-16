@@ -42,11 +42,15 @@ public class Client extends GameState {
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		world.update();
 		player.control(gc.getInput());
-		player.updateHead();
 		if (gc.getInput().isKeyPressed(Input.KEY_TAB))
 			FrostFire.debug = (FrostFire.debug) ? false : true;
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
+	}
+	
+	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		player.updateHead();
 	}
 
 	public int getID() {

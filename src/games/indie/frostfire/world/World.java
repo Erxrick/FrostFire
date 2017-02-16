@@ -36,7 +36,7 @@ public class World implements Drawable {
 	
 	public void update() {
 		// TODO use EntityMoveListener and sort more efficiently
-		entities.sort(null);
+		entities.sort(null); // This sorts for z-layer order drawing
 	}
 
 	public void draw() {
