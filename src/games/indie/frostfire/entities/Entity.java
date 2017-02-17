@@ -3,7 +3,6 @@ package games.indie.frostfire.entities;
 import java.util.ArrayList;
 
 import games.indie.frostfire.Drawable;
-import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.world.Coord;
 import games.indie.frostfire.world.Direction;
 import games.indie.frostfire.world.World;
@@ -27,8 +26,6 @@ public abstract class Entity implements Drawable, Comparable<Entity> {
 	}
 	
 	public boolean move(Direction direction, float distance) {
-		// TODO temporary ActionListener --improve this hacky code
-		((Human) this).setAction(ActionType.MOVE, direction);
 		return move(direction.getAngle(), distance);
 	}
 

@@ -71,9 +71,6 @@ public class Player extends Human {
 	public void setLocation(Coord location) {
 		this.location = location;
 		Camera.setCenter(center());
-		if (head != null) {
-			updateHead();
-		}
 	}
 	
 	public void updateHead() {
