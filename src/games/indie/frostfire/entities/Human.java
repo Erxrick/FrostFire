@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.openal.Audio;
 
-import games.indie.frostfire.Resources;
+import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.items.Item;
 import games.indie.frostfire.world.Camera;
@@ -15,7 +15,8 @@ import games.indie.frostfire.world.Direction;
 
 public class Human extends Creature {
 	
-	protected static Audio step = Resources.loadSound("res/audio/step.wav");
+	// TODO Resource Audio loading
+	protected static Audio step = Resource.loadSound("res/audio/step.wav");
 	
 	public enum BodyPart {
 		HEAD,
@@ -35,7 +36,7 @@ public class Human extends Creature {
 	protected Action currentAction;
 	
 	protected Body body = new Body();
-	protected Head head = new Head("res/images/player/head-sprites.png");
+	protected Head head = new Head("head-sprites");
 	private Action[] actions;
 		
 	public class Body {
@@ -46,10 +47,10 @@ public class Human extends Creature {
 			
 			String[] vertical = {"0", "1", "2", "1", "0", "1f", "2f", "1f"};
 			String[] horizonal = {"0", "1", "2", "3", "0", "4", "5", "6"};
-			SpriteSheet s = new SpriteSheet(Resources.loadImage("res/images/player/move-side.png"), 16, 16);
-			Animation moveUp = Resources.build("res/images/player/move-north.png", 16, vertical);
-			Animation moveDown = Resources.build("res/images/player/move-south.png", 16, vertical);
-			Animation moveRight = Resources.build(s, 16, horizonal);
+			SpriteSheet s = new SpriteSheet(Resource.loadImage("res/images/player/move-side.png"), 16, 16);
+			Animation moveUp = Resource.build("res/images/player/move-north.png", 16, vertical);
+			Animation moveDown = Resource.build("res/images/player/move-south.png", 16, vertical);
+			Animation moveRight = Resource.build(s, 16, horizonal);
 			Animation moveLeft = new Animation();
 			for (int i = 0; i < moveRight.getFrameCount(); i++) {
 				moveLeft.addFrame(moveRight.getImage(i).getFlippedCopy(true, false), 100);
@@ -107,8 +108,8 @@ public class Human extends Creature {
 		private Image currentState;
 		private int x_offset, y_offset;
 		
-		Head(String path) {
-			SpriteSheet headSprites = new SpriteSheet(Resources.loadImage(path), 16, 16);
+		Head(String name) {
+			SpriteSheet headSprites = new SpriteSheet(Resource.get(name), 16, 16);
 			headMap = new HashMap<>();
 			for (int i = 0; i < headSprites.getHorizontalCount(); i++)
 				headMap.put(Direction.values()[i], headSprites.getSprite(i, 0));

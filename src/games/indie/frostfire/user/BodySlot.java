@@ -6,15 +6,9 @@ public class BodySlot extends InventorySlot {
 	
 	private BodyPart equip;
 	
-	public BodySlot(int x, int y, BodyPart equip) {
-		super(x, y);
+	public BodySlot(int screen_x, int screen_y, BodyPart equip) {
+		super(screen_x, screen_y);
 		this.equip = equip;
-	}
-
-	public void draw() {
-		if (holding != null) {
-			// TODO draw item
-		}
 	}
 
 }

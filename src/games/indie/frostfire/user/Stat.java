@@ -2,15 +2,15 @@ package games.indie.frostfire.user;
 
 import org.newdawn.slick.Image;
 
-import games.indie.frostfire.Resources;
+import games.indie.frostfire.Resource;
 
 public class Stat extends UIComponent {
 	
 	private Image icon;
 
-	public Stat(int screen_x, int screen_y, String path) {
+	public Stat(int screen_x, int screen_y, String name) {
 		super(screen_x, screen_y);
-		icon = Resources.loadImage(path);
+		icon = Resource.get(name);
 	}
 
 	public void draw() {

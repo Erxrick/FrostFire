@@ -68,8 +68,9 @@ public class World implements Drawable {
 			if (e == entity || e.getCollision() == null)
 				continue;
 			for (Coord point : points) {
-				if (e.getCollision().contains(point))
+				if (e.getCollision().contains(point)) {
 					return false;
+				}
 			}
 		}
 		return true;

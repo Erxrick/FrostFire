@@ -66,12 +66,6 @@ public class Player extends Human {
 		} else {
 			setAction(ActionType.IDLE, body.getDirection());
 		}
-		if (Control.INTERACT_LEFT.isPressed()) {
-			System.out.println("Punch with LEFT_HAND");
-		}
-		if (Control.INTERACT_RIGHT.isPressed()) {
-			System.out.println("Purnch with RIGHT_HAND");
-		}
 	}
 	
 	public void setLocation(Coord location) {

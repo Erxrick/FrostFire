@@ -25,6 +25,7 @@ public class FrostFire extends StateBasedGame {
 		gc.setShowFPS(false);
 		gc.setVSync(true);
 		
+		Resource.load();
 		this.addState(new Client());
 		this.addState(new Menu());
 	}

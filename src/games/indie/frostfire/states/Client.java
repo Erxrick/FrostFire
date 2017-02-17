@@ -36,7 +36,7 @@ public class Client extends GameState {
 		if (FrostFire.debug) {
 			world.debug_draw(screen);
 			screen.setColor(Color.cyan);
-			screen.drawLine(Camera.onScreen(player.center()).getX(), 
+			screen.drawLine(Camera.onScreen(player.center()).getX(),
 					Camera.onScreen(player.center()).getY(),
 					Mouse.getX()/FrostFire.SCALE, 
 					FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE);

@@ -1,6 +1,8 @@
 package games.indie.frostfire;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
@@ -10,7 +12,36 @@ import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-public class Resources {
+public class Resource {
+	
+	private static HashMap<String, Image> images;
+	private static HashMap<String, Audio> sounds;
+	
+	public static Image get(String resource) {
+		return images.get(resource + ".png");
+	}
+	
+	public static void load() {
+		System.out.println("Loading Images...");
+		images = new HashMap<>();
+		loadImages();
+		System.out.println("Finished Loading Resources");
+	}
+	
+	public static void loadImages() {
+		File[] startLocation = new File("res/images").listFiles();
+		discoverFiles(startLocation);
+	}
+	
+	public static void discoverFiles(File[] files) {
+	    for (File file : files) {
+	        if (file.isDirectory()) {
+	            discoverFiles(file.listFiles());
+	        } else {
+	        	images.put(file.getName(), loadImage(file.getPath()));
+	        }
+	    }
+	}
 		
 	public static Image loadImage(String path) {
 		try {
@@ -25,9 +56,9 @@ public class Resources {
 		try {
 			return AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/step.wav"));
 		} catch (IOException e) {
-			System.out.println("Unable to load audio file :(");
+			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 	
 	public static Animation build(String path, int sprite_size, String...frames) {
