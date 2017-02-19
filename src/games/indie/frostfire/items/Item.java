@@ -5,7 +5,7 @@ import org.newdawn.slick.Image;
 import games.indie.frostfire.Resource;
 import games.indie.frostfire.world.Coord;
 
-public abstract class Item {
+public abstract class Item implements StateChangeListener, Usable {
 	
 	private Image icon, sprite;
 	private int weight;

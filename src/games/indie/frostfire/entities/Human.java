@@ -198,6 +198,7 @@ public class Human extends Creature {
 	@Override
 	public boolean move(Direction direction, float distance) {
 		setAction(ActionType.MOVE, direction);
+		// TODO only when move starts
 		head.sightAngle = direction.getAngle() - 180;
 		return move(direction.getAngle(), distance);
 	}
