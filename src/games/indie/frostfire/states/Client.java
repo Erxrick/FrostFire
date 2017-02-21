@@ -5,7 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
@@ -36,12 +35,7 @@ public class Client extends GameState {
 		world.draw();
 		ui.draw();
 		for (Entity entity : world.entities) {
-			screen.setColor(Color.green);
-			Vector2f onScreen = Camera.onScreen(entity.getX(), entity.getY());
-			screen.drawRect(onScreen.getX(), onScreen.getY(), entity.getWidth(), entity.getHeight());
-			screen.setColor(Color.red);
-			onScreen = Camera.onScreen(entity.getCollision().getX(), entity.getCollision().getY());
-			screen.drawRect(onScreen.getX(), onScreen.getY(), entity.getCollision().getWidth(), entity.getCollision().getHeight());
+			
 		}
 	}
 

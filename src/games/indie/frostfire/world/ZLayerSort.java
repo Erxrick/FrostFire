@@ -4,6 +4,11 @@ import java.util.Comparator;
 
 import games.indie.frostfire.entities.Entity;
 
+/**
+ * 
+ * @author Wesley Barlow
+ *
+ */
 public class ZLayerSort implements Comparator<Entity> {
 
 	public int compare(Entity e_0, Entity e_1) {

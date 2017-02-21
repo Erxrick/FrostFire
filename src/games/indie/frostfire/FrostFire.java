@@ -7,7 +7,7 @@ import games.indie.frostfire.states.*;
 
 public class FrostFire extends StateBasedGame {
 	
-	public final int FPS = 60;
+	public final static int FPS = 60;
 	public static final int NATIVE_WIDTH = 320, NATIVE_HEIGHT = 180;
 	public static int scale = 4;
 	

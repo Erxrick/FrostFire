@@ -2,6 +2,7 @@ package games.indie.frostfire.world;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
 import games.indie.frostfire.Drawable;
@@ -53,7 +54,12 @@ public class World implements Drawable {
 		for (Entity entity : entities) {
 			if (entity == moving)
 				continue;
-			if (changedCollision.intersects(entity.getCollision())) {
+			// Don't ask
+			if (changedCollision.intersects(new Rectangle(
+					entity.getCollision().getX(), 
+					entity.getCollision().getY() + (changedCollision.getHeight() - entity.getCollision().getHeight()),
+					entity.getCollision().getWidth(),
+					entity.getCollision().getHeight()))) {
 				return false;
 			}
 		}

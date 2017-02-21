@@ -203,4 +203,8 @@ public class Human extends Creature {
 		return move(direction.getAngle(), distance);
 	}
 	
+	public Head getHead() {
+		return head;
+	}
+	
 }
