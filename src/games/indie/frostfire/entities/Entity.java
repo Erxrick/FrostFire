@@ -1,82 +1,40 @@
 package games.indie.frostfire.entities;
 
-import java.util.ArrayList;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
-import games.indie.frostfire.Drawable;
-import games.indie.frostfire.world.Coord;
-import games.indie.frostfire.world.Direction;
-import games.indie.frostfire.world.World;
+import games.indie.frostfire.Sprite;
+import games.indie.frostfire.world.Camera;
 
-public abstract class Entity implements Drawable, Comparable<Entity> {
+public abstract class Entity extends Sprite {
 	
-	protected Coord location;
-	protected Box collision;
-	private int width, height;
-	private ArrayList<EntityMoveListener> listeners;
-	// World included so they can reference other entities for collision detection
-	private World world;
+	// x and y of collision relative to this.location
+	protected Shape collision;
+	protected float offset_x, offset_y;
 	
-	public Entity() {
-		listeners = new ArrayList<>();
-		setLocation(new Coord());
+	public void setCollision(float width, float height, float offset_x, float offset_y) {
+		this.offset_x = offset_x;
+		this.offset_y = offset_y;
+		collision = new Rectangle(x + offset_x, y + offset_y, width, height);
 	}
 	
-	public Coord center() {
-		return new Coord(location.getX() + width/2, location.getY() - height/2);
-	}
-	
-	public boolean move(Direction direction, float distance) {
-		return move(direction.getAngle(), distance);
-	}
-
-	public boolean move(double degrees, float distance) {
-		float x_component = (float) (Math.cos(Math.toRadians(degrees)) * distance);
-		float y_component = (float) (Math.sin(Math.toRadians(degrees)) * distance);
-		Coord moveTo = new Coord(location.getX() + x_component, location.getY() + y_component);
-		boolean validMove = world.testMove(this, moveTo);
-		if (validMove) {
-			setLocation(moveTo);
-			for (EntityMoveListener listener : listeners) {
-				listener.moved(this);
-			}
-		}
-		return validMove;
-	}
-
-	public Coord getLocation() {
-		return location;
-	}
-
-	public void setLocation(Coord location) {
-		this.location = location;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	
-	public Box getCollision() {
+	public Shape getCollision() {
 		return collision;
 	}
 	
-	public void setWorld(World world) {
-		this.world = world;
+	@Override
+	public void setLocation(float x, float y) {
+		super.setLocation(x, y);
+		collision.setLocation(x + offset_x, y + offset_y);
 	}
 	
-	public int compareTo(Entity entity) {
-		return (int) ((entity.getLocation().getY() - entity.getHeight()) - (location.getY() - height));
+	public void draw() {
+		Camera.draw(icon, getX(), getY());
 	}
+	
+	public String toString() {
+		return this.getClass().getSimpleName() + " at " + getLocation();
+	}
+	
 
 }

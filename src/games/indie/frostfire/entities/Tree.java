@@ -1,10 +1,12 @@
 package games.indie.frostfire.entities;
 
-public class Tree extends Prop {
+import games.indie.frostfire.Resource;
+
+public class Tree extends Plant {
 		
 	public Tree() {
-		super("tree");
-		collision = new Box(this, 24, 8, 4, -23);
+		setIcon(Resource.get("tree"));
+		setCollision(24, 8, 4, -23);
 	}
 
 }

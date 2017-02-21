@@ -1,14 +1,15 @@
 package games.indie.frostfire.states;
 
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
+import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.user.Player;
 import games.indie.frostfire.user.UI;
 import games.indie.frostfire.world.Camera;
@@ -25,30 +26,28 @@ public class Client extends GameState {
 		world = new World();
 		world.place(player);
 		player.setWorld(world);
-		Camera.setCenter(player.center());
+		Camera.setCenter(player.getCenterX(), player.getMinY());
 		ui = new UI();
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
 		screen.setBackground(new Color(44, 141, 144));
-		screen.scale(FrostFire.SCALE, FrostFire.SCALE);
+		screen.scale(FrostFire.scale, FrostFire.scale);
 		world.draw();
-		if (FrostFire.debug) {
-			world.debug_draw(screen);
-			screen.setColor(Color.cyan);
-			screen.drawLine(Camera.onScreen(player.center()).getX(),
-					Camera.onScreen(player.center()).getY(),
-					Mouse.getX()/FrostFire.SCALE, 
-					FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE);
-		}
 		ui.draw();
+		for (Entity entity : world.entities) {
+			screen.setColor(Color.green);
+			Vector2f onScreen = Camera.onScreen(entity.getX(), entity.getY());
+			screen.drawRect(onScreen.getX(), onScreen.getY(), entity.getWidth(), entity.getHeight());
+			screen.setColor(Color.red);
+			onScreen = Camera.onScreen(entity.getCollision().getX(), entity.getCollision().getY());
+			screen.drawRect(onScreen.getX(), onScreen.getY(), entity.getCollision().getWidth(), entity.getCollision().getHeight());
+		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		world.update();
 		player.control(gc.getInput());
-		if (gc.getInput().isKeyPressed(Input.KEY_TAB))
-			FrostFire.debug = (FrostFire.debug) ? false : true;
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 	}

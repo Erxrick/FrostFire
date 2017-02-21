@@ -89,7 +89,7 @@ public class Human extends Creature {
 		}
 
 		public void draw() {
-			Camera.draw(currentAction.getAnimation(), location);
+			Camera.draw(currentAction.getAnimation(), getLocation());
 		}
 
 		public Direction getDirection() {
@@ -146,7 +146,7 @@ public class Human extends Creature {
 			else if (currentAction == actions[3] || currentAction == actions[7])
 				head.x_offset -= 1;
 			
-			Camera.draw(headMap.get(Direction.towards(sightAngle)), location.getX() + x_offset, location.getY() + y_offset);
+			Camera.draw(headMap.get(Direction.towards(sightAngle)), getX() + x_offset, getY() + y_offset);
 		}
 
 		public double getSightAngle() {
@@ -168,7 +168,7 @@ public class Human extends Creature {
 		strength = 100;
 		setWidth(16);
 		setHeight(16);
-		collision = new Box(this, 12, 4, 2, -12);
+		setCollision(12, 4, 2, -12);
 		setAction(ActionType.MOVE, Direction.SOUTH);
 	}
 	

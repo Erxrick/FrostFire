@@ -1,7 +1,11 @@
 package games.indie.frostfire.entities;
 
+import org.newdawn.slick.geom.Rectangle;
+
 import games.indie.frostfire.items.Inventory;
 import games.indie.frostfire.items.Item;
+import games.indie.frostfire.world.Direction;
+import games.indie.frostfire.world.World;
 
 public abstract class Creature extends Entity {
 	
@@ -10,6 +14,7 @@ public abstract class Creature extends Entity {
 	private int temperature, coldBound, hotBound;
 	private int defence;
 	protected Inventory inventory;
+	protected World world;
 	
 	public Creature(int maxHealth, int maxEnergy) {
 		this.maxHealth = maxHealth;
@@ -22,6 +27,21 @@ public abstract class Creature extends Entity {
 	private void init() {
 		health = maxHealth;
 		energy = maxEnergy;
+	}
+	
+	public boolean move(Direction direction, float distance) {
+		return move(direction.getAngle(), distance);
+	}
+
+	public boolean move(double degrees, float distance) {
+		float x_component = (float) (Math.cos(Math.toRadians(degrees)) * distance);
+		float y_component = (float) (Math.sin(Math.toRadians(degrees)) * distance);
+		Rectangle moveTo = new Rectangle(collision.getX() + x_component, collision.getY() + y_component, collision.getWidth(), collision.getHeight());
+		boolean validMove = world.isValidMove(this, moveTo);
+		if (validMove) {
+			setLocation(x + x_component, y + y_component);
+		}
+		return validMove;
 	}
 	
 	public void setTemperatureBounds(int coldBound, int hotBound) {
@@ -42,6 +62,10 @@ public abstract class Creature extends Entity {
 		if (this.health <= 0) {
 			die();
 		}
+	}
+	
+	public void setWorld(World world) {
+		this.world = world;
 	}
 	
 	private void die() {

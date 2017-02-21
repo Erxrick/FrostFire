@@ -1,32 +1,38 @@
 package games.indie.frostfire.world;
 
 import org.newdawn.slick.Renderable;
+import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.FrostFire;
 
 /**
  * The Camera class is responsible for translating Map Coords to screen positions
- * Static variables are used because there can only be one Camera
+ * 
  * @author Wesley Barlow
  */
 public class Camera {
 	
-	static private Coord center = new Coord();
+	private static Point center;
 	
-	public static void setCenter(Coord center) {
-		Camera.center = center;
+	public static void setCenter(float...coords) {
+		Camera.center = new Point(coords[0], coords[1]);
 	}
 	
-	public static void draw(Renderable sprite, Coord location) {
-		draw(sprite, location.getX(), location.getY());
-	}
 	public static void draw(Renderable sprite, float x, float y) {
-		sprite.draw(FrostFire.NATIVE_WIDTH/2 + x - center.getX(), FrostFire.NATIVE_HEIGHT/2 + center.getY() - y);
+		drawToScreen(sprite, onScreen(x, y));
+	}
+	public static void draw(Renderable sprite, Vector2f location) {
+		drawToScreen(sprite, onScreen(location.getX(), location.getY()));
 	}
 	
-	public static Coord onScreen(Coord location) {
-		return new Coord(FrostFire.NATIVE_WIDTH/2 + location.getX() - center.getX(), 
-				FrostFire.NATIVE_HEIGHT/2 + center.getY() - location.getY());
+	public static Vector2f onScreen(float x, float y) {
+		return new Vector2f(FrostFire.NATIVE_WIDTH/2 + x - center.getX(), 
+				FrostFire.NATIVE_HEIGHT/2 + center.getY() - y);
+	}
+	
+	public static void drawToScreen(Renderable sprite, Vector2f position) {
+		sprite.draw(position.getX(), position.getY());
 	}
 	
 }

@@ -1,10 +1,12 @@
 package games.indie.frostfire.entities;
 
-public class CocoPlant extends Prop {
+import games.indie.frostfire.Resource;
+
+public class CocoPlant extends Entity {
 
 	public CocoPlant() {
-		super("coconut-plant");
-		collision = new Box(this, 10, 3, 2, -15);
+		setIcon(Resource.get("coconut-plant"));
+		setCollision(10, 3, 2, -15);
 	}
 
 }

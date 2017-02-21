@@ -1,7 +1,7 @@
 package games.indie.frostfire.items;
 
-import games.indie.frostfire.world.Coord;
-import games.indie.frostfire.world.Line;
+import org.newdawn.slick.geom.Line;
+import org.newdawn.slick.geom.Point;
 
 /**
  * 
@@ -19,7 +19,7 @@ public class Motion {
 	
 	private Line[] action;
 	
-	public Motion(Coord origin, MotionType type, double direction, int duration, double range) {
+	public Motion(Point origin, MotionType type, double direction, int duration, double range) {
 		
 	}
 
