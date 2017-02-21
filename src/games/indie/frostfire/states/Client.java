@@ -32,16 +32,18 @@ public class Client extends GameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
 		screen.setBackground(new Color(44, 141, 144));
 		screen.scale(FrostFire.scale, FrostFire.scale);
+		screen.setLineWidth(FrostFire.scale);
 		world.draw();
 		ui.draw();
 		for (Entity entity : world.entities) {
-			
+			entity.debug_draw(screen);
 		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		world.update();
 		player.control(gc.getInput());
+		player.update();
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 	}

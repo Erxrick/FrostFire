@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.entities.Human;
+import games.indie.frostfire.motion.Punch;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
@@ -40,6 +41,10 @@ public class Player extends Human {
 	public void control(Input input) {
 		Player.input = input;
 		float speed = 0.9f;
+		if (Control.INTERACT_RIGHT.isPressed() && rightHandMotion == null) {
+			rightHandMotion = new Punch(this);
+			System.out.println("PUNCH CREATED");
+		}
 		if (Control.MOVE_RIGHT.isPressed()) {
 			if (Control.MOVE_UP.isPressed())
 				move(Direction.NORTH_EAST ,speed);

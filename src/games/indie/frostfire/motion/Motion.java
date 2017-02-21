@@ -22,7 +22,7 @@ public abstract class Motion implements Iterator<Vector2f> {
 	protected float range;
 	
 	public Motion(double timeInSeconds, double direction, float range) {
-		this.duration = (int) timeInSeconds * FrostFire.FPS;
+		this.duration = (int) (timeInSeconds * FrostFire.FPS);
 		this.direction = direction;
 		this.range = range;
 		this.count = 0;

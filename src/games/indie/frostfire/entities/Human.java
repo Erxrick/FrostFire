@@ -3,13 +3,17 @@ package games.indie.frostfire.entities;
 import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.openal.Audio;
 
 import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.Action.ActionType;
 import games.indie.frostfire.items.Item;
+import games.indie.frostfire.motion.Motion;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
@@ -28,10 +32,11 @@ public class Human extends Creature {
 	}
 	protected HashMap<BodyPart, Item> gear;
 	
-	private int hunger, maxHunger;
-	private int thirst, maxThirst;
+	protected int hunger, maxHunger;
+	protected int thirst, maxThirst;
 	// TODO temperature affects thirst change rate
 	private int strength;
+	protected Motion rightHandMotion;
 	
 	protected Action currentAction;
 	
@@ -205,6 +210,28 @@ public class Human extends Creature {
 	
 	public Head getHead() {
 		return head;
+	}
+	
+	protected Line interaction;
+	
+	public void update() {
+		if (rightHandMotion != null) {
+			if (rightHandMotion.hasNext()) {
+					interaction = new Line(getLocation(), getLocation().add(rightHandMotion.next()));
+			} else {
+				rightHandMotion = null;
+				interaction = null;
+			}
+		}
+	}
+	
+	public void debug_draw(Graphics screen) {
+		super.debug_draw(screen);
+		if (interaction != null) {
+			screen.setColor(Color.blue);
+			Line onScreenLine = Camera.onScreen(interaction);
+			screen.drawLine(onScreenLine.getX1(), onScreenLine.getY1(), onScreenLine.getX2(), onScreenLine.getY2());
+		}
 	}
 	
 }
