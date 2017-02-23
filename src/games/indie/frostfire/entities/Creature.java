@@ -9,25 +9,10 @@ import games.indie.frostfire.world.World;
 
 public abstract class Creature extends Entity {
 	
-	private int health, maxHealth;
-	private int energy, maxEnergy;
-	private int temperature, coldBound, hotBound;
-	private int defence;
+	protected Stat energy;
+	protected Stat temperature;
 	protected Inventory inventory;
 	protected World world;
-	
-	public Creature(int maxHealth, int maxEnergy) {
-		this.maxHealth = maxHealth;
-		this.maxEnergy = maxEnergy;
-		this.coldBound = 0; // Celcius
-		this.hotBound = 35;
-		init();
-	}
-	
-	private void init() {
-		health = maxHealth;
-		energy = maxEnergy;
-	}
 	
 	public boolean move(Direction direction, float distance) {
 		return move(direction.getAngle(), distance);
@@ -44,24 +29,8 @@ public abstract class Creature extends Entity {
 		return validMove;
 	}
 	
-	public void setTemperatureBounds(int coldBound, int hotBound) {
-		this.coldBound = coldBound;
-		this.hotBound = hotBound;
-	}
-	
 	public void addToInventory(Item i) {
 		inventory.add(i);
-	}
-	
-	public void takeDamage(int damage) {
-		
-	}
-	
-	public void setCurrentHealth(int health) {
-		this.health = health;
-		if (this.health <= 0) {
-			die();
-		}
 	}
 	
 	public void setWorld(World world) {

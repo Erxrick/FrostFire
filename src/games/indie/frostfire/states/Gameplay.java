@@ -5,19 +5,17 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
-import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.user.Player;
-import games.indie.frostfire.user.UI;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
 
-public class Client extends GameState {
+public class Gameplay extends BasicGameState {
 	
 	private Player player;
-	private UI ui;
 	private World world;
 
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
@@ -26,7 +24,6 @@ public class Client extends GameState {
 		world.place(player);
 		player.setWorld(world);
 		Camera.setCenter(player.getCenterX(), player.getMinY());
-		ui = new UI();
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
@@ -34,16 +31,11 @@ public class Client extends GameState {
 		screen.scale(FrostFire.scale, FrostFire.scale);
 		screen.setLineWidth(FrostFire.scale);
 		world.draw();
-		ui.draw();
-		for (Entity entity : world.entities) {
-			entity.debug_draw(screen);
-		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		world.update();
 		player.control(gc.getInput());
-		player.update();
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 	}
@@ -54,7 +46,7 @@ public class Client extends GameState {
 	}
 
 	public int getID() {
-		return CLIENT;
+		return GameState.GAMEPLAY;
 	}
 
 }

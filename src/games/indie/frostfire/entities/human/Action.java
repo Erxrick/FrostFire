@@ -1,4 +1,4 @@
-package games.indie.frostfire.entities;
+package games.indie.frostfire.entities.human;
 
 import java.util.Arrays;
 

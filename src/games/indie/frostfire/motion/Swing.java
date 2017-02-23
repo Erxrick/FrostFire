@@ -2,12 +2,13 @@ package games.indie.frostfire.motion;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import games.indie.frostfire.entities.human.Hand;
+public class Swing extends Motion {
+	
+	protected int degreesToSwing;
 
-public class Punch extends Motion {
-
-	public Punch(Hand hand) {
-		super(0.5, hand.getBody().getHead().getSightAngle() + 180, 8);
+	public Swing(double timeInSeconds, double direction, float range) {
+		super(timeInSeconds, direction, range);
+		degreesToSwing = 180;
 	}
 
 	public Vector2f next() {
@@ -16,7 +17,7 @@ public class Punch extends Motion {
 		float distanceFromOrigin;
 		distanceFromOrigin = (count < duration/2) ? percentageComplete : 1 - percentageComplete;
 		distanceFromOrigin *= 2 * range;
-		Vector2f components = new Vector2f(direction);
+		Vector2f components = new Vector2f(direction + percentageComplete * degreesToSwing - degreesToSwing/2);
 		return new Vector2f(components.getX() * distanceFromOrigin, components.getY() * distanceFromOrigin);
 	}
 

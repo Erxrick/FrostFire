@@ -3,17 +3,17 @@ package games.indie.frostfire;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Sprite extends Rectangle implements Drawable {
+public class Sprite extends Rectangle {
 	
-	// Override draw() or update icon with Animation frames when necessary
-	protected Image icon;
-
 	public Sprite() {
 		super(0, 0, 0, 0);
 	}
 
+	// Override draw() or update icon with Animation frames when necessary
+	protected Image icon;
+
 	public void draw() {
-		icon.draw(getX(), getY());
+		icon.draw(x, y);
 	}
 	
 	public void setIcon(Image icon) {

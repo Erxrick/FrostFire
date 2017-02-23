@@ -6,7 +6,7 @@ public class Tree extends Plant {
 		
 	public Tree() {
 		setIcon(Resource.get("tree"));
-		setCollision(24, 8, 4, -23);
+		setCollision(4, -23, 24, 8);
 	}
 
 }

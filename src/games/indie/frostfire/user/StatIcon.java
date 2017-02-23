@@ -4,11 +4,11 @@ import org.newdawn.slick.Image;
 
 import games.indie.frostfire.Resource;
 
-public class Stat extends UIComponent {
+public class StatIcon extends UIComponent {
 	
 	private Image icon;
 
-	public Stat(int screen_x, int screen_y, String name) {
+	public StatIcon(int screen_x, int screen_y, String name) {
 		super(screen_x, screen_y);
 		icon = Resource.get(name);
 	}
