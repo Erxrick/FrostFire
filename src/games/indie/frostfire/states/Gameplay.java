@@ -31,6 +31,10 @@ public class Gameplay extends BasicGameState {
 		screen.scale(FrostFire.scale, FrostFire.scale);
 		screen.setLineWidth(FrostFire.scale);
 		world.draw();
+//		for (Entity entity : world.entities) {
+//			entity.debug_draw(screen);
+//		}
+		player.getUI().draw();
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {

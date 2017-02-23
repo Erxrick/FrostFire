@@ -1,5 +1,7 @@
 package games.indie.frostfire.world;
 
+import org.newdawn.slick.geom.Vector2f;
+
 /**
  * Hooray!
  * 
@@ -26,14 +28,27 @@ public enum Direction {
 		return this.angle;
 	}
 	
-	public static Direction towards(double degrees) {
+	public Vector2f getVector() {
+		return new Vector2f(angle);
+	}
+	
+	public static Direction four(double degrees) {
+		if (degrees < 0)
+			degrees = 360 + (degrees % 360);
+		return values()[((int) ((degrees + 45)/90)) % 4 * 2];
+	}
+	
+	public static Direction eight(double degrees) {
 		if (degrees < 0)
 			degrees = 360 + (degrees % 360);
 		return values()[((int) ((degrees + 22.5)/45)) % 8];
 	}
 	
 	public static Direction opposite(Direction direction) {
-		return towards(direction.getAngle() + 180);
+		return eight(direction.getAngle() + 180);
+	}
+	public static Direction opposite(double degrees) {
+		return eight(degrees + 180);
 	}
 	
 }

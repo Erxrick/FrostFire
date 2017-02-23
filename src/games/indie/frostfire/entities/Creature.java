@@ -1,6 +1,7 @@
 package games.indie.frostfire.entities;
 
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.items.Inventory;
 import games.indie.frostfire.items.Item;
@@ -12,19 +13,26 @@ public abstract class Creature extends Entity {
 	protected Stat energy;
 	protected Stat temperature;
 	protected Inventory inventory;
+	protected Direction direction;
 	protected World world;
 	
-	public boolean move(Direction direction, float distance) {
-		return move(direction.getAngle(), distance);
+	public Creature() {
+		this.direction = Direction.SOUTH;
+	}
+	
+	public boolean move(Direction direction) {
+		return move(direction.getVector());
 	}
 
-	public boolean move(double degrees, float distance) {
-		float x_component = (float) (Math.cos(Math.toRadians(degrees)) * distance);
-		float y_component = (float) (Math.sin(Math.toRadians(degrees)) * distance);
-		Rectangle moveTo = new Rectangle(collision.getX() + x_component, collision.getY() + y_component, collision.getWidth(), collision.getHeight());
+	public boolean move(Vector2f movement) {
+		Rectangle moveTo = new Rectangle(
+				collision.getX() + movement.getX(), 
+				collision.getY() + movement.getY(), 
+				collision.getWidth(), collision.getHeight());
 		boolean validMove = world.isValidMove(this, moveTo);
+		direction = Direction.four(movement.getTheta());
 		if (validMove) {
-			setLocation(x + x_component, y + y_component);
+			setLocation(x + movement.getX(), y + movement.getY());
 		}
 		return validMove;
 	}
@@ -39,6 +47,10 @@ public abstract class Creature extends Entity {
 	
 	private void die() {
 		// TODO drop inventory
+	}
+	
+	public Direction getDirection() {
+		return direction;
 	}
 
 }
