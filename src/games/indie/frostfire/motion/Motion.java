@@ -4,8 +4,6 @@ import java.util.Iterator;
 
 import org.newdawn.slick.geom.Vector2f;
 
-import games.indie.frostfire.FrostFire;
-
 /**
  * A base generator class for Motions created by world interactions (EX: punching or using a tool)
  * Creating class has the responsiblity of having an origin point
@@ -15,21 +13,24 @@ import games.indie.frostfire.FrostFire;
  */
 public abstract class Motion implements Iterator<Vector2f> {
 	
-	// Number of frames the animation lasts
 	protected int duration;
-	protected int count;
+	protected int timeSinceStart;
 	protected double direction;
 	protected float range;
 	
-	public Motion(double timeInSeconds, double direction, float range) {
-		this.duration = (int) (timeInSeconds * FrostFire.FPS);
+	public Motion(int timeInMilliseconds, double direction, float range) {
+		this.duration = timeInMilliseconds;
 		this.direction = direction;
 		this.range = range;
-		this.count = 0;
+	}
+	
+	public Vector2f generate(int delta) {
+		timeSinceStart += delta;
+		return next();
 	}
 	
 	public boolean hasNext() {
-		return count < duration;
+		return timeSinceStart < duration;
 	}
 
 	public int getDuration() {

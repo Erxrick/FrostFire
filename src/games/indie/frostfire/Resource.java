@@ -85,4 +85,11 @@ public class Resource {
 	}
 
 
+	public static Animation flip(Animation animation) {
+		Animation ani = new Animation();
+		for (int i = 0; i < animation.getFrameCount(); i++) {
+			ani.addFrame(animation.getImage(i).getFlippedCopy(true, false), 100);
+		}
+		return ani;
+	}
 }

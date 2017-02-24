@@ -41,6 +41,10 @@ public abstract class Creature extends Entity {
 		inventory.add(i);
 	}
 	
+	public World getWorld() {
+		return world;
+	}
+	
 	public void setWorld(World world) {
 		this.world = world;
 	}

@@ -19,11 +19,13 @@ public class Player extends Human {
 	}
 	
 	public void control(Input input) {
-		if (input.isKeyDown(Input.KEY_E))
+		if (input.isKeyDown(Input.KEY_E)) {
 			rightHand.punch();
+		}
 		if (input.isKeyDown(Input.KEY_Q))
 			leftHand.punch();
 		
+		boolean canChangeAction = (currentAction.getType() != ActionType.PUNCH_RIGHT && currentAction.getType() != ActionType.PUNCH_LEFT);
 		Vector2f movement = new Vector2f();
 		if (input.isKeyDown(Input.KEY_W))
 			movement.add(Direction.NORTH.getVector());
@@ -34,11 +36,13 @@ public class Player extends Human {
 		if (input.isKeyDown(Input.KEY_D))
 			movement.add(Direction.EAST.getVector());
 		if (movement.equals(new Vector2f())) {
-			setAction(ActionType.IDLE, direction);
+			if (canChangeAction)
+				setAction(ActionType.IDLE, direction);
 		} else {
 			move(movement.getNormal());
-			setAction(ActionType.MOVE, movement.getTheta());
-		}
+			if (canChangeAction)
+				setAction(ActionType.MOVE, movement.getTheta());
+		};
 	}
 	
 	public void setLocation(float x, float y) {

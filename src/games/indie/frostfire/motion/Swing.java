@@ -6,16 +6,15 @@ public class Swing extends Motion {
 	
 	protected int degreesToSwing;
 
-	public Swing(double timeInSeconds, double direction, float range) {
-		super(timeInSeconds, direction, range);
+	public Swing(int timeInMilliseconds, double direction, float range) {
+		super(timeInMilliseconds, direction, range);
 		degreesToSwing = 180;
 	}
 
 	public Vector2f next() {
-		count++;
-		float percentageComplete = count/(float) duration;
+		float percentageComplete = timeSinceStart/(float) duration;
 		float distanceFromOrigin;
-		distanceFromOrigin = (count < duration/2) ? percentageComplete : 1 - percentageComplete;
+		distanceFromOrigin = (timeSinceStart < duration/2) ? percentageComplete : 1 - percentageComplete;
 		distanceFromOrigin *= 2 * range;
 		Vector2f components = new Vector2f(direction + percentageComplete * degreesToSwing - degreesToSwing/2);
 		return new Vector2f(components.getX() * distanceFromOrigin, components.getY() * distanceFromOrigin);

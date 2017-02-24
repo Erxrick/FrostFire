@@ -7,6 +7,7 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.Resource;
+import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
@@ -26,26 +27,42 @@ public class Head extends BodyPart {
 	}
 
 	public void draw() {
-		switch (body.currentAction.getAnimation().getFrame()) {
-			case 1:
-			case 3:
-			case 5:
-			case 7:
-				offset.x = 0;
-				offset.y =  7;
-				break;
+		if (body.getCurrentAction().getType() == ActionType.MOVE) {
+			switch (body.currentAction.getAnimation().getFrame()) {
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+					offset.x = 0;
+					offset.y =  7;
+					break;
+				case 2:
+					offset.x = 1;
+					offset.y =  6;
+					break;
+				case 6:
+					offset.x =  -1;
+					offset.y =  6;
+					break;
+				default:
+					offset.x = 0;
+					offset.y =  8;
+				}
+		} else if (body.currentAction.getType() == ActionType.IDLE){
+			offset.x = 0;
+			offset.y =  8;
+		} else {
+			switch (body.currentAction.getAnimation().getFrame()) {
+			case 0:
 			case 2:
-				offset.x = 1;
-				offset.y =  6;
-				break;
-			case 6:
-				offset.x =  -1;
-				offset.y =  6;
-				break;
-			default:
+				offset.y = 7;
 				offset.x = 0;
-				offset.y =  8;
+				break;
+			case 1:
+				offset.y = 6;
+				offset.x = 0;
 			}
+		}
 		if (body.getDirection() == Direction.EAST)
 			offset.x += 1;
 		else if (body.getDirection() == Direction.WEST)

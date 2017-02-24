@@ -1,6 +1,7 @@
 package games.indie.frostfire.entities.human;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -16,8 +17,8 @@ public class Human extends Creature {
 	protected Stat hunger;
 	protected Stat thirst;
 	
-	protected Hand rightHand = new Hand(this);
-	protected Hand leftHand = new Hand(this);
+	protected Hand rightHand = new Hand(this, ActionType.PUNCH_RIGHT);
+	protected Hand leftHand = new Hand(this, ActionType.PUNCH_LEFT);
 	protected Head head = new Head(this);
 	protected BodyPart chest = new BodyPart(this);
 	protected BodyPart legs = new BodyPart(this);
@@ -31,6 +32,14 @@ public class Human extends Creature {
 		setCollision(2, -12, 12, 4);
 		loadActions();
 		setAction(ActionType.IDLE, Direction.SOUTH);
+		leftHand.getOffset().set(3, -10);
+		rightHand.getOffset().set(13, -10);
+	}
+	
+	public void update(int delta) {
+		currentAction.getAnimation().update(delta);
+		rightHand.update(delta);
+		leftHand.update(delta);
 	}
 	
 	public void setAction(ActionType type, Direction direction) {
@@ -43,6 +52,10 @@ public class Human extends Creature {
 	}
 	public void setAction(ActionType type, double degrees) {
 		setAction(type, Direction.four(degrees));
+	}
+	
+	public Action getCurrentAction() {
+		return currentAction;
 	}
 	
 	public void draw() {
@@ -87,24 +100,54 @@ public class Human extends Creature {
 		Animation moveUp = Resource.build("res/images/player/move-north.png", 16, vertical);
 		Animation moveDown = Resource.build("res/images/player/move-south.png", 16, vertical);
 		Animation moveRight = Resource.build(s, 16, horizonal);
-		Animation moveLeft = new Animation();
-		for (int i = 0; i < moveRight.getFrameCount(); i++) {
-			moveLeft.addFrame(moveRight.getImage(i).getFlippedCopy(true, false), 100);
-		}
+		Animation moveLeft = Resource.flip(moveRight);
+		
+		Animation rightPunchUp = new Animation(new SpriteSheet(Resource.get("interact-north"), 16, 16), 100);
+		Animation leftPunchUp = Resource.flip(rightPunchUp);
+		
+		Animation rightPunchDown = new Animation(new SpriteSheet(Resource.get("interact-south"), 16, 16), 100);
+		Animation leftPunchDown = Resource.flip(rightPunchDown);
+		
+		Animation rightPunchRight = new Animation(new SpriteSheet(Resource.get("interact-right-right_hand"), 16, 16), 100);
+		Animation leftPunchRight = new Animation(new SpriteSheet(Resource.get("interact-right-left_hand"), 16, 16), 100);
+		
+		Animation rightPunchLeft = Resource.flip(leftPunchRight);
+		Animation leftPunchLeft = Resource.flip(rightPunchRight);
+		
 		actions = new Action[] {
+				
 				new Action (new Animation(), ActionType.IDLE, Direction.SOUTH),
 				new Action (new Animation(), ActionType.IDLE, Direction.NORTH),
 				new Action (new Animation(), ActionType.IDLE, Direction.EAST),
 				new Action (new Animation(), ActionType.IDLE, Direction.WEST),
+				
 				new Action(moveDown, ActionType.MOVE, Direction.SOUTH),
 				new Action(moveUp, ActionType.MOVE, Direction.NORTH),
 				new Action(moveRight, ActionType.MOVE, Direction.EAST),
-				new Action(moveLeft, ActionType.MOVE, Direction.WEST)
+				new Action(moveLeft, ActionType.MOVE, Direction.WEST),
+				
+				new Action(rightPunchDown, ActionType.PUNCH_RIGHT, Direction.SOUTH),
+				new Action(leftPunchDown, ActionType.PUNCH_LEFT, Direction.SOUTH),
+				
+				new Action(rightPunchUp, ActionType.PUNCH_RIGHT, Direction.NORTH),
+				new Action(leftPunchUp, ActionType.PUNCH_LEFT, Direction.NORTH),
+				
+				new Action(rightPunchRight, ActionType.PUNCH_RIGHT, Direction.EAST),
+				new Action(leftPunchRight, ActionType.PUNCH_LEFT, Direction.EAST),
+				
+				new Action(rightPunchLeft, ActionType.PUNCH_RIGHT, Direction.WEST),
+				new Action(leftPunchLeft, ActionType.PUNCH_LEFT, Direction.WEST),
 		};
 		actions[0].getAnimation().addFrame(moveDown.getImage(0), 100);
 		actions[1].getAnimation().addFrame(moveUp.getImage(0), 100);
 		actions[2].getAnimation().addFrame(moveRight.getImage(0), 100);
 		actions[3].getAnimation().addFrame(moveLeft.getImage(0), 100);
+	}
+	
+	public void debug_draw(Graphics screen) {
+		super.debug_draw(screen);
+		rightHand.debug_draw(screen);
+		leftHand.debug_draw(screen);
 	}
 	
 }

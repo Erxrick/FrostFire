@@ -50,6 +50,21 @@ public class World implements Drawable {
 		}
 	}
 	
+	public void hit(Entity self, Shape interaction) {
+		for (Entity entity : entities) {
+			if (entity == self)
+				continue;
+			if (interaction.intersects(new Rectangle(
+					entity.getCollision().getX(), 
+					entity.getCollision().getY() - entity.getCollision().getHeight(),
+					entity.getCollision().getWidth(),
+					entity.getCollision().getHeight()))) {
+				entities.remove(entity);
+				break;
+			}
+		}
+	}
+	
 	public boolean isValidMove(Entity moving, Shape changedCollision) {
 		for (Entity entity : entities) {
 			if (entity == moving)

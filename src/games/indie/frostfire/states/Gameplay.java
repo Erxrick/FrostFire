@@ -9,6 +9,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
+import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.user.Player;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
@@ -31,14 +32,15 @@ public class Gameplay extends BasicGameState {
 		screen.scale(FrostFire.scale, FrostFire.scale);
 		screen.setLineWidth(FrostFire.scale);
 		world.draw();
-//		for (Entity entity : world.entities) {
-//			entity.debug_draw(screen);
-//		}
+		for (Entity entity : world.entities) {
+			entity.debug_draw(screen);
+		}
 		player.getUI().draw();
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
 		world.update();
+		player.update(delta);
 		player.control(gc.getInput());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
@@ -47,6 +49,14 @@ public class Gameplay extends BasicGameState {
 	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		player.updateHead();
+	}
+	
+	@Override
+	public void mousePressed(int button, int x, int y) {
+		if (button == 0)
+			player.getLeftHand().punch();
+		else if (button == 1)
+			player.getRightHand().punch();
 	}
 
 	public int getID() {
