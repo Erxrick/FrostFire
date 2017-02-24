@@ -16,6 +16,10 @@ public class Sprite extends Rectangle {
 		icon.draw(x, y);
 	}
 	
+	public Image getIcon() {
+		return icon;
+	}
+	
 	public void setIcon(Image icon) {
 		this.icon = icon;
 		setSize(icon.getWidth(), icon.getHeight());

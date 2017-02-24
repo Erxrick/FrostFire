@@ -7,7 +7,7 @@ import games.indie.frostfire.entities.human.Hand;
 public class Punch extends Motion {
 
 	public Punch(Hand hand) {
-		super(300, hand.getBody().getHead().getSightAngle(), 12);
+		super(300, hand.getBody().getHead().getSightAngle(), 8);
 	}
 
 	public Vector2f next() {

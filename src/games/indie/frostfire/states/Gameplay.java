@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Entity;
+import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.user.Player;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
@@ -18,12 +19,12 @@ public class Gameplay extends BasicGameState {
 	
 	private Player player;
 	private World world;
+	private boolean debugDraw = false;
 
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		player = new Player();
 		world = new World();
 		world.place(player);
-		player.setWorld(world);
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 	}
 
@@ -32,8 +33,10 @@ public class Gameplay extends BasicGameState {
 		screen.scale(FrostFire.scale, FrostFire.scale);
 		screen.setLineWidth(FrostFire.scale);
 		world.draw();
-		for (Entity entity : world.entities) {
-			entity.debug_draw(screen);
+		if (debugDraw) {
+			for (Entity entity : world.entities) {
+				entity.debug_draw(screen);
+			}
 		}
 		player.getUI().draw();
 	}
@@ -44,6 +47,8 @@ public class Gameplay extends BasicGameState {
 		player.control(gc.getInput());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
+		if (gc.getInput().isKeyPressed(Input.KEY_Z))
+			player.getLeftHand().equip(new Axe());
 	}
 	
 	@Override

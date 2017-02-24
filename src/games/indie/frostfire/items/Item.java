@@ -7,8 +7,9 @@ import games.indie.frostfire.Sprite;
 
 public abstract class Item extends Sprite implements StateChangeListener, Usable {
 	
-	private Image show; // Displayed during motion
-	private int weight;
+	protected Image show; // Displayed during motion
+	protected int weight;
+	protected float angle;
 	
 	public Item(int weight, String itemName) {
 		this.weight = weight;
@@ -16,12 +17,12 @@ public abstract class Item extends Sprite implements StateChangeListener, Usable
 		show = icon.copy();
 	}
 	
-	public int getWeight() {
-		return weight;
+	public Image getShow() {
+		return show;
 	}
 	
-	public Image getIcon() {
-		return icon;
+	public int getWeight() {
+		return weight;
 	}
 
 }

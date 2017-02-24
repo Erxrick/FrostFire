@@ -3,7 +3,6 @@ package games.indie.frostfire.user;
 import games.indie.frostfire.Drawable;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.human.Human;
-import games.indie.frostfire.items.Axe;
 
 public class UI implements Drawable {
 	
@@ -24,8 +23,6 @@ public class UI implements Drawable {
 				new BodySlot(screen_midpoint, lift, human.getLegs()),
 				new BodySlot(screen_midpoint + 16, lift, human.getFeet()),
 				"lower-slots");
-		
-		rightHand.pickup(new Axe());
 		
 		StatIcon health = new StatIcon(screen_midpoint - 32, lift - 10, "heart");
 		StatIcon thirst = new StatIcon(screen_midpoint - 22, lift - 10, "water");

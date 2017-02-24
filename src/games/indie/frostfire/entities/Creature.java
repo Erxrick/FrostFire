@@ -3,10 +3,10 @@ package games.indie.frostfire.entities;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+import games.indie.frostfire.entities.stats.Stat;
 import games.indie.frostfire.items.Inventory;
 import games.indie.frostfire.items.Item;
 import games.indie.frostfire.world.Direction;
-import games.indie.frostfire.world.World;
 
 public abstract class Creature extends Entity {
 	
@@ -14,7 +14,6 @@ public abstract class Creature extends Entity {
 	protected Stat temperature;
 	protected Inventory inventory;
 	protected Direction direction;
-	protected World world;
 	
 	public Creature() {
 		this.direction = Direction.SOUTH;
@@ -39,18 +38,6 @@ public abstract class Creature extends Entity {
 	
 	public void addToInventory(Item i) {
 		inventory.add(i);
-	}
-	
-	public World getWorld() {
-		return world;
-	}
-	
-	public void setWorld(World world) {
-		this.world = world;
-	}
-	
-	private void die() {
-		// TODO drop inventory
 	}
 	
 	public Direction getDirection() {

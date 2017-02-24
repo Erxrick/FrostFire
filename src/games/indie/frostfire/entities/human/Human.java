@@ -7,15 +7,15 @@ import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.Creature;
-import games.indie.frostfire.entities.Stat;
 import games.indie.frostfire.entities.human.Action.ActionType;
+import games.indie.frostfire.entities.stats.Natural;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
 public class Human extends Creature {
 	
-	protected Stat hunger;
-	protected Stat thirst;
+	protected Natural hunger;
+	protected Natural thirst;
 	
 	protected Hand rightHand = new Hand(this, ActionType.PUNCH_RIGHT);
 	protected Hand leftHand = new Hand(this, ActionType.PUNCH_LEFT);
@@ -24,7 +24,7 @@ public class Human extends Creature {
 	protected BodyPart legs = new BodyPart(this);
 	protected BodyPart feet = new BodyPart(this);
 	
-	private Action[] actions;
+	private static Action[] actions;
 	protected Action currentAction;
 	
 	public Human() {
@@ -32,17 +32,49 @@ public class Human extends Creature {
 		setCollision(2, -12, 12, 4);
 		loadActions();
 		setAction(ActionType.IDLE, Direction.SOUTH);
-		leftHand.getOffset().set(3, -10);
-		rightHand.getOffset().set(13, -10);
+		hunger = new Natural(0, 100, -.0001, health);
+		thirst = new Natural(0, 100, -.0002, health);
 	}
+	
+	private int time;
 	
 	public void update(int delta) {
 		currentAction.getAnimation().update(delta);
 		rightHand.update(delta);
 		leftHand.update(delta);
+		time += delta;
+		if (time >= 1000) {
+			time -= 1000;
+			hunger.update(1000);
+			thirst.update(1000);
+			System.out.println("Hunger" + ": " + hunger);
+			System.out.println("Thirst" + ": " + thirst);
+			System.out.println("Health" + ": " + health);
+		}
+		
 	}
 	
 	public void setAction(ActionType type, Direction direction) {
+		this.direction = direction;
+		switch (direction) {
+		case WEST:
+			leftHand.getOffset().set(6, -12);
+			rightHand.getOffset().set(4, -12);
+			break;
+		case EAST:
+			leftHand.getOffset().set(12, -12);
+			rightHand.getOffset().set(10, -12);
+			break;
+		case NORTH:
+			leftHand.getOffset().set(3, -12);
+			rightHand.getOffset().set(13, -12);
+			break;
+		case SOUTH:
+			rightHand.getOffset().set(3, -12);
+			leftHand.getOffset().set(13, -12);
+			break;
+		default:
+		}
 		for (Action action : actions) {
 			if (action.equals(type, direction)) {
 				currentAction = action;
@@ -66,6 +98,8 @@ public class Human extends Creature {
 			Camera.draw(currentAction.getAnimation(), x, y);
 			head.draw();
 		}
+		rightHand.draw();
+		leftHand.draw();
 	}
 	
 	public boolean move(Vector2f movement) {
@@ -94,6 +128,7 @@ public class Human extends Creature {
 	}
 	
 	private void loadActions() {
+		// Forgive me father, for I know not what I do
 		String[] vertical = {"0", "1", "2", "1", "0", "1f", "2f", "1f"};
 		String[] horizonal = {"0", "1", "2", "3", "0", "4", "5", "6"};
 		SpriteSheet s = new SpriteSheet(Resource.loadImage("res/images/player/move-side.png"), 16, 16);

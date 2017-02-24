@@ -20,23 +20,24 @@ public class World implements Drawable {
 	public World() {
 		topDown = new ZLayerSort();
 		entities = new ArrayList<>();
-		// TODO generate random seed
+		// TODO generate random seeds
 		generate(0);
 	}
 	
 	public void generate(long seed) {
 		Tree tree = new Tree();
 		tree.setLocation(80, 80);
-		entities.add(tree);
+		place(tree);
 		Tree tree2 = new Tree();
 		tree2.setLocation(-48, 0);
-		entities.add(tree2);
+		place(tree2);
 		CocoPlant c = new CocoPlant();
 		c.setLocation(0, -30);
-		entities.add(c);
+		place(c);
 	}
 	
 	public void place(Entity e) {
+		e.setWorld(this);
 		entities.add(e);
 	}
 	
@@ -59,7 +60,8 @@ public class World implements Drawable {
 					entity.getCollision().getY() - entity.getCollision().getHeight(),
 					entity.getCollision().getWidth(),
 					entity.getCollision().getHeight()))) {
-				entities.remove(entity);
+				// TODO Trigger interaction event
+				entity.takeDamage(20);
 				break;
 			}
 		}
