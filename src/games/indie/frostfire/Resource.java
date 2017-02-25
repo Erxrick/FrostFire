@@ -57,9 +57,9 @@ public class Resource {
 		}
 	}
 	
-	public static Audio loadSound(String string) {
+	public static Audio loadSound(String path) {
 		try {
-			return AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/step.wav"));
+			return AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

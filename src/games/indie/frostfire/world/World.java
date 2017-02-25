@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Shape;
 import games.indie.frostfire.Drawable;
 import games.indie.frostfire.entities.CocoPlant;
 import games.indie.frostfire.entities.Entity;
+import games.indie.frostfire.entities.Interactor;
 import games.indie.frostfire.entities.Tree;
 
 public class World implements Drawable {
@@ -51,17 +52,16 @@ public class World implements Drawable {
 		}
 	}
 	
-	public void hit(Entity self, Shape interaction) {
+	public void checkInteraction(Entity self, Interactor hand) {
 		for (Entity entity : entities) {
 			if (entity == self)
 				continue;
-			if (interaction.intersects(new Rectangle(
+			if (hand.getLine().intersects(new Rectangle(
 					entity.getCollision().getX(), 
 					entity.getCollision().getY() - entity.getCollision().getHeight(),
 					entity.getCollision().getWidth(),
 					entity.getCollision().getHeight()))) {
-				// TODO Trigger interaction event
-				entity.takeDamage(20);
+				hand.interact(entity);
 				break;
 			}
 		}

@@ -30,7 +30,8 @@ public class Natural extends Stat {
 	}
 	
 	protected void reachMin() {
-		health.affect(-.01);
+		super.reachMin();
+		health.affect(-1);
 	}
 
 }

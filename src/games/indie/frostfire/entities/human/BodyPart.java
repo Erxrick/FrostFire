@@ -4,7 +4,7 @@ import games.indie.frostfire.items.Item;
 
 public class BodyPart {
 	
-	private Item equipped;
+	protected Item equipped;
 	protected int zIndex;
 	protected Human body;
 	

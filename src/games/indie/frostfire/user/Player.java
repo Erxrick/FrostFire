@@ -7,15 +7,18 @@ import org.newdawn.slick.geom.Vector2f;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.human.Human;
 import games.indie.frostfire.entities.human.Action.ActionType;
+import games.indie.frostfire.entities.human.Hand;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
 public class Player extends Human {
 	
 	protected UI ui;
+	protected Hand primaryHand;
 	
 	public Player() {
 		ui = new UI(this);
+		primaryHand = leftHand;
 	}
 	
 	public void control(Input input) {
@@ -37,14 +40,28 @@ public class Player extends Human {
 				move(movement.getNormal());
 				setAction(ActionType.MOVE, movement.getTheta());
 			};
+			if (input.isKeyDown(Input.KEY_SPACE)) {
+				updateHead();
+				primaryHand.punch();
+				toggleHand();
+			}
 			if (input.isKeyDown(Input.KEY_E)) {
 				updateHead();
+				primaryHand = rightHand;
 				rightHand.punch();
 			} else if (input.isKeyDown(Input.KEY_Q)) {
 				updateHead();
+				primaryHand = leftHand;
 				leftHand.punch();
 			}
 		}
+	}
+	
+	public void toggleHand() {
+		if (primaryHand == rightHand)
+			primaryHand = leftHand;
+		else
+			primaryHand = rightHand;
 	}
 	
 	public void setLocation(float x, float y) {

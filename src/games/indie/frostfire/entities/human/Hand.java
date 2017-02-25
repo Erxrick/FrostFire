@@ -7,55 +7,66 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.openal.Audio;
 
 import games.indie.frostfire.Resource;
+import games.indie.frostfire.entities.Entity;
+import games.indie.frostfire.entities.Interactor;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.motion.Motion;
 import games.indie.frostfire.motion.Punch;
 import games.indie.frostfire.world.Camera;
 
-public class Hand extends BodyPart {
+public class Hand extends BodyPart implements Interactor {
 	
-	private Audio punchSound = Resource.loadSound("res/audio/step.wav");
+	private Audio punchSound = Resource.loadSound("res/audio/punch.wav");
 	
 	protected Motion currentMotion;
 	protected Vector2f offset;
-	protected ActionType handUsed;
+	private ActionType side;
 	protected Line interaction;
+	protected int restTime;
 
 	public Hand(Human human, ActionType handUsed) {
 		super(human);
-		this.handUsed = handUsed;
+		this.setSide(handUsed);
 		this.offset = new Vector2f();
 	}
 	
-	public Vector2f getOffset() {
-		return offset;
+	public void setCurrentMotion(Motion motion) {
+		currentMotion = motion;
+	}
+	
+	public boolean canPunch() {
+		return currentMotion == null && restTime <= 0;
 	}
 	
 	public void punch() {
-		if (currentMotion == null) {
+		if (canPunch()) {
+			double useDirection = body.head.getSightAngle();
 			if (getEquipped() == null) {
+				body.setAction(getSide(), useDirection);
 				punchSound.playAsSoundEffect(1, 1, false);
-				body.setAction(handUsed, body.head.getSightAngle());
-				currentMotion = new Punch(this);
+				setCurrentMotion(new Punch(this));
 			} else {
-				System.out.println("Holding item");
+				equipped.use(this, useDirection);
 			}
+			restTime = 800;
 		}
 	}
 	
-	public Vector2f getLocation() {
-		return body.getLocation().add(offset);
-	}
-	
 	public void update(int delta) {
+		if (restTime > 0) {
+			restTime -= delta;
+		}
 		if (currentMotion != null) {
 			if (currentMotion.hasNext()) {
-				interaction = new Line(getLocation(), getLocation().add(currentMotion.generate(delta)));
-				body.getWorld().hit(body, interaction);
+				Vector2f motionVector = currentMotion.generate(delta);
+				if (equipped != null) {
+					equipped.getShow().setRotation(
+							(float) (-motionVector.getTheta()) + 45);
+				}
+				interaction = new Line(getLocation(), getLocation().add(motionVector));
+				body.getWorld().checkInteraction(body, this);
 			} else {
-				currentMotion = null;
-				interaction = null;
-				body.setAction(ActionType.IDLE, body.getDirection());
+				endMotion();
 			}
 		}
 	}
@@ -71,6 +82,39 @@ public class Hand extends BodyPart {
 			screen.setColor(Color.red);
 			screen.draw(Camera.onScreen(interaction));
 		}
+	}
+
+	public Line getLine() {
+		return interaction;
+	}
+
+	public void interact(Entity e) {
+		System.out.println("Punched " + e);
+		e.takeDamage(10);
+		endMotion();
+	}
+	
+	private void endMotion() {
+		currentMotion = null;
+		interaction = null;
+		body.setAction(ActionType.IDLE, body.getDirection());
+	}
+	
+	
+	public Vector2f getOffset() {
+		return offset;
+	}
+	
+	public Vector2f getLocation() {
+		return body.getLocation().add(offset);
+	}
+
+	public ActionType getSide() {
+		return side;
+	}
+
+	public void setSide(ActionType side) {
+		this.side = side;
 	}
 
 }
