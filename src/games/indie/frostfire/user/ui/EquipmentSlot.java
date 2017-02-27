@@ -1,26 +1,31 @@
-package games.indie.frostfire.user;
+package games.indie.frostfire.user.ui;
 
 import org.newdawn.slick.Image;
 
 import games.indie.frostfire.Drawable;
 import games.indie.frostfire.Resource;
 
-public class EquipmentSlot implements Drawable {
+public class EquipmentSlot extends UIComponent implements Drawable {
 	
 	protected BodySlot first;
 	protected BodySlot second;
 	private Image icon;
 	
 	public EquipmentSlot(BodySlot first, BodySlot second, String name) {
+		super(first.screen_x, first.screen_y);
 		this.first = first;
 		this.second = second;
 		icon = Resource.get(name);
 	}
 
 	public void draw() {
-		icon.draw(first.screen_x, first.screen_y);
+		icon.draw(screen_x, screen_y);
 		first.draw();
 		second.draw();
+	}
+	
+	public boolean mousePressed(int button, int x, int y) {
+		return (first.mousePressed(button, x, y) || second.mousePressed(button, x, y));
 	}
 
 }

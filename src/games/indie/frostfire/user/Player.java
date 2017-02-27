@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.human.Human;
 import games.indie.frostfire.entities.human.Action.ActionType;
+import games.indie.frostfire.user.ui.UI;
 import games.indie.frostfire.entities.human.Hand;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
