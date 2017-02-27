@@ -41,16 +41,13 @@ public class Player extends Human {
 				setAction(ActionType.MOVE, movement.getTheta());
 			};
 			if (input.isKeyDown(Input.KEY_SPACE)) {
-				updateHead();
 				primaryHand.punch();
 				toggleHand();
 			}
 			if (input.isKeyDown(Input.KEY_E)) {
-				updateHead();
 				primaryHand = rightHand;
 				rightHand.punch();
 			} else if (input.isKeyDown(Input.KEY_Q)) {
-				updateHead();
 				primaryHand = leftHand;
 				leftHand.punch();
 			}
