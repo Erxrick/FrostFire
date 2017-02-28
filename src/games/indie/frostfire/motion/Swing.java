@@ -12,10 +12,6 @@ public class Swing extends Motion {
 	}
 
 	public Vector2f next() {
-		float percentageComplete = timeSinceStart/(float) duration;
-		float distanceFromOrigin;
-		distanceFromOrigin = (timeSinceStart < duration/2) ? percentageComplete : 1 - percentageComplete;
-		distanceFromOrigin *= 2 * range;
 		Vector2f components = new Vector2f(direction + percentageComplete * degreesToSwing - degreesToSwing/2);
 		return new Vector2f(components.getX() * range, components.getY() * range);
 	}

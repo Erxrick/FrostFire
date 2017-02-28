@@ -17,6 +17,7 @@ public abstract class Motion implements Iterator<Vector2f> {
 	protected int timeSinceStart;
 	protected double direction;
 	protected float range;
+	protected float percentageComplete;
 	
 	public Motion(int timeInMilliseconds, double direction, float range) {
 		this.duration = timeInMilliseconds;
@@ -26,6 +27,7 @@ public abstract class Motion implements Iterator<Vector2f> {
 	
 	public Vector2f generate(int delta) {
 		timeSinceStart += delta;
+		percentageComplete = timeSinceStart/(float) duration;
 		return next();
 	}
 	

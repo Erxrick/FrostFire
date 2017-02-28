@@ -11,6 +11,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.items.Axe;
+import games.indie.frostfire.items.Consumable;
+import games.indie.frostfire.items.ConsumableType;
 import games.indie.frostfire.user.Player;
 import games.indie.frostfire.user.ui.UIComponent;
 import games.indie.frostfire.world.Camera;
@@ -48,8 +50,10 @@ public class Gameplay extends BasicGameState {
 		player.control(gc.getInput());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
-		if (gc.getInput().isKeyPressed(Input.KEY_Z))
+		if (gc.getInput().isKeyPressed(Input.KEY_Z)) {
+			player.getRightHand().equip(new Consumable(ConsumableType.STRAWBERRY));
 			player.getLeftHand().equip(new Axe());
+		}
 	}
 	
 	@Override

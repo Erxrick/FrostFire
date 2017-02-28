@@ -11,7 +11,6 @@ public class Punch extends Motion {
 	}
 
 	public Vector2f next() {
-		float percentageComplete = timeSinceStart/(float) duration;
 		float distanceFromOrigin;
 		distanceFromOrigin = (timeSinceStart < duration/2) ? percentageComplete : 1 - percentageComplete;
 		distanceFromOrigin *= 2 * range;

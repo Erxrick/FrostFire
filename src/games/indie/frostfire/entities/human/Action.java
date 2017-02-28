@@ -10,8 +10,7 @@ public class Action {
 		IDLE,
 		MOVE,
 		PUNCH_RIGHT,
-		PUNCH_LEFT,
-		SWIM
+		PUNCH_LEFT
 	}
 	
 	private Animation animation;
