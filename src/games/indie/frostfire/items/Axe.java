@@ -10,7 +10,7 @@ public class Axe extends Tool {
 	}
 
 	public void stateChange() {
-		
+		System.out.println("State changed!");
 	}
 
 	public void use(Hand hand, double direction) {

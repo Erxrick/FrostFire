@@ -1,12 +1,12 @@
-package games.indie.frostfire.user;
+package games.indie.frostfire.user.ui;
+
+import java.util.ArrayList;
 
 import games.indie.frostfire.Drawable;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.human.Human;
 
-public class UI implements Drawable {
-	
-	private Drawable[] components;
+public class UI extends ArrayList<UIComponent> implements Drawable {
 	
 	public UI(Human human) {
 		int screen_midpoint = FrostFire.NATIVE_WIDTH/2;
@@ -28,19 +28,17 @@ public class UI implements Drawable {
 		StatIcon thirst = new StatIcon(screen_midpoint - 22, lift - 10, "water");
 		StatIcon hunger = new StatIcon(screen_midpoint - 12, lift - 10, "food");
 		
-		components = new Drawable[] {
-				rightHand,
-				leftHand,
-				upper_body,
-				lower_body,
-				health,
-				thirst,
-				hunger
-		};
+		this.add(rightHand);
+		this.add(leftHand);
+		this.add(upper_body);
+		this.add(lower_body);
+		this.add(health);
+		this.add(thirst);
+		this.add(hunger);
 	}
 
 	public void draw() {
-		for (Drawable component : components) {
+		for (Drawable component : this) {
 			component.draw();
 		}
 	}

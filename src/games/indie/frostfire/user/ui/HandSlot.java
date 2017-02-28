@@ -1,4 +1,4 @@
-package games.indie.frostfire.user;
+package games.indie.frostfire.user.ui;
 
 import org.newdawn.slick.Image;
 

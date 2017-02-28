@@ -12,6 +12,7 @@ import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.user.Player;
+import games.indie.frostfire.user.ui.UIComponent;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
 
@@ -58,10 +59,19 @@ public class Gameplay extends BasicGameState {
 	
 	@Override
 	public void mousePressed(int button, int x, int y) {
-		if (button == 0)
-			player.getLeftHand().punch();
-		else if (button == 1)
-			player.getRightHand().punch();
+		boolean punch = true;
+		for (UIComponent component : player.getUI()) {
+			if (component.mousePressed(button, x/FrostFire.scale, y/FrostFire.scale)) {
+				punch = false;
+				break;
+			}
+		}
+		if (punch) {
+			if (button == 0)
+				player.getLeftHand().punch();
+			else if (button == 1)
+				player.getRightHand().punch();
+		}
 	}
 
 	public int getID() {

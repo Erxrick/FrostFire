@@ -16,8 +16,16 @@ public class BodyPart {
 		return body;
 	}
 	
+	public boolean hasItem() {
+		return equipped != null;
+	}
+	
 	public void equip(Item item) {
 		this.setEquipped(item);
+	}
+	
+	public void dropItem() {
+		setEquipped(null);
 	}
 
 	public Item getEquipped() {
