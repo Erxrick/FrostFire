@@ -15,7 +15,7 @@ public class EquipmentSlot extends UIComponent implements Drawable {
 		super(first.screen_x, first.screen_y);
 		this.first = first;
 		this.second = second;
-		icon = Resource.get(name);
+		icon = Resource.getImage(name);
 	}
 
 	public void draw() {

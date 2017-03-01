@@ -1,5 +1,8 @@
 package games.indie.frostfire.entities.human;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
@@ -9,6 +12,7 @@ import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.Creature;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.entities.stats.Natural;
+import games.indie.frostfire.items.Item;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
@@ -37,6 +41,8 @@ public class Human extends Creature {
 	}
 	
 	private int time;
+	private Queue<Item> nearbyItems = new LinkedList<>();
+	private int timeToPickup;
 	
 	public void update(int delta) {
 		currentAction.getAnimation().update(delta);
@@ -47,11 +53,33 @@ public class Human extends Creature {
 			time -= 1000;
 			hunger.update(1000);
 			thirst.update(1000);
-			System.out.println("Hunger" + ": " + hunger);
-			System.out.println("Thirst" + ": " + thirst);
-			System.out.println("Health" + ": " + health);
 		}
-		
+		for (Item item : world.onGround) {
+			if (nearbyItems.contains(item)) {
+				if (!withinPickupRange(item)) {
+					nearbyItems.remove(item);
+					break;
+				}
+			} else if (withinPickupRange(item)) {
+				nearbyItems.offer(item);
+			}
+		}
+		if (nearbyItems.size() > 0) {
+			timeToPickup += delta;
+		} else {
+			timeToPickup = 0;
+		}
+		if (timeToPickup > 500) {
+			Item item = nearbyItems.poll();
+			Resource.play("pickup");
+			rightHand.pickup(item);
+			world.onGround.remove(item);
+		}
+	}
+	
+	
+	private boolean withinPickupRange(Item item) {
+		return getLocation().distance(item.getLocation()) < 16;
 	}
 	
 	public void setAction(ActionType type, Direction direction) {
@@ -93,9 +121,9 @@ public class Human extends Creature {
 	public void draw() {
 		if (direction == Direction.NORTH) {
 			head.draw();
-			Camera.draw(currentAction.getAnimation(), x, y);
+			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 		} else {
-			Camera.draw(currentAction.getAnimation(), x, y);
+			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
 		}
 		rightHand.draw();
@@ -137,14 +165,14 @@ public class Human extends Creature {
 		Animation moveRight = Resource.build(s, 16, horizonal);
 		Animation moveLeft = Resource.flip(moveRight);
 		
-		Animation rightPunchUp = new Animation(new SpriteSheet(Resource.get("interact-north"), 16, 16), 100);
+		Animation rightPunchUp = new Animation(new SpriteSheet(Resource.getImage("interact-north"), 16, 16), 100);
 		Animation leftPunchUp = Resource.flip(rightPunchUp);
 		
-		Animation rightPunchDown = new Animation(new SpriteSheet(Resource.get("interact-south"), 16, 16), 100);
+		Animation rightPunchDown = new Animation(new SpriteSheet(Resource.getImage("interact-south"), 16, 16), 100);
 		Animation leftPunchDown = Resource.flip(rightPunchDown);
 		
-		Animation rightPunchRight = new Animation(new SpriteSheet(Resource.get("interact-right-right_hand"), 16, 16), 100);
-		Animation leftPunchRight = new Animation(new SpriteSheet(Resource.get("interact-right-left_hand"), 16, 16), 100);
+		Animation rightPunchRight = new Animation(new SpriteSheet(Resource.getImage("interact-right-right_hand"), 16, 16), 100);
+		Animation leftPunchRight = new Animation(new SpriteSheet(Resource.getImage("interact-right-left_hand"), 16, 16), 100);
 		
 		Animation rightPunchLeft = Resource.flip(leftPunchRight);
 		Animation leftPunchLeft = Resource.flip(rightPunchRight);

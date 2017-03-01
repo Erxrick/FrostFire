@@ -10,7 +10,7 @@ public class StatIcon extends UIComponent {
 
 	public StatIcon(int screen_x, int screen_y, String name) {
 		super(screen_x, screen_y);
-		icon = Resource.get(name);
+		icon = Resource.getImage(name);
 	}
 
 	public void draw() {

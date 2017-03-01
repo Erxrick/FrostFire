@@ -1,6 +1,6 @@
 package games.indie.frostfire.world;
 
-import org.newdawn.slick.Renderable;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -19,10 +19,10 @@ public class Camera {
 		Camera.center = new Vector2f(coords);
 	}
 	
-	public static void draw(Renderable sprite, float x, float y) {
+	public static void draw(Image sprite, float x, float y) {
 		drawToScreen(sprite, onScreen(x, y));
 	}
-	public static void draw(Renderable sprite, Vector2f location) {
+	public static void draw(Image sprite, Vector2f location) {
 		drawToScreen(sprite, onScreen(location.getX(), location.getY()));
 	}
 	
@@ -35,7 +35,7 @@ public class Camera {
 				, onScreen(line.getX2(), line.getY2()));
 	}
 	
-	public static void drawToScreen(Renderable sprite, Vector2f position) {
+	public static void drawToScreen(Image sprite, Vector2f position) {
 		sprite.draw(position.getX(), position.getY());
 	}
 	

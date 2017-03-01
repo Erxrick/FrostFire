@@ -10,6 +10,8 @@ import games.indie.frostfire.entities.CocoPlant;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.entities.Interactor;
 import games.indie.frostfire.entities.Tree;
+import games.indie.frostfire.items.Axe;
+import games.indie.frostfire.items.Item;
 
 public class World implements Drawable {
 	
@@ -17,11 +19,12 @@ public class World implements Drawable {
 	private long seed;
 	private ZLayerSort topDown;
 	public ArrayList<Entity> entities;
+	public ArrayList<Item> onGround;
 	
 	public World() {
 		topDown = new ZLayerSort();
 		entities = new ArrayList<>();
-		// TODO generate random seeds
+		onGround = new ArrayList<>();
 		generate(0);
 	}
 	
@@ -35,6 +38,7 @@ public class World implements Drawable {
 		CocoPlant c = new CocoPlant();
 		c.setLocation(0, -30);
 		place(c);
+		onGround.add(new Axe());
 	}
 	
 	public void place(Entity e) {
@@ -47,6 +51,9 @@ public class World implements Drawable {
 	}
 
 	public void draw() {
+		for (Item item : onGround) {
+			item.draw();
+		}
 		for (Entity entity : entities) {
 			entity.draw();
 		}

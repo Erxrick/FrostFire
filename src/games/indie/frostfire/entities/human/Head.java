@@ -20,7 +20,7 @@ public class Head extends BodyPart {
 	public Head(Human body) {
 		super(body);
 		offset = new Vector2f(0, 8);
-		SpriteSheet headSprites = new SpriteSheet(Resource.get("head-sprites"), 16, 16);
+		SpriteSheet headSprites = new SpriteSheet(Resource.getImage("head-sprites"), 16, 16);
 		headMap = new HashMap<>();
 		for (int i = 0; i < Direction.values().length; i++)
 			headMap.put(Direction.values()[i], headSprites.getSprite(i, 0));

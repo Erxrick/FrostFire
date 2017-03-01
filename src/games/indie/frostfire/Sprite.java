@@ -24,5 +24,5 @@ public class Sprite extends Rectangle {
 		this.icon = icon;
 		setSize(icon.getWidth(), icon.getHeight());
 	}
-
+	
 }

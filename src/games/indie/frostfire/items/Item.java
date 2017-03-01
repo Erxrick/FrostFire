@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.Resource;
 import games.indie.frostfire.Sprite;
+import games.indie.frostfire.world.Camera;
 
 public abstract class Item extends Sprite implements StateChangeListener, Usable {
 	
@@ -15,7 +16,7 @@ public abstract class Item extends Sprite implements StateChangeListener, Usable
 	
 	public Item(int weight, String itemName) {
 		this.weight = weight;
-		icon = Resource.get(itemName);
+		icon = Resource.getImage(itemName);
 		show = icon.copy();
 		show.setCenterOfRotation(2, show.getHeight() - 2);
 	}
@@ -26,6 +27,10 @@ public abstract class Item extends Sprite implements StateChangeListener, Usable
 	
 	public int getWeight() {
 		return weight;
+	}
+	
+	public void draw() {
+		Camera.draw(show, x, y);
 	}
 
 }
