@@ -7,10 +7,21 @@ import games.indie.frostfire.world.Direction;
 public class Action {
 	
 	public enum ActionType {
-		IDLE,
-		MOVE,
-		PUNCH_RIGHT,
-		PUNCH_LEFT
+		IDLE (0),
+		MOVE (1),
+		PUNCH_RIGHT (2),
+		PUNCH_LEFT (3);
+
+		private int num;
+		
+		ActionType(int num) {
+			this.num = num;
+		}
+		
+		public int getNum() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 	}
 	
 	private Animation animation;

@@ -1,6 +1,7 @@
 package games.indie.frostfire.world;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -10,8 +11,11 @@ import games.indie.frostfire.entities.CocoPlant;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.entities.Interactor;
 import games.indie.frostfire.entities.Tree;
+import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Item;
+import games.indie.frostfire.multiplayer.PlayerMP;
+
 
 public class World implements Drawable {
 	
@@ -89,4 +93,36 @@ public class World implements Drawable {
 		}
 		return true;
 	}
+
+	public synchronized void movePlayer(String username, float x, float y, ActionType action, Direction direction) {
+		int index = getPlayerMPIndex(username);
+		getEntities().get(index).setLocation(x, y);
+	}
+	
+    public synchronized void removePlayerMP(String username) {
+        int index = 0;
+        for (Entity e : getEntities()) {
+            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername().equals(username)) {
+                break;
+            }
+            index++;
+        }
+        this.getEntities().remove(index);
+    }
+    
+    private synchronized int getPlayerMPIndex(String username) {
+        int index = 0;
+        for (Entity e : getEntities()) {
+            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername().equals(username)) {
+                break;
+            }
+            index++;
+        }
+        return index;
+    }
+    
+    public synchronized List<Entity> getEntities() {
+        return this.entities;
+     
+    }
 }
