@@ -22,28 +22,53 @@ public class Resource {
 	private static HashMap<String, Image> images;
 	private static HashMap<String, Audio> sounds;
 	
-	public static Image get(String resource) {
-		return images.get(resource + ".png");
+	public static Image getImage(String imageName) {
+		return images.get(imageName + ".png");
+	}
+	
+	public static Audio getSound(String soundName) {
+		return sounds.get(soundName + ".wav");
+	}
+	
+	public static void play(String soundName) {
+		getSound(soundName).playAsSoundEffect(1, 1, false);
 	}
 	
 	public static void load() {
 		System.out.println("Loading Images...");
 		images = new HashMap<>();
 		loadImages();
+		sounds = new HashMap<>();
+		loadAudio();
 		System.out.println("Finished Loading Resources");
 	}
 	
 	public static void loadImages() {
 		File[] startLocation = new File("res/images").listFiles();
-		discoverFiles(startLocation);
+		discoverImages(startLocation);
 	}
 	
-	public static void discoverFiles(File[] files) {
+	public static void discoverImages(File[] files) {
 	    for (File file : files) {
 	        if (file.isDirectory()) {
-	            discoverFiles(file.listFiles());
+	            discoverImages(file.listFiles());
 	        } else {
 	        	images.put(file.getName(), loadImage(file.getPath()));
+	        }
+	    }
+	}
+	
+	public static void loadAudio() {
+		File[] startLocation = new File("res/audio").listFiles();
+		discoverAudio(startLocation);
+	}
+	
+	public static void discoverAudio(File[] files) {
+	    for (File file : files) {
+	        if (file.isDirectory()) {
+	            discoverImages(file.listFiles());
+	        } else {
+	        	sounds.put(file.getName(), loadSound(file.getPath()));
 	        }
 	    }
 	}

@@ -20,12 +20,18 @@ public class BodyPart {
 		return equipped != null;
 	}
 	
-	public void equip(Item item) {
-		this.setEquipped(item);
+	public void pickup(Item item) {
+		if (!hasItem()) {
+			this.setEquipped(item);
+		}
 	}
 	
 	public void dropItem() {
-		setEquipped(null);
+		if (hasItem()) {
+			equipped.setLocation(body.getLocation());
+			body.getWorld().onGround.add(equipped);
+			setEquipped(null);
+		}
 	}
 
 	public Item getEquipped() {

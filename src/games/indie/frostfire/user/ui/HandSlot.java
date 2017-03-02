@@ -11,7 +11,7 @@ public class HandSlot extends BodySlot {
 
 	public HandSlot(int x, int y, BodyPart equip, String name) {
 		super(x, y, equip);
-		icon = Resource.get(name);
+		icon = Resource.getImage(name);
 	}
 
 	public void draw() {

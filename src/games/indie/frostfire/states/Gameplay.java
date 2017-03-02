@@ -51,8 +51,11 @@ public class Gameplay extends BasicGameState {
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 		if (gc.getInput().isKeyPressed(Input.KEY_Z)) {
-			player.getRightHand().equip(new Consumable(ConsumableType.STRAWBERRY));
-			player.getLeftHand().equip(new Axe());
+			player.getRightHand().pickup(new Consumable(ConsumableType.STRAWBERRY));
+			player.getLeftHand().pickup(new Axe());
+		}
+		if (gc.getInput().isKeyPressed(Input.KEY_TAB)) {
+			debugDraw = debugDraw ? false : true;
 		}
 	}
 	
