@@ -17,6 +17,7 @@ public abstract class Item extends Sprite implements StateChangeListener, Usable
 	public Item(int weight, String itemName) {
 		this.weight = weight;
 		icon = Resource.getImage(itemName);
+		setSize(icon.getWidth(), icon.getHeight());
 		show = icon.copy();
 		show.setCenterOfRotation(2, show.getHeight() - 2);
 	}
