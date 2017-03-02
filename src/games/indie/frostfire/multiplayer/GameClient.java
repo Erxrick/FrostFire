@@ -89,7 +89,7 @@ public class GameClient extends Thread {
       PlayerMP player = new PlayerMP(packet.getX(), packet.getY(), packet.getUsername(), address, port);
 //      packet.getX(), packet.getY(), 
       if(!(packet.getUsername() == (game.getPlayer().getUsername()))) {
-      	game.world.place(player);
+      	game.world.place(player, 0, 0);
       }
     }
 

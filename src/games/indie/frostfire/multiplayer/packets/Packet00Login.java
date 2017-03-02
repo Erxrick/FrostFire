@@ -4,7 +4,6 @@ package games.indie.frostfire.multiplayer.packets;
 
 import games.indie.frostfire.multiplayer.GameClient;
 import games.indie.frostfire.multiplayer.GameServer;
-import games.indie.frostfire.world.World;
 
 public class Packet00Login extends Packet {
 
