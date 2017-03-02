@@ -94,15 +94,15 @@ public class World implements Drawable {
 		return true;
 	}
 
-	public synchronized void movePlayer(String username, float x, float y, ActionType action, Direction direction) {
-		int index = getPlayerMPIndex(username);
+	public synchronized void movePlayer(long l, float x, float y, ActionType action, Direction direction) {
+		int index = getPlayerMPIndex(l);
 		getEntities().get(index).setLocation(x, y);
 	}
 	
-    public synchronized void removePlayerMP(String username) {
+    public synchronized void removePlayerMP(long username) {
         int index = 0;
         for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername().equals(username)) {
+            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
                 break;
             }
             index++;
@@ -110,10 +110,10 @@ public class World implements Drawable {
         this.getEntities().remove(index);
     }
     
-    private synchronized int getPlayerMPIndex(String username) {
+    private synchronized int getPlayerMPIndex(long username) {
         int index = 0;
         for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername().equals(username)) {
+            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
                 break;
             }
             index++;

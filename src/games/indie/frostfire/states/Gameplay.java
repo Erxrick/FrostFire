@@ -1,6 +1,6 @@
 package games.indie.frostfire.states;
 
-import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -27,8 +27,11 @@ public class Gameplay extends BasicGameState {
 	public World world;
 	private boolean debugDraw = false;
 
+	public Gameplay() {
+		player = new PlayerMP(10, 10, ThreadLocalRandom.current().nextLong(123456), null, 0);		
+	}
+	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-		player = new PlayerMP(10, 10, new UUID(0, 0), null, 0);
 		world = new World();
 		world.place(player);
 		Camera.setCenter(player.getCenterX(), player.getMinY());
