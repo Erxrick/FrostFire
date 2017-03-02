@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import games.indie.frostfire.multiplayer.Multiplayer;
 import games.indie.frostfire.states.Gameplay;
 import games.indie.frostfire.states.StartMenu;
 
@@ -13,7 +14,8 @@ public class FrostFire extends StateBasedGame {
 	public static final int FPS = 60;
 	public static final int NATIVE_WIDTH = 320, NATIVE_HEIGHT = 180;
 	public static int scale = 4;
-	
+	public static Multiplayer multiplayer;	
+	public static Gameplay gameplay;
 	FrostFire() throws SlickException {
 		super("FrostFire");
 	}
@@ -26,8 +28,9 @@ public class FrostFire extends StateBasedGame {
 		gc.setVSync(true);
 		
 		Resource.load();
+		gameplay = new Gameplay();
 		this.addState(new StartMenu());
-		this.addState(new Gameplay());
+		this.addState(gameplay);
 	}
 
 	public static void main(String[] args) throws SlickException {
