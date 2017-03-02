@@ -64,7 +64,7 @@ public class Player extends Human {
 	
 	public void setLocation(float x, float y) {
 		super.setLocation(x, y);
-		Camera.setCenter(getCenterX(), minY);
+//		Camera.setCenter(getCenterX(), minY);
 	}
 	
 	public void updateHead() {

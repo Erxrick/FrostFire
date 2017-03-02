@@ -58,13 +58,13 @@ public class World implements Drawable {
 		for (Item item : onGround) {
 			item.draw();
 		}
-		for (Entity entity : entities) {
+		for (Entity entity : getEntities()) {
 			entity.draw();
 		}
 	}
 	
 	public void checkInteraction(Entity self, Interactor hand) {
-		for (Entity entity : entities) {
+		for (Entity entity : getEntities()) {
 			if (entity == self)
 				continue;
 			if (hand.getLine().intersects(new Rectangle(
@@ -79,7 +79,7 @@ public class World implements Drawable {
 	}
 	
 	public boolean isValidMove(Entity moving, Shape changedCollision) {
-		for (Entity entity : entities) {
+		for (Entity entity : getEntities()) {
 			if (entity == moving)
 				continue;
 			// Don't ask

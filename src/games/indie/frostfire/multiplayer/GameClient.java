@@ -91,6 +91,7 @@ public class GameClient extends Thread {
       if(!(packet.getUsername() == (game.getPlayer().getUsername()))) {
       	game.world.place(player);
       }
+      System.out.println("Handled Login");
     }
 
     private void handleMove(Packet02Move packet) {
