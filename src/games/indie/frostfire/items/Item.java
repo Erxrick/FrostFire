@@ -13,13 +13,30 @@ public abstract class Item extends Sprite implements StateChangeListener, Usable
 	protected int weight;
 	protected float angle;
 	protected Vector2f holdingOffset;
+	protected float hover;
+	protected boolean hoverUp;
 	
 	public Item(int weight, String itemName) {
+		hoverUp = true;
 		this.weight = weight;
 		icon = Resource.getImage(itemName);
 		setSize(icon.getWidth(), icon.getHeight());
 		show = icon.copy();
 		show.setCenterOfRotation(2, show.getHeight() - 2);
+	}
+	
+	public float getHover() {
+		if (hoverUp) {
+			hover += .1;
+		} else {
+			hover -= .1;
+		}
+		if (hover >= 2) {
+			hoverUp = false;
+		} else if (hover <= -2) {
+			hoverUp = true;
+		}
+		return hover;
 	}
 	
 	public Image getShow() {

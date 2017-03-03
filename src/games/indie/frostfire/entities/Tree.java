@@ -1,7 +1,6 @@
 package games.indie.frostfire.entities;
 
 import games.indie.frostfire.Resource;
-import games.indie.frostfire.items.Twig;
 
 public class Tree extends Plant {
 		
@@ -11,7 +10,7 @@ public class Tree extends Plant {
 	}
 	
 	public void die() {
-		world.place(new Twig(), x, y);
+		world.place(new TreeStump(), x + 8, y - 16);
 		super.die();
 	}
 

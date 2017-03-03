@@ -10,9 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
-import games.indie.frostfire.entities.Entity;
-import games.indie.frostfire.entities.Interactor;
-import games.indie.frostfire.entities.Tree;
+import games.indie.frostfire.entities.*;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Item;
@@ -37,6 +35,10 @@ public class World {
 	public void generate(long seed) {
 		place(new Tree(), 80, 80);
 		onGround.add(new Axe());
+		place(new Bush(), 0, -64);
+		place(new Crystal(), -32, 32);
+		place(new Mushroom(), 32, 32);
+		place(new Stone(), 64, 32);
 	}
 	
 	public void place(Item item, float x, float y) {
@@ -66,7 +68,7 @@ public class World {
 			screen.setColor(new Color(40, 85, 138));
 			screen.fillOval(position.getX() + item.getWidth()/4, position.getY() + item.getHeight() + 2, 
 					item.getWidth()/2, item.getHeight()/4);
-			Camera.draw(showOnMap, item.getLocation());
+			Camera.draw(showOnMap, item.getX(), item.getY() + item.getHover());
 		}
 		for (Entity entity : entities) {
 			entity.draw();

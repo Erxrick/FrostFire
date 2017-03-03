@@ -80,12 +80,14 @@ public class Human extends Creature {
 	}
 	
 	private boolean pickup(Item item) {
-		if (rightHand.hasItem()) {
-			return false;
-		} else {
+		if (!rightHand.hasItem()) {
 			rightHand.pickup(item);
 			return true;
+		} else if (!leftHand.hasItem()) {
+			leftHand.pickup(item);
+			return true;
 		}
+		return false;
 	}
 	
 	
