@@ -54,6 +54,7 @@ public class Gameplay extends BasicGameState {
 		world.update();
 		player.update(delta);
 		player.control(gc.getInput());
+		Camera.setCenter(player.getCenterX(), player.getMinY());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
 		if (gc.getInput().isKeyPressed(Input.KEY_Z)) {

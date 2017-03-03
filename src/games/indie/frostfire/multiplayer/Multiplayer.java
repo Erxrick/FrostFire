@@ -16,7 +16,8 @@ public class Multiplayer {
 		this.client = client;
 		server.start();
 		client.start();
-	   Packet00Login loginPacket = new Packet00Login(FrostFire.gameplay.getPlayer().getUsername(), FrostFire.gameplay.getPlayer().getX(), FrostFire.gameplay.getPlayer().getY());
+		PlayerMP player = FrostFire.gameplay.getPlayer();
+	   Packet00Login loginPacket = new Packet00Login(player.getUsername(), player.getX(), player.getY());
        server.addConnection(FrostFire.gameplay.getPlayer(), loginPacket);
        loginPacket.writeData(client);
 	}
@@ -28,9 +29,11 @@ public class Multiplayer {
 		this.server = null;
 		this.client = client;
 		client.start();
-		   Packet00Login loginPacket = new Packet00Login(FrostFire.gameplay.getPlayer().getUsername(), FrostFire.gameplay.getPlayer().getX(), FrostFire.gameplay.getPlayer().getY());
-	       loginPacket.writeData(client);
+		PlayerMP player = FrostFire.gameplay.getPlayer();
+		Packet00Login loginPacket = new Packet00Login(player.getUsername(), player.getX(), player.getY());
+		loginPacket.writeData(client);
 		
 	}
+	
 	
 }

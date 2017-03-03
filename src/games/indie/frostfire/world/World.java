@@ -70,13 +70,13 @@ public class World {
 					item.getWidth()/2, item.getHeight()/4);
 			Camera.draw(showOnMap, item.getX(), item.getY() + item.getHover());
 		}
-		for (Entity entity : entities) {
+		for (Entity entity : getEntities()) {
 			entity.draw();
 		}
 	}
 	
 	public void checkInteraction(Entity self, Interactor hand) {
-		for (Entity entity : entities) {
+		for (Entity entity : getEntities()) {
 			if (entity == self)
 				continue;
 			if (hand.getLine().intersects(new Rectangle(
@@ -91,7 +91,7 @@ public class World {
 	}
 	
 	public boolean isValidMove(Entity moving, Shape changedCollision) {
-		for (Entity entity : entities) {
+		for (Entity entity : getEntities()) {
 			if (entity == moving)
 				continue;
 			// Don't ask
