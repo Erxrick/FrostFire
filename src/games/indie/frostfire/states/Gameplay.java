@@ -1,5 +1,7 @@
 package games.indie.frostfire.states;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -13,20 +15,24 @@ import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Consumable;
 import games.indie.frostfire.items.ConsumableType;
-import games.indie.frostfire.user.Player;
+import games.indie.frostfire.multiplayer.PlayerMP;
+
 import games.indie.frostfire.user.ui.UIComponent;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
 
 public class Gameplay extends BasicGameState {
 	
-	private World world;
-	private Player player;
+	private PlayerMP player;
+	public World world;
 	private boolean debugDraw = false;
+
+	public Gameplay() {
+		player = new PlayerMP(10, 10, ThreadLocalRandom.current().nextLong(123456), null, 0);		
+	}
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		world = new World();
-		player = new Player();
 		world.place(player, 0, 0);
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 	}
@@ -83,6 +89,10 @@ public class Gameplay extends BasicGameState {
 
 	public int getID() {
 		return GameState.GAMEPLAY;
+	}
+
+	public PlayerMP getPlayer() {
+		return this.player;
 	}
 
 }
