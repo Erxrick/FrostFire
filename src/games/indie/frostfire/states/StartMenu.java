@@ -44,7 +44,7 @@ public class StartMenu extends BasicGameState {
 		if (host.mousePressed(button, x/FrostFire.scale, y/FrostFire.scale)) {
 			hostGame();
 		} else if (join.mousePressed(button, x/FrostFire.scale, y/FrostFire.scale)) {
-			joinGame();
+			joinGame("localhost");
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class StartMenu extends BasicGameState {
 		FrostFire.multiplayer = new Multiplayer(new GameServer(FrostFire.gameplay), new GameClient(FrostFire.gameplay, "localhost"));
 	}
 	
-	private void joinGame() {
+	private void joinGame(String ipAddress) {
 		System.out.println("JOIN GAME!");
 		FrostFire.multiplayer = new Multiplayer(new GameClient(FrostFire.gameplay, "localhost"));
 	}

@@ -13,16 +13,13 @@ import org.newdawn.slick.geom.Vector2f;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.entities.Interactor;
 import games.indie.frostfire.entities.Tree;
-import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Item;
-import games.indie.frostfire.multiplayer.PlayerMP;
 
 
 public class World {
 	
 	public static Camera camera = new Camera();
-	private long seed;
 	private ZLayerSort topDown;
 	public ArrayList<Entity> entities;
 	public ArrayList<Item> onGround;
@@ -103,36 +100,8 @@ public class World {
 		}
 		return true;
 	}
-
-	public synchronized void movePlayer(long l, float x, float y, ActionType action, Direction direction) {
-		int index = getPlayerMPIndex(l);
-		getEntities().get(index).setLocation(x, y);
-	}
-	
-    public synchronized void removePlayerMP(long username) {
-        int index = 0;
-        for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
-                break;
-            }
-            index++;
-        }
-        this.getEntities().remove(index);
-    }
-    
-    private synchronized int getPlayerMPIndex(long username) {
-        int index = 0;
-        for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
-                break;
-            }
-            index++;
-        }
-        return index;
-    }
     
     public synchronized List<Entity> getEntities() {
-        return this.entities;
-     
+        return entities;
     }
 }

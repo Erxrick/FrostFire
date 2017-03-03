@@ -1,6 +1,8 @@
 package games.indie.frostfire.states;
 
-public abstract class GameState {
+import org.newdawn.slick.state.BasicGameState;
+
+public abstract class GameState extends BasicGameState {
 	
 	public static final int START_MENU = 0;
 	public static final int HOST_OPTIONS = 1;

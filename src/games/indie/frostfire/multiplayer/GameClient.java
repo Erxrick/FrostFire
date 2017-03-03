@@ -15,10 +15,11 @@ import games.indie.frostfire.multiplayer.packets.Packet02Move;
 import games.indie.frostfire.states.Gameplay;
 
 
-
 public class GameClient extends Thread {
 
     private InetAddress ipAddress;
+    private int port;
+    private String username;
     private DatagramSocket socket;
     private Gameplay game;
     
@@ -84,12 +85,10 @@ public class GameClient extends Thread {
     }
 
     private void handleLogin(Packet00Login packet, InetAddress address, int port) {
-        System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername()
+    	System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername()
                 + " has joined the game...");
-      PlayerMP player = new PlayerMP(packet.getX(), packet.getY(), packet.getUsername(), address, port);
-//      packet.getX(), packet.getY(), 
-      if(!(packet.getUsername() == (game.getPlayer().getUsername()))) {
-      	game.world.place(player, 0, 0);
+      if (!(packet.getUsername() == (game.getPlayer().getUsername()))) {
+    	  
       }
     }
 
