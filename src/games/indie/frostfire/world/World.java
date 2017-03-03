@@ -2,6 +2,7 @@ package games.indie.frostfire.world;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -39,11 +40,18 @@ public class World {
 //		place(new Crystal(), -32, 32);
 //		place(new Mushroom(), 32, 32);
 //		place(new Stone(), 64, 32);
-		PerlinNoiseGenerator p = new PerlinNoiseGenerator(seed);
+		PerlinNoiseGenerator p = new PerlinNoiseGenerator(seed);//generates float with 9 digits following decimal.
+		Random rand = new Random(seed);
 		for(float x=0;x<1;x+=0.01){
 			for(float y=0;y<1;y+=0.01){
 				float noise = p.noise2(x, y);
-				
+				if(rand.nextDouble()>0.33){
+					if(noise<0.5){
+						place(new Crystal(), x*1600, y*1600);
+					} else {
+						place(new Stone(), x*1600, y*1600);
+					}
+				}
 			}
 		}
 
@@ -121,14 +129,7 @@ public class World {
 	}
 	
     public synchronized void removePlayerMP(long username) {
-        int index = 0;
-        for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
-                break;
-            }
-            index++;
-        }
-        this.getEntities().remove(index);
+        this.getEntities().remove(getPlayerMPIndex(username));
     }
     
     private synchronized int getPlayerMPIndex(long username) {
