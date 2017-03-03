@@ -20,7 +20,7 @@ import games.indie.frostfire.multiplayer.PlayerMP;
 public class World {
 	
 	public static Camera camera = new Camera();
-	private long seed;
+	private int seed;
 	private ZLayerSort topDown;
 	public ArrayList<Entity> entities;
 	public ArrayList<Item> onGround;
@@ -32,13 +32,22 @@ public class World {
 		generate(0);
 	}
 	
-	public void generate(long seed) {
-		place(new Tree(), 80, 80);
-		onGround.add(new Axe());
-		place(new Bush(), 0, -64);
-		place(new Crystal(), -32, 32);
-		place(new Mushroom(), 32, 32);
-		place(new Stone(), 64, 32);
+	public void generate(int seed) {
+//		place(new Tree(), 80, 80);
+//		onGround.add(new Axe());
+//		place(new Bush(), 0, -64);
+//		place(new Crystal(), -32, 32);
+//		place(new Mushroom(), 32, 32);
+//		place(new Stone(), 64, 32);
+		PerlinNoiseGenerator p = new PerlinNoiseGenerator(seed);
+		for(float x=0;x<1;x+=0.01){
+			for(float y=0;y<1;y+=0.01){
+				float noise = p.noise2(x, y);
+				
+			}
+		}
+
+
 	}
 	
 	public void place(Item item, float x, float y) {
