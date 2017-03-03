@@ -7,6 +7,8 @@ import games.indie.frostfire.user.Player;
 import games.indie.frostfire.world.Direction;
 
 public class PlayerMP extends Player {
+	
+	//make this hold a player not extend player
 
     public InetAddress ipAddress;
     public int port;

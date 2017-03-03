@@ -43,7 +43,7 @@ public class GameServer extends Thread {
             this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
         }
     }
-
+    
     private void parsePacket(byte[] data, InetAddress address, int port) {
         String message = new String(data).trim();
         PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
@@ -76,7 +76,7 @@ public class GameServer extends Thread {
                 if (p.ipAddress == null) {
                     p.ipAddress = player.ipAddress;
                 }
-                if (p.port == -1) {
+                if (p.port == 0) {
                     p.port = player.port;
                 }
                 alreadyConnected = true;
