@@ -22,7 +22,7 @@ public class World implements Drawable {
 	public static Camera camera = new Camera();
 	private long seed;
 	private ZLayerSort topDown;
-	public ArrayList<Entity> entities;
+	private List<Entity> entities;
 	public ArrayList<Item> onGround;
 	
 	public World() {
@@ -97,6 +97,7 @@ public class World implements Drawable {
 	public synchronized void movePlayer(long l, float x, float y, ActionType action, Direction direction) {
 		int index = getPlayerMPIndex(l);
 		getEntities().get(index).setLocation(x, y);
+//		((PlayerMP) getEntities().get(index)).setAction(action, direction);
 	}
 	
     public synchronized void removePlayerMP(long username) {

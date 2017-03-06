@@ -6,7 +6,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
 
+import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.multiplayer.packets.Packet;
 import games.indie.frostfire.multiplayer.packets.Packet.PacketTypes;
 import games.indie.frostfire.multiplayer.packets.Packet00Login;
@@ -88,7 +90,13 @@ public class GameClient extends Thread {
                 + " has joined the game...");
       PlayerMP player = new PlayerMP(packet.getX(), packet.getY(), packet.getUsername(), address, port);
 //      packet.getX(), packet.getY(), 
-      if(!(packet.getUsername() == (game.getPlayer().getUsername()))) {
+      List<Entity>  entit= game.world.getEntities();
+      boolean inside = false;
+      for (Entity entity : entit) {
+		if(entity instanceof PlayerMP && ((PlayerMP) entity).getUsername() == packet.getUsername()) 
+			inside = true;
+      }
+      if(inside == false) {
       	game.world.place(player);
       }
       System.out.println("Handled Login");

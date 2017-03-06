@@ -56,7 +56,8 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void die() {
-		world.entities.remove(this);
+		world.getEntities().remove(this);
+		//wriite a packet here for the server to know
 		System.out.println(this + " DIED!");
 	}
 	
