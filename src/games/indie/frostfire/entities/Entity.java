@@ -62,5 +62,13 @@ public abstract class Entity extends Sprite {
 	public void takeDamage(double damage) {
 		health.affect(-damage);
 	}
+	
+	public void update(int delta) {
+		
+	}
+	
+	public void interaction(Interactor hand) {
+		
+	}
 
 }

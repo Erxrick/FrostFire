@@ -16,6 +16,7 @@ public class FrostFire extends StateBasedGame {
 	public static int scale = 4;
 	public static Multiplayer multiplayer;	
 	public static Gameplay gameplay;
+	
 	FrostFire() throws SlickException {
 		super("FrostFire");
 	}

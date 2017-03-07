@@ -51,8 +51,7 @@ public class Gameplay extends BasicGameState {
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-		world.update();
-		player.update(delta);
+		world.update(delta);
 		player.control(gc.getInput());
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))

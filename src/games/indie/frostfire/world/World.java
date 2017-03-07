@@ -56,11 +56,17 @@ public class World {
 		entities.remove(e);
 	}
 	
-	public void update() {
+	public void update(int delta) {
 		entities.sort(topDown);
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).update(delta);
+		}
 	}
 
 	public void draw(Graphics screen) {
+		for (Entity entity : getEntities()) {
+			entity.draw();
+		}
 		for (Item item : onGround) {
 			Image showOnMap = item.getShow().copy();
 			showOnMap.setAlpha(.9f);
@@ -69,9 +75,6 @@ public class World {
 			screen.fillOval(position.getX() + item.getWidth()/4, position.getY() + item.getHeight() + 2, 
 					item.getWidth()/2, item.getHeight()/4);
 			Camera.draw(showOnMap, item.getX(), item.getY() + item.getHover());
-		}
-		for (Entity entity : getEntities()) {
-			entity.draw();
 		}
 	}
 	

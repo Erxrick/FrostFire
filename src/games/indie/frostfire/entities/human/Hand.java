@@ -89,6 +89,7 @@ public class Hand extends BodyPart implements Interactor {
 	}
 
 	public void interact(Entity e) {
+		e.interaction(this);
 		System.out.println("Interaction with " + e);
 		e.takeDamage(10);
 		endMotion();
