@@ -13,7 +13,6 @@ public class PlayerMP extends Player {
     public InetAddress ipAddress;
     public int port;
     private long username;
-    private GameClient socketClient;
 
 
     public long getUsername() {
@@ -21,7 +20,6 @@ public class PlayerMP extends Player {
 	}
 
 	public PlayerMP(float x, float y, long username, InetAddress ipAddress, int port) {
-  //      super(username);
         this.username = username;
         this.ipAddress = ipAddress;
         this.port = port;
@@ -33,9 +31,7 @@ public class PlayerMP extends Player {
 //		return location.getX();
 //	}
 
-	public void setClient(GameClient socketClient) {
-        this.socketClient = socketClient;
-	}
+
 //	public float getY() {
 //		return location.getY();
 //	}

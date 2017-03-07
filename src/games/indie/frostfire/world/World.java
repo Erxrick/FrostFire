@@ -3,6 +3,7 @@ package games.indie.frostfire.world;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -23,12 +24,12 @@ public class World {
 	public static Camera camera = new Camera();
 	private int seed;
 	private ZLayerSort topDown;
-	public ArrayList<Entity> entities;
+	private List<Entity> entities;
 	public ArrayList<Item> onGround;
 	
 	public World() {
 		topDown = new ZLayerSort();
-		entities = new ArrayList<>();
+		entities = new CopyOnWriteArrayList<>();
 		onGround = new ArrayList<>();
 		generate(0);
 	}
@@ -39,18 +40,20 @@ public class World {
 		for(float x=0;x<1;x+=0.01){
 			for(float y=0;y<1;y+=0.01){
 				double noise = Math.abs(p.noise2(x, y));
+				System.out.println(noise);
 				if(rand.nextDouble()>0.33){
+					System.out.println("in entity statements");
 					if(noise>0.4 && noise<0.49) {
 						place(new Crystal(), findXorY(x), findXorY(y));
 					} else if(noise>0.5 && noise<0.59) {
 						place(new Stone(), findXorY(x), findXorY(y));
 					} else if(noise>0.6 && noise<0.69) {
 						place(new CocoPlant(), findXorY(x), findXorY(y));
-					} else if(noise>0.7 && noise<0.79) {
+					} else if(noise>0.7 && noise<0.79 || noise>0.2 && noise<0.29) {
 						place(new Bush(), findXorY(x), findXorY(y));
-					} else if(noise>0.8 && noise<0.89) {
+					} else if(noise>0.8 && noise<0.89 || noise>0.1 && noise<0.19) {
 						place(new Tree(), findXorY(x), findXorY(y));
-					} else if(noise>0.9 && noise<1) {
+					} else if(noise>0.9 && noise<1 || noise>0 && noise<0.09) {
 						place(new TreeStump(), findXorY(x), findXorY(y));
 					} else if(noise>0.3 && noise<0.39) {
 						place(new Mushroom(), findXorY(x), findXorY(y));
@@ -139,6 +142,7 @@ public class World {
 	public synchronized void movePlayer(long l, float x, float y, ActionType action, Direction direction) {
 		int index = getPlayerMPIndex(l);
 		getEntities().get(index).setLocation(x, y);
+//		((PlayerMP) getEntities().get(index)).setAction(action, direction);
 	}
 	
     public synchronized void removePlayerMP(long username) {
@@ -158,6 +162,8 @@ public class World {
     
     public synchronized List<Entity> getEntities() {
         return this.entities;
-     
+    }
+    public void setWorldSeed(int seed) {
+    	this.seed = seed;
     }
 }

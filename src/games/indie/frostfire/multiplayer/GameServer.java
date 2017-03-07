@@ -20,10 +20,11 @@ public class GameServer extends Thread {
 
     private DatagramSocket socket;
     private Gameplay game;
-    private ArrayList<PlayerMP> connectedPlayers = new ArrayList<PlayerMP>();
+    private ArrayList<PlayerMP> connectedPlayers;
 
     public GameServer(Gameplay game) {
         this.game = game;
+        connectedPlayers = new ArrayList<PlayerMP>();
         try {
             this.socket = new DatagramSocket(1331);
         } catch (SocketException e) {
@@ -71,28 +72,31 @@ public class GameServer extends Thread {
 
     public void addConnection(PlayerMP player, Packet00Login packet) {
         boolean alreadyConnected = false;
-        for (PlayerMP p : this.connectedPlayers) {
-            if ( player != null && player.getUsername() == p.getUsername()) {
-                if (p.ipAddress == null) {
-                    p.ipAddress = player.ipAddress;
-                }
-                if (p.port == 0) {
-                    p.port = player.port;
-                }
-                alreadyConnected = true;
-            } else {
-                // relay to the current connected player that there is a new
-                // player
-                sendData(packet.getData(), p.ipAddress, p.port);
-                System.out.println(player.getUsername());
-                // relay to the new player that the currently connect player
-                // exists
-                packet = new Packet00Login(p.getUsername(), p.getX(), p.getY());
-                sendData(packet.getData(), player.ipAddress, player.port);
-            }
-        }
-        if (!alreadyConnected) {
-        	this.connectedPlayers.add(player);
+        if(connectedPlayers.contains(player)) {
+        	alreadyConnected = true;
+        } else {
+         	this.connectedPlayers.add(player);        
+         	
+         	//migrate this to the client because fuckall
+	        for (PlayerMP p : this.connectedPlayers) {	
+	            if ( player != null && player.getUsername() == p.getUsername()) {
+	                if (p.ipAddress == null) {
+	                    p.ipAddress = player.ipAddress;
+	                }
+	                if (p.port == 0) {
+	                    p.port = player.port;
+	                }
+	            } else if (player.getUsername() != p.getUsername()) {
+	                // relay to the current connected player that there is a new player
+//	                sendData(packet.getData(), p.ipAddress, p.port);
+	                // relay to the new player that the currently connect player exists
+	                
+	            	sendDataToAllClients(packet.getData());
+	                //this one works just fine
+	                packet = new Packet00Login(p.getUsername(), p.getX(), p.getY());
+	                sendData(packet.getData(), player.ipAddress, player.port);
+	            }
+        	}
         }
     }
 

@@ -34,6 +34,11 @@ public class Multiplayer {
 		loginPacket.writeData(client);
 		
 	}
-	
+
+
+
+	public GameClient getClient() {
+		return client;
+	}
 	
 }

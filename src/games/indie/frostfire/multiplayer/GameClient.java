@@ -6,7 +6,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
 
+import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.multiplayer.packets.Packet;
 import games.indie.frostfire.multiplayer.packets.Packet.PacketTypes;
 import games.indie.frostfire.multiplayer.packets.Packet00Login;
@@ -50,7 +52,6 @@ public class GameClient extends Thread {
 
     private void parsePacket(byte[] data, InetAddress address, int port) {
         String message = new String(data).trim();
-        System.out.println(message);
         PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
         switch (type) {
         default:
@@ -89,9 +90,17 @@ public class GameClient extends Thread {
       PlayerMP player = new PlayerMP(packet.getX(), packet.getY(), packet.getUsername(), address, port);
 //      packet.getX(), packet.getY(), 
       if(!(packet.getUsername() == (game.getPlayer().getUsername()))) {
+      List<Entity>  entit= game.world.getEntities();
+      boolean inside = false;
+      for (Entity entity : entit) {
+		if(entity instanceof PlayerMP && ((PlayerMP) entity).getUsername() == packet.getUsername()) 
+			inside = true;
+      }
+      if(inside == false) {
       	game.world.place(player, 0, 0);
       }
       System.out.println("Handled Login");
+      }
     }
 
     private void handleMove(Packet02Move packet) {

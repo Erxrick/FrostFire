@@ -16,7 +16,7 @@ import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Consumable;
 import games.indie.frostfire.items.ConsumableType;
 import games.indie.frostfire.multiplayer.PlayerMP;
-
+import games.indie.frostfire.multiplayer.packets.Packet02Move;
 import games.indie.frostfire.user.ui.UIComponent;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
@@ -43,7 +43,7 @@ public class Gameplay extends BasicGameState {
 		screen.setLineWidth(FrostFire.scale);
 		world.draw(screen);
 		if (debugDraw) {
-			for (Entity entity : world.entities) {
+			for (Entity entity : world.getEntities()) {
 				entity.debug_draw(screen);
 			}
 		}
@@ -54,6 +54,8 @@ public class Gameplay extends BasicGameState {
 		world.update();
 		player.update(delta);
 		player.control(gc.getInput());
+		Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY(), this.player.getAction(), this.player.getDirection());
+		movePacket.writeData(FrostFire.multiplayer.getClient());
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
