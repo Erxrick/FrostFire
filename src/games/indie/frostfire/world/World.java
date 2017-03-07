@@ -143,7 +143,7 @@ public class World {
 		int index = getPlayerMPIndex(l);
 		getEntities().get(index).setLocation(x, y);
 	//	System.out.println(action);
-		((PlayerMP) getEntities().get(index)).setAction(action, direction);
+	//	((PlayerMP) getEntities().get(index)).setAction(action, direction);
 	}
 	
 	
