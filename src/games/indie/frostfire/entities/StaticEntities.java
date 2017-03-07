@@ -7,8 +7,7 @@ public enum StaticEntities {
 	Mushroom(0.6f,0.69f),
 	Stone(0.7f,0.79f),
 	Tree(0.8f, 0.89f),
-	TreeStump(0.9f,0.95f),
-	Nothing(0.96f, 0.99f);
+	TreeStump(0.9f,0.95f);
 	
 	private float minValue;
 	private float maxValue;

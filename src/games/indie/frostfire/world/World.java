@@ -34,28 +34,41 @@ public class World {
 	}
 	
 	public void generate(int seed) {
-//		place(new Tree(), 80, 80);
-//		onGround.add(new Axe());
-//		place(new Bush(), 0, -64);
-//		place(new Crystal(), -32, 32);
-//		place(new Mushroom(), 32, 32);
-//		place(new Stone(), 64, 32);
 		PerlinNoiseGenerator p = new PerlinNoiseGenerator(seed);//generates float with 9 digits following decimal.
 		Random rand = new Random(seed);
 		for(float x=0;x<1;x+=0.01){
 			for(float y=0;y<1;y+=0.01){
-				float noise = p.noise2(x, y);
+				double noise = Math.abs(p.noise2(x, y));
 				if(rand.nextDouble()>0.33){
-					if(noise<0.5){
-						place(new Crystal(), x*1600, y*1600);
-					} else {
-						place(new Stone(), x*1600, y*1600);
+					if(noise>0.4 && noise<0.49) {
+						place(new Crystal(), findXorY(x), findXorY(y));
+					} else if(noise>0.5 && noise<0.59) {
+						place(new Stone(), findXorY(x), findXorY(y));
+					} else if(noise>0.6 && noise<0.69) {
+						place(new CocoPlant(), findXorY(x), findXorY(y));
+					} else if(noise>0.7 && noise<0.79) {
+						place(new Bush(), findXorY(x), findXorY(y));
+					} else if(noise>0.8 && noise<0.89) {
+						place(new Tree(), findXorY(x), findXorY(y));
+					} else if(noise>0.9 && noise<1) {
+						place(new TreeStump(), findXorY(x), findXorY(y));
+					} else if(noise>0.3 && noise<0.39) {
+						place(new Mushroom(), findXorY(x), findXorY(y));
 					}
 				}
 			}
 		}
-
-
+	}
+	
+	public float findXorY(float x){
+		Random gen = new Random(seed);
+		float result = 0;
+		if(gen.nextInt(2) == 0){
+			result = x*1600;
+		} else {
+			result = (0-x)*1600;
+		}
+		return result;
 	}
 	
 	public void place(Item item, float x, float y) {
