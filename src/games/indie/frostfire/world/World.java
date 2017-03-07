@@ -22,7 +22,7 @@ import games.indie.frostfire.multiplayer.PlayerMP;
 public class World {
 	
 	public static Camera camera = new Camera();
-	private int seed;
+	private int seed = 200;
 	private ZLayerSort topDown;
 	private List<Entity> entities;
 	public ArrayList<Item> onGround;
@@ -41,32 +41,30 @@ public class World {
 			for(float y=0;y<1;y+=0.01){
 				double noise = Math.abs(p.noise2(x, y));
 				System.out.println(noise);
+				int posNeg = rand.nextInt(2);
 				if(rand.nextDouble()>0.33){
 					System.out.println("in entity statements");
 					if(noise>0.4 && noise<0.49) {
-						place(new Crystal(), findXorY(x), findXorY(y));
+						place(new Crystal(), findXorY(x, posNeg), findXorY(y, posNeg));
 					} else if(noise>0.5 && noise<0.59) {
-						place(new Stone(), findXorY(x), findXorY(y));
-					} else if(noise>0.6 && noise<0.69) {
-						place(new CocoPlant(), findXorY(x), findXorY(y));
+						place(new Stone(), findXorY(x, posNeg), findXorY(y, posNeg));
+					} else if(noise>0.6 && noise<0.69 || noise>0.9 && noise<1) {
+						place(new CocoPlant(), findXorY(x, posNeg), findXorY(y, posNeg));
 					} else if(noise>0.7 && noise<0.79 || noise>0.2 && noise<0.29) {
-						place(new Bush(), findXorY(x), findXorY(y));
+						place(new Bush(), findXorY(x, posNeg), findXorY(y, posNeg));
 					} else if(noise>0.8 && noise<0.89 || noise>0.1 && noise<0.19) {
-						place(new Tree(), findXorY(x), findXorY(y));
-					} else if(noise>0.9 && noise<1 || noise>0 && noise<0.09) {
-						place(new TreeStump(), findXorY(x), findXorY(y));
-					} else if(noise>0.3 && noise<0.39) {
-						place(new Mushroom(), findXorY(x), findXorY(y));
+						place(new Tree(), findXorY(x, posNeg), findXorY(y, posNeg));
+					}  else if(noise>0.3 && noise<0.39 || noise>0 && noise<0.09) {
+						place(new Mushroom(), findXorY(x, posNeg), findXorY(y, posNeg));
 					}
 				}
 			}
 		}
 	}
 	
-	public float findXorY(float x){
-		Random gen = new Random(seed);
+	public float findXorY(float x, int rand){
 		float result = 0;
-		if(gen.nextInt(2) == 0){
+		if(rand == 0){
 			result = x*1600;
 		} else {
 			result = (0-x)*1600;
