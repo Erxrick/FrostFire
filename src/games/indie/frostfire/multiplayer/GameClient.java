@@ -52,7 +52,7 @@ public class GameClient extends Thread {
 
     private void parsePacket(byte[] data, InetAddress address, int port) {
         String message = new String(data).trim();
-        System.out.println(message);
+     //   System.out.println(message);
         PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
         switch (type) {
         default:
@@ -94,13 +94,15 @@ public class GameClient extends Thread {
       List<Entity>  entit= game.world.getEntities();
       boolean inside = false;
       for (Entity entity : entit) {
-		if(entity instanceof PlayerMP && ((PlayerMP) entity).getUsername() == packet.getUsername()) 
+		if(entity instanceof PlayerMP && ((PlayerMP) entity).getUsername() == packet.getUsername()) {
 			inside = true;
+		}
       }
       if(inside == false) {
-      	game.world.place(player, 0, 0);
+      	game.world.place(player, 0f, 0f);
       }
       System.out.println("Handled Login");
+      }
     }
 
     private void handleMove(Packet02Move packet) {
