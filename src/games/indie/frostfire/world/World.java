@@ -2,6 +2,7 @@ package games.indie.frostfire.world;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.newdawn.slick.Color;
@@ -21,7 +22,7 @@ import games.indie.frostfire.multiplayer.PlayerMP;
 public class World {
 	
 	public static Camera camera = new Camera();
-	private long seed;
+	private int seed;
 	private ZLayerSort topDown;
 	private List<Entity> entities;
 	public ArrayList<Item> onGround;
@@ -33,13 +34,44 @@ public class World {
 		generate(0);
 	}
 	
-	public void generate(long seed) {
-		place(new Tree(), 80, 80);
-		onGround.add(new Axe());
-		place(new Bush(), 0, -64);
-		place(new Crystal(), -32, 32);
-		place(new Mushroom(), 32, 32);
-		place(new Stone(), 64, 32);
+	public void generate(int seed) {
+		PerlinNoiseGenerator p = new PerlinNoiseGenerator(seed);//generates float with 9 digits following decimal.
+		Random rand = new Random(seed);
+		for(float x=0;x<1;x+=0.01){
+			for(float y=0;y<1;y+=0.01){
+				double noise = Math.abs(p.noise2(x, y));
+				System.out.println(noise);
+				if(rand.nextDouble()>0.33){
+					System.out.println("in entity statements");
+					if(noise>0.4 && noise<0.49) {
+						place(new Crystal(), findXorY(x), findXorY(y));
+					} else if(noise>0.5 && noise<0.59) {
+						place(new Stone(), findXorY(x), findXorY(y));
+					} else if(noise>0.6 && noise<0.69) {
+						place(new CocoPlant(), findXorY(x), findXorY(y));
+					} else if(noise>0.7 && noise<0.79 || noise>0.2 && noise<0.29) {
+						place(new Bush(), findXorY(x), findXorY(y));
+					} else if(noise>0.8 && noise<0.89 || noise>0.1 && noise<0.19) {
+						place(new Tree(), findXorY(x), findXorY(y));
+					} else if(noise>0.9 && noise<1 || noise>0 && noise<0.09) {
+						place(new TreeStump(), findXorY(x), findXorY(y));
+					} else if(noise>0.3 && noise<0.39) {
+						place(new Mushroom(), findXorY(x), findXorY(y));
+					}
+				}
+			}
+		}
+	}
+	
+	public float findXorY(float x){
+		Random gen = new Random(seed);
+		float result = 0;
+		if(gen.nextInt(2) == 0){
+			result = x*1600;
+		} else {
+			result = (0-x)*1600;
+		}
+		return result;
 	}
 	
 	public void place(Item item, float x, float y) {
@@ -114,14 +146,7 @@ public class World {
 	}
 	
     public synchronized void removePlayerMP(long username) {
-        int index = 0;
-        for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
-                break;
-            }
-            index++;
-        }
-        this.getEntities().remove(index);
+        this.getEntities().remove(getPlayerMPIndex(username));
     }
     
     private synchronized int getPlayerMPIndex(long username) {
@@ -137,6 +162,8 @@ public class World {
     
     public synchronized List<Entity> getEntities() {
         return this.entities;
-     
+    }
+    public void setWorldSeed(int seed) {
+    	this.seed = seed;
     }
 }

@@ -99,6 +99,7 @@ public class GameClient extends Thread {
 		}
       }
       if(inside == false) {
+     // 	game.world.place(player, 0, 0);
       	game.world.place(player, 0f, 0f);
       }
       System.out.println("Handled Login");

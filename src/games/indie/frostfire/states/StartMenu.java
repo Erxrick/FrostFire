@@ -50,11 +50,13 @@ public class StartMenu extends BasicGameState {
 	
 	private void hostGame() {
 		System.out.println("HOST GAME!");
+		//need to input seed then this is ran
 		FrostFire.multiplayer = new Multiplayer(new GameServer(FrostFire.gameplay), new GameClient(FrostFire.gameplay, "localhost"));
 	}
 	
 	private void joinGame() {
 		System.out.println("JOIN GAME!");
+		//need to input ip address then this is ran
 		FrostFire.multiplayer = new Multiplayer(new GameClient(FrostFire.gameplay, "localhost"));
 	}
 
