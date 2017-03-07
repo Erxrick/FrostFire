@@ -2,6 +2,7 @@ package games.indie.frostfire.world;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -27,7 +28,7 @@ public class World implements Drawable {
 	
 	public World() {
 		topDown = new ZLayerSort();
-		entities = new ArrayList<>();
+		entities = new CopyOnWriteArrayList<>();
 		onGround = new ArrayList<>();
 		generate(0);
 	}
