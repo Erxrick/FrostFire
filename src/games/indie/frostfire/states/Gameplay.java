@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Entity;
+import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Consumable;
 import games.indie.frostfire.items.ConsumableType;
@@ -54,6 +55,7 @@ public class Gameplay extends BasicGameState {
 		world.update();
 		player.update(delta);
 		player.control(gc.getInput());
+	//	System.out.println(this.player.getAction());
 		Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY(), this.player.getAction(), this.player.getDirection());
 		movePacket.writeData(FrostFire.multiplayer.getClient());
 		Camera.setCenter(player.getCenterX(), player.getMinY());

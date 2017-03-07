@@ -142,8 +142,11 @@ public class World {
 	public synchronized void movePlayer(long l, float x, float y, ActionType action, Direction direction) {
 		int index = getPlayerMPIndex(l);
 		getEntities().get(index).setLocation(x, y);
-//		((PlayerMP) getEntities().get(index)).setAction(action, direction);
+	//	System.out.println(action);
+		((PlayerMP) getEntities().get(index)).setAction(action, direction);
 	}
+	
+	
 	
     public synchronized void removePlayerMP(long username) {
         this.getEntities().remove(getPlayerMPIndex(username));

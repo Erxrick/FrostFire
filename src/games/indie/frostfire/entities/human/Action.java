@@ -19,8 +19,7 @@ public class Action {
 		}
 		
 		public int getNum() {
-			// TODO Auto-generated method stub
-			return 0;
+			return this.num;
 		}
 	}
 	

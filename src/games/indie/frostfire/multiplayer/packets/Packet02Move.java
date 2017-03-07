@@ -64,6 +64,7 @@ public class Packet02Move extends Packet {
 
     @Override
     public byte[] getData() {
+    	System.out.println(this.action.getNum());
         return ("02" + this.username + "," + this.x + "," + this.y + "," + this.action.getNum() + "," + this.movingDir.getAngle()).getBytes();
 
     }
