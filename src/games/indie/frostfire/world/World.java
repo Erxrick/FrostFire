@@ -1,7 +1,6 @@
 package games.indie.frostfire.world;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -11,10 +10,7 @@ import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.entities.*;
-import games.indie.frostfire.entities.human.Action.ActionType;
-import games.indie.frostfire.items.Axe;
-import games.indie.frostfire.items.Item;
-import games.indie.frostfire.multiplayer.PlayerMP;
+import games.indie.frostfire.items.*;
 
 
 public class World {
@@ -64,7 +60,7 @@ public class World {
 	}
 
 	public void draw(Graphics screen) {
-		for (Entity entity : getEntities()) {
+		for (Entity entity : entities) {
 			entity.draw();
 		}
 		for (Item item : onGround) {
@@ -79,7 +75,7 @@ public class World {
 	}
 	
 	public void checkInteraction(Entity self, Interactor hand) {
-		for (Entity entity : getEntities()) {
+		for (Entity entity : entities) {
 			if (entity == self)
 				continue;
 			if (hand.getLine().intersects(new Rectangle(
@@ -94,7 +90,7 @@ public class World {
 	}
 	
 	public boolean isValidMove(Entity moving, Shape changedCollision) {
-		for (Entity entity : getEntities()) {
+		for (Entity entity : entities) {
 			if (entity == moving)
 				continue;
 			// Don't ask
@@ -108,36 +104,4 @@ public class World {
 		}
 		return true;
 	}
-
-	public synchronized void movePlayer(long l, float x, float y, ActionType action, Direction direction) {
-		int index = getPlayerMPIndex(l);
-		getEntities().get(index).setLocation(x, y);
-	}
-	
-    public synchronized void removePlayerMP(long username) {
-        int index = 0;
-        for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
-                break;
-            }
-            index++;
-        }
-        this.getEntities().remove(index);
-    }
-    
-    private synchronized int getPlayerMPIndex(long username) {
-        int index = 0;
-        for (Entity e : getEntities()) {
-            if (e instanceof PlayerMP && ((PlayerMP) e).getUsername() == username) {
-                break;
-            }
-            index++;
-        }
-        return index;
-    }
-    
-    public synchronized List<Entity> getEntities() {
-        return this.entities;
-     
-    }
 }

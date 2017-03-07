@@ -15,8 +15,16 @@ public class Camera {
 	
 	private static Vector2f center;
 	
+	public static void setCenter(Vector2f coords) {
+		setCenter(coords.x, coords.y);
+	}
+	
 	public static void setCenter(float...coords) {
 		Camera.center = new Vector2f(coords);
+	}
+	
+	public static Vector2f getCenter() {
+		return center;
 	}
 	
 	public static void draw(Image sprite, float x, float y) {

@@ -8,5 +8,9 @@ public class Mushroom extends Plant {
 		setIcon(Resource.getImage(("mushroom")));
 		setCollision(2, -10, 12, 6);
 	}
+	
+	public void interaction(Interactor hand) {
+		Resource.getSound("hit-mushroom").playAsSoundEffect(1, 1, false);
+	}
 
 }

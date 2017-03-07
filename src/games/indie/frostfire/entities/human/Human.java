@@ -18,8 +18,8 @@ import games.indie.frostfire.world.Direction;
 
 public class Human extends Creature {
 	
-	protected Natural hunger;
-	protected Natural thirst;
+	private Natural hunger;
+	private Natural thirst;
 	
 	protected Hand rightHand = new Hand(this, ActionType.PUNCH_RIGHT);
 	protected Hand leftHand = new Hand(this, ActionType.PUNCH_LEFT);
@@ -36,8 +36,8 @@ public class Human extends Creature {
 		setCollision(2, -12, 12, 4);
 		loadActions();
 		setAction(ActionType.IDLE, Direction.SOUTH);
-		hunger = new Natural(0, 100, -.0001, health);
-		thirst = new Natural(0, 100, -.0002, health);
+		setHunger(new Natural(0, 100, -.0001, getHealth()));
+		setThirst(new Natural(0, 100, -.0002, getHealth()));
 	}
 	
 	private int time;
@@ -51,8 +51,8 @@ public class Human extends Creature {
 		time += delta;
 		if (time >= 1000) {
 			time -= 1000;
-			hunger.update(1000);
-			thirst.update(1000);
+			getHunger().update(1000);
+			getThirst().update(1000);
 		}
 		for (Item item : world.onGround) {
 			if (nearbyItems.contains(item)) {
@@ -103,12 +103,12 @@ public class Human extends Creature {
 			rightHand.getOffset().set(4, -12);
 			break;
 		case EAST:
-			leftHand.getOffset().set(12, -12);
-			rightHand.getOffset().set(10, -12);
+			leftHand.getOffset().set(12, -10);
+			rightHand.getOffset().set(4, -11);
 			break;
 		case NORTH:
 			leftHand.getOffset().set(3, -12);
-			rightHand.getOffset().set(13, -12);
+			rightHand.getOffset().set(11, -12);
 			break;
 		case SOUTH:
 			rightHand.getOffset().set(3, -12);
@@ -132,15 +132,31 @@ public class Human extends Creature {
 	}
 	
 	public void draw() {
-		if (direction == Direction.NORTH) {
+		switch (direction) {
+		case NORTH:
+			rightHand.draw();
+			leftHand.draw();
 			head.draw();
 			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
-		} else {
+			break;
+		case EAST:
+			leftHand.draw();
 			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
+			rightHand.draw();
+			break;
+		case WEST:
+			rightHand.draw();
+			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			head.draw();
+			leftHand.draw();
+			break;
+		default:
+			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			head.draw();
+			rightHand.draw();
+			leftHand.draw();
 		}
-		rightHand.draw();
-		leftHand.draw();
 	}
 	
 	public boolean move(Vector2f movement) {
@@ -224,6 +240,22 @@ public class Human extends Creature {
 		super.debug_draw(screen);
 		rightHand.debug_draw(screen);
 		leftHand.debug_draw(screen);
+	}
+
+	public Natural getThirst() {
+		return thirst;
+	}
+
+	public void setThirst(Natural thirst) {
+		this.thirst = thirst;
+	}
+
+	public Natural getHunger() {
+		return hunger;
+	}
+
+	public void setHunger(Natural hunger) {
+		this.hunger = hunger;
 	}
 	
 }

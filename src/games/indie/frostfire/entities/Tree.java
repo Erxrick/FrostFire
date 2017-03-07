@@ -13,5 +13,9 @@ public class Tree extends Plant {
 		world.place(new TreeStump(), x + 8, y - 16);
 		super.die();
 	}
+	
+	public void interaction(Interactor hand) {
+		Resource.getSound("hit-tree").playAsSoundEffect(1, 1, false);
+	}
 
 }

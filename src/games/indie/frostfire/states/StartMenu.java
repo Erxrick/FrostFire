@@ -9,9 +9,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.Resource;
-import games.indie.frostfire.multiplayer.GameClient;
-import games.indie.frostfire.multiplayer.GameServer;
-import games.indie.frostfire.multiplayer.Multiplayer;
 import games.indie.frostfire.user.ui.Button;
 
 public class StartMenu extends BasicGameState {
@@ -50,12 +47,10 @@ public class StartMenu extends BasicGameState {
 	
 	private void hostGame() {
 		System.out.println("HOST GAME!");
-		FrostFire.multiplayer = new Multiplayer(new GameServer(FrostFire.gameplay), new GameClient(FrostFire.gameplay, "localhost"));
 	}
 	
 	private void joinGame() {
 		System.out.println("JOIN GAME!");
-		FrostFire.multiplayer = new Multiplayer(new GameClient(FrostFire.gameplay, "localhost"));
 	}
 
 }

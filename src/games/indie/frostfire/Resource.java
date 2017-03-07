@@ -13,7 +13,7 @@ import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 /**
- * Loads all files and images into the game
+ * Loads all audio and images into the game
  * @author Wesley Barlow
  *
  */

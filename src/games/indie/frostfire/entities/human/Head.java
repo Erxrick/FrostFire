@@ -78,5 +78,10 @@ public class Head extends BodyPart {
 
 	public void setSightAngle(double sightAngle) {
 		this.sightAngle = sightAngle;
+		body.setDirection(Direction.four(sightAngle));
+	}
+	
+	public Vector2f getRealOffset() {
+		return offset.sub(new Vector2f(0, 8));
 	}
 }

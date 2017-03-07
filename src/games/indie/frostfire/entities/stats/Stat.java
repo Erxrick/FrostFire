@@ -1,5 +1,10 @@
 package games.indie.frostfire.entities.stats;
 
+/**
+ * 
+ * @author Wesley Barlow
+ *
+ */
 public class Stat {
 	
 	protected int min, max;
@@ -28,6 +33,10 @@ public class Stat {
 	
 	public String toString() {
 		return (int) currentValue + "/" + max;
+	}
+	
+	public double getPercentage() {
+		return currentValue/max;
 	}
 
 }

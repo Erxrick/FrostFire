@@ -12,14 +12,15 @@ import games.indie.frostfire.world.World;
 
 public abstract class Entity extends Sprite {
 	
-	// x and y of collision relative to this location
+	// x and y of collision relative to this.getLocation()
 	protected Box collision;
-	protected Health health;
+	
+	private Health health;
 	protected float direction;
 	protected World world;
 	
 	public Entity() {
-		health = new Health(this, 0, 100);
+		setHealth(new Health(this, 0, 100));
 	}
 	
 	public World getWorld() {
@@ -60,15 +61,29 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void takeDamage(double damage) {
-		health.affect(-damage);
+		getHealth().affect(-damage);
 	}
 	
+	/**
+	 * An optional override that allows entities to be time aware
+	 */
 	public void update(int delta) {
 		
 	}
 	
+	/**
+	 * An optional override that allows entities to react to interaction events
+	 */
 	public void interaction(Interactor hand) {
 		
+	}
+
+	public Health getHealth() {
+		return health;
+	}
+
+	public void setHealth(Health health) {
+		this.health = health;
 	}
 
 }

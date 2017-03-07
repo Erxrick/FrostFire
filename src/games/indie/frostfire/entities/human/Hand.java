@@ -4,9 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.openal.Audio;
 
-import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.entities.Interactor;
 import games.indie.frostfire.entities.human.Action.ActionType;
@@ -15,8 +13,6 @@ import games.indie.frostfire.motion.Punch;
 import games.indie.frostfire.world.Camera;
 
 public class Hand extends BodyPart implements Interactor {
-	
-	private Audio punchSound = Resource.loadSound("res/audio/punch.wav");
 	
 	protected Motion currentMotion;
 	protected Vector2f offset;
@@ -43,7 +39,6 @@ public class Hand extends BodyPart implements Interactor {
 			double useDirection = body.head.getSightAngle();
 			if (getEquipped() == null) {
 				body.setAction(getSide(), useDirection);
-				punchSound.playAsSoundEffect(1, 1, false);
 				setCurrentMotion(new Punch(this));
 			} else {
 				equipped.use(this, useDirection);
@@ -73,7 +68,7 @@ public class Hand extends BodyPart implements Interactor {
 	
 	public void draw() {
 		if (getEquipped() != null) {
-			Camera.draw(getEquipped().getShow(), getLocation().add(new Vector2f(0, 9)));
+			Camera.draw(getEquipped().getShow(), getLocation().add(body.getHead().getRealOffset().negate()).add(new Vector2f(0, 9)));
 		}
 	}
 	

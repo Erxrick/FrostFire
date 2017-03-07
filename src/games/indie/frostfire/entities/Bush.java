@@ -28,7 +28,7 @@ public class Bush extends Plant {
 		if (shouldGrowBerry()) {
 			time = 0;
 			Consumable berry = new Consumable(ConsumableType.STRAWBERRY);
-			berry.setLocation(x + (float) Math.random() * (width - berry.getWidth()), y - (float) Math.random() * (height - berry.getHeight()));
+			berry.setLocation(x + (int) Math.random() * (width - berry.getWidth()), y - (int) Math.random() * (height - berry.getHeight()));
 			berries.push(berry);
 		}
 	}

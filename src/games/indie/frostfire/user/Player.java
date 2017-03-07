@@ -16,10 +16,12 @@ public class Player extends Human {
 	
 	protected UI ui;
 	protected Hand primaryHand;
+	protected float sightRadius;
 	
 	public Player() {
 		ui = new UI(this);
 		primaryHand = leftHand;
+		sightRadius = 10;
 	}
 	
 	public void control(Input input) {
@@ -62,11 +64,6 @@ public class Player extends Human {
 			primaryHand = rightHand;
 	}
 	
-	public void setLocation(float x, float y) {
-		super.setLocation(x, y);
-//		Camera.setCenter(getCenterX(), minY);
-	}
-	
 	public void updateHead() {
 		Vector2f position = Camera.onScreen(getCenterX(), getCenterY());
 		head.setSightAngle(new Vector2f(
@@ -76,6 +73,17 @@ public class Player extends Human {
 	
 	public UI getUI() {
 		return ui;
+	}
+	
+	public Vector2f getFocus() {
+		return getLocation().add(new Vector2f(head.getSightAngle()).scale(sightRadius));
+	}
+	
+	public void update(int delta) {
+		Camera.setCenter(
+				new Vector2f(getCenter()[0] - (FrostFire.NATIVE_WIDTH/2 - Mouse.getX()/FrostFire.scale)/30f,
+				minY - (FrostFire.NATIVE_HEIGHT/2 - Mouse.getY()/FrostFire.scale)/30f).add(Camera.getCenter()).scale(.5f));
+		super.update(delta);
 	}
 	
 }

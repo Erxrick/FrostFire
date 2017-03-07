@@ -40,6 +40,10 @@ public abstract class Creature extends Entity {
 		inventory.add(i);
 	}
 	
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+	
 	public Direction getDirection() {
 		return direction;
 	}

@@ -2,17 +2,17 @@ package games.indie.frostfire.world;
 
 import java.util.Comparator;
 
-import games.indie.frostfire.entities.Entity;
+import games.indie.frostfire.Sprite;
 
 /**
  * 
  * @author Wesley Barlow
  *
  */
-public class ZLayerSort implements Comparator<Entity> {
+public class ZLayerSort implements Comparator<Sprite> {
 
-	public int compare(Entity e_0, Entity e_1) {
-		return (int) (e_1.getY() - e_1.getHeight() - (e_0.getY() - e_0.getHeight()));
+	public int compare(Sprite s_0, Sprite s_1) {
+		return (int) (s_1.getY() - s_1.getHeight() - (s_0.getY() - s_0.getHeight()));
 	}
 
 }

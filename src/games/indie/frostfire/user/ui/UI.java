@@ -24,9 +24,12 @@ public class UI extends ArrayList<UIComponent> implements Drawable {
 				new BodySlot(screen_midpoint + 16, lift, human.getFeet()),
 				"lower-slots");
 		
-		StatIcon health = new StatIcon(screen_midpoint - 32, lift - 10, "heart");
-		StatIcon thirst = new StatIcon(screen_midpoint - 22, lift - 10, "water");
-		StatIcon hunger = new StatIcon(screen_midpoint - 12, lift - 10, "food");
+		StatIcon health = new StatIcon(screen_midpoint - 15, 4, "heart");
+		health.setStat(human.getHealth());
+		StatIcon thirst = new StatIcon(screen_midpoint - 5, 4, "water");
+		thirst.setStat(human.getThirst());
+		StatIcon hunger = new StatIcon(screen_midpoint + 5, 4, "food");
+		hunger.setStat(human.getHunger());
 		
 		this.add(rightHand);
 		this.add(leftHand);
