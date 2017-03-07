@@ -4,21 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Vector2f;
 
-import games.indie.frostfire.Drawable;
-import games.indie.frostfire.entities.CocoPlant;
-import games.indie.frostfire.entities.Entity;
-import games.indie.frostfire.entities.Interactor;
-import games.indie.frostfire.entities.Tree;
+import games.indie.frostfire.entities.*;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Item;
 import games.indie.frostfire.multiplayer.PlayerMP;
 
 
-public class World implements Drawable {
+public class World {
 	
 	public static Camera camera = new Camera();
 	private long seed;
@@ -34,30 +34,42 @@ public class World implements Drawable {
 	}
 	
 	public void generate(long seed) {
-		Tree tree = new Tree();
-		tree.setLocation(80, 80);
-		place(tree);
-		Tree tree2 = new Tree();
-		tree2.setLocation(-48, 0);
-		place(tree2);
-		CocoPlant c = new CocoPlant();
-		c.setLocation(0, -30);
-		place(c);
+		place(new Tree(), 80, 80);
 		onGround.add(new Axe());
+		place(new Bush(), 0, -64);
+		place(new Crystal(), -32, 32);
+		place(new Mushroom(), 32, 32);
+		place(new Stone(), 64, 32);
 	}
 	
-	public void place(Entity e) {
-		e.setWorld(this);
-		entities.add(e);
+	public void place(Item item, float x, float y) {
+		item.setLocation(x, y);
+		onGround.add(item);
+	}
+	
+	public void place(Entity entity, float x, float y) {
+		entity.setLocation(x, y);
+		entity.setWorld(this);
+		entities.add(entity);
+	}
+	
+	public void remove(Entity e) {
+		entities.remove(e);
 	}
 	
 	public void update() {
 		entities.sort(topDown);
 	}
 
-	public void draw() {
+	public void draw(Graphics screen) {
 		for (Item item : onGround) {
-			item.draw();
+			Image showOnMap = item.getShow().copy();
+			showOnMap.setAlpha(.9f);
+			Vector2f position = Camera.onScreen(item.getX(), item.getY());
+			screen.setColor(new Color(40, 85, 138));
+			screen.fillOval(position.getX() + item.getWidth()/4, position.getY() + item.getHeight() + 2, 
+					item.getWidth()/2, item.getHeight()/4);
+			Camera.draw(showOnMap, item.getX(), item.getY() + item.getHover());
 		}
 		for (Entity entity : getEntities()) {
 			entity.draw();

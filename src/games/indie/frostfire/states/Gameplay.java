@@ -33,7 +33,7 @@ public class Gameplay extends BasicGameState {
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		world = new World();
-		world.place(player);
+		world.place(player, 0, 0);
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 	}
 
@@ -41,7 +41,7 @@ public class Gameplay extends BasicGameState {
 		screen.setBackground(new Color(44, 141, 144));
 		screen.scale(FrostFire.scale, FrostFire.scale);
 		screen.setLineWidth(FrostFire.scale);
-		world.draw();
+		world.draw(screen);
 		if (debugDraw) {
 			for (Entity entity : world.getEntities()) {
 				entity.debug_draw(screen);

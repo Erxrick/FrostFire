@@ -90,6 +90,7 @@ public class GameClient extends Thread {
                 + " has joined the game...");
       PlayerMP player = new PlayerMP(packet.getX(), packet.getY(), packet.getUsername(), address, port);
 //      packet.getX(), packet.getY(), 
+      if(!(packet.getUsername() == (game.getPlayer().getUsername()))) {
       List<Entity>  entit= game.world.getEntities();
       boolean inside = false;
       for (Entity entity : entit) {
@@ -97,7 +98,7 @@ public class GameClient extends Thread {
 			inside = true;
       }
       if(inside == false) {
-      	game.world.place(player);
+      	game.world.place(player, 0, 0);
       }
       System.out.println("Handled Login");
     }
