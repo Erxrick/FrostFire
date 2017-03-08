@@ -15,7 +15,7 @@ public abstract class Entity extends Sprite {
 	// x and y of collision relative to this.getLocation()
 	protected Box collision;
 	
-	private Health health;
+	protected Health health;
 	protected float direction;
 	protected World world;
 	

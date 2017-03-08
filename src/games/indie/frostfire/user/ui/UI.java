@@ -2,11 +2,17 @@ package games.indie.frostfire.user.ui;
 
 import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
+
 import games.indie.frostfire.Drawable;
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.human.Human;
+import games.indie.frostfire.items.Item;
+import games.indie.frostfire.user.Player;
 
 public class UI extends ArrayList<UIComponent> implements Drawable {
+	
+	private Item grabbed;
 	
 	public UI(Human human) {
 		int screen_midpoint = FrostFire.NATIVE_WIDTH/2;
@@ -44,6 +50,29 @@ public class UI extends ArrayList<UIComponent> implements Drawable {
 		for (Drawable component : this) {
 			component.draw();
 		}
+		if (getGrabbed() != null) {
+			getGrabbed().getIcon().draw(Mouse.getX()/FrostFire.scale, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.scale);
+		}
 	}
+
+	public void grab(Item equipped) {
+		setGrabbed(equipped);
+	}
+	
+	public void dropGrabbed(Player player) {
+		if (getGrabbed() != null) {
+			player.getWorld().place(getGrabbed(), player.getCenterX(), player.getCenterY());
+			setGrabbed(null);
+		}
+	}
+
+	public Item getGrabbed() {
+		return grabbed;
+	}
+
+	public void setGrabbed(Item grabbed) {
+		this.grabbed = grabbed;
+	}
+	
 
 }

@@ -11,7 +11,15 @@ public abstract class UIComponent implements Drawable, Clickable {
 		this.screen_y = screen_y;
 	}
 	
+	public boolean mouseOverSelf(int x, int y) {
+		return false;
+	}
+	
 	public boolean mousePressed(int button, int x, int y) {
+		return false;
+	}
+	
+	public boolean mouseReleased(int x, int y) {
 		return false;
 	}
 }

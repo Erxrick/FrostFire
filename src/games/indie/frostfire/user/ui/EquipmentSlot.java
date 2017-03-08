@@ -27,5 +27,9 @@ public class EquipmentSlot extends UIComponent implements Drawable {
 	public boolean mousePressed(int button, int x, int y) {
 		return (first.mousePressed(button, x, y) || second.mousePressed(button, x, y));
 	}
+	
+	public boolean mouseReleased(int x, int y) {
+		return (first.mouseReleased(x, y) || second.mouseReleased(x, y));
+	}
 
 }

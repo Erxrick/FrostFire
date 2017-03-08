@@ -13,11 +13,14 @@ public abstract class Item extends Sprite implements StateChangeListener, Usable
 	protected int weight;
 	protected float angle;
 	protected Vector2f holdingOffset;
+	
+	protected int maxStackSize;
+	
 	protected float hover;
 	protected boolean hoverUp;
 	
 	public Item(int weight, String itemName) {
-		hoverUp = true;
+		maxStackSize = 1;
 		this.weight = weight;
 		icon = Resource.getImage(itemName);
 		setSize(icon.getWidth(), icon.getHeight());

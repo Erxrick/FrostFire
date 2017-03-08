@@ -4,8 +4,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.entities.stats.Stat;
-import games.indie.frostfire.items.Inventory;
-import games.indie.frostfire.items.Item;
+import games.indie.frostfire.items.*;
 import games.indie.frostfire.world.Direction;
 
 public abstract class Creature extends Entity {
@@ -46,6 +45,10 @@ public abstract class Creature extends Entity {
 	
 	public Direction getDirection() {
 		return direction;
+	}
+	
+	public void consume(ConsumableType consumable) {
+		health.affect(consumable.getHealthChange());
 	}
 
 }

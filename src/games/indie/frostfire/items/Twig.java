@@ -1,5 +1,6 @@
 package games.indie.frostfire.items;
 
+import games.indie.frostfire.entities.human.BodyPart;
 import games.indie.frostfire.entities.human.Hand;
 import games.indie.frostfire.motion.Swing;
 
@@ -10,7 +11,7 @@ public class Twig extends Item {
 	}
 
 	@Override
-	public void stateChange() {
+	public void stateChange(BodyPart holder) {
 		
 	}
 

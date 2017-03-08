@@ -1,5 +1,7 @@
 package games.indie.frostfire.items;
 
+import games.indie.frostfire.entities.human.BodyPart;
+
 /**
  * stateChange() called when an InventorySlot holding this Item is right clicked.
  * Use for performing an inventory function or changing a setting.
@@ -9,5 +11,5 @@ package games.indie.frostfire.items;
  * @author Wesley Barlow
  */
 public interface StateChangeListener {
-	public void stateChange();
+	public void stateChange(BodyPart part);
 }

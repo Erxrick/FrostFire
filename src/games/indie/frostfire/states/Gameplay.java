@@ -61,12 +61,14 @@ public class Gameplay extends BasicGameState {
 		}
 	}
 	
-	@Override
 	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
 		player.updateHead();
 	}
 	
-	@Override
+	public void mouseDragged(int oldx, int oldy, int newx, int newy) {
+		player.updateHead();
+	}
+	
 	public void mousePressed(int button, int x, int y) {
 		boolean punch = true;
 		for (UIComponent component : player.getUI()) {
@@ -80,6 +82,22 @@ public class Gameplay extends BasicGameState {
 				player.getLeftHand().punch();
 			else if (button == 1)
 				player.getRightHand().punch();
+		}
+	}
+	
+	public void mouseReleased(int button, int x, int y) {
+		if (player.getUI().getGrabbed() != null) {
+			boolean shouldDrop = true;
+			for (UIComponent component : player.getUI()) {
+				if (component.mouseReleased(x/FrostFire.scale, y/FrostFire.scale)) {
+					player.getUI().grab(null);
+					shouldDrop = false;
+					break;
+				}
+			}
+			if (shouldDrop) {
+				player.getUI().dropGrabbed(player);
+			}
 		}
 	}
 

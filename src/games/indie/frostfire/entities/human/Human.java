@@ -12,6 +12,7 @@ import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.Creature;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.entities.stats.Natural;
+import games.indie.frostfire.items.ConsumableType;
 import games.indie.frostfire.items.Item;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
@@ -256,6 +257,13 @@ public class Human extends Creature {
 
 	public void setHunger(Natural hunger) {
 		this.hunger = hunger;
+	}
+	
+	@Override
+	public void consume(ConsumableType consumable) {
+		super.consume(consumable);
+		thirst.affect(consumable.getThirstChange());
+		hunger.affect(consumable.getHungerChange());
 	}
 	
 }
