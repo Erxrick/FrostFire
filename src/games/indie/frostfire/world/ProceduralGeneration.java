@@ -23,7 +23,7 @@ public class ProceduralGeneration {
 				double noise = Math.abs(p.noise2(x, y));
 				System.out.println(noise);
 				int posNeg = rand.nextInt(2);
-				if(rand.nextDouble()>0.35){
+				if(rand.nextDouble()>0.4){
 					if(noise<0.0000002){
 						generatePattern(x, y);
 					}else if(noise>0.8 && noise<0.89) {//

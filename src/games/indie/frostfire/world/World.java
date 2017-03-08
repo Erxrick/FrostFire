@@ -28,22 +28,25 @@ import games.indie.frostfire.multiplayer.PlayerMP;
 public class World {
 	
 	public static Camera camera = new Camera();
-	private int seed = 200;
+	private int seed;
 	private ZLayerSort topDown;
 	private List<Entity> entities;
 	public ArrayList<Item> onGround;
 	private int entityCount;
 	
 	public World(int seed) {
+		this.seed = seed;
 		topDown = new ZLayerSort();
 		entities = new CopyOnWriteArrayList<>();
 		onGround = new ArrayList<>();
-generate(seed);	}
+		generate();	
+		}
 	
 	public void generate() {//reduce entities that are spawned
 		ProceduralGeneration pG = new ProceduralGeneration(this);
 		pG.generateWorld(this.getWorldSeed());
 	}
+	
 	public int getWorldSeed(){
 		return this.seed;
 	}
