@@ -38,45 +38,14 @@ public class World {
 		topDown = new ZLayerSort();
 		entities = new CopyOnWriteArrayList<>();
 		onGround = new ArrayList<>();
-		generate(seed);
-	}
+generate(seed);	}
 	
-	public void generate(int seed) {
-		PerlinNoiseGenerator p = new PerlinNoiseGenerator(seed);//generates float with 9 digits following decimal.
-		Random rand = new Random(seed);
-		for(float x=0;x<1;x+=0.01){
-			for(float y=0;y<1;y+=0.01){
-				double noise = Math.abs(p.noise2(x, y));
-		//		System.out.println(noise);
-				int posNeg = rand.nextInt(2);
-				if(rand.nextDouble()>0.33){
-		//			System.out.println("in entity statements");
-					if(noise>0.4 && noise<0.49) {
-						place(new Crystal(), findXorY(x, posNeg), findXorY(y, posNeg));
-					} else if(noise>0.5 && noise<0.59) {
-						place(new Stone(), findXorY(x, posNeg), findXorY(y, posNeg));
-					} else if(noise>0.6 && noise<0.69 || noise>0.9 && noise<1) {
-						place(new CocoPlant(), findXorY(x, posNeg), findXorY(y, posNeg));
-					} else if(noise>0.7 && noise<0.79 || noise>0.2 && noise<0.29) {
-						place(new Bush(), findXorY(x, posNeg), findXorY(y, posNeg));
-					} else if(noise>0.8 && noise<0.89 || noise>0.1 && noise<0.19) {
-						place(new Tree(), findXorY(x, posNeg), findXorY(y, posNeg));
-					}  else if(noise>0.3 && noise<0.39 || noise>0 && noise<0.09) {
-						place(new Mushroom(), findXorY(x, posNeg), findXorY(y, posNeg));
-					}
-				}
-			}
-		}
+	public void generate() {//reduce entities that are spawned
+		ProceduralGeneration pG = new ProceduralGeneration(this);
+		pG.generateWorld(this.getWorldSeed());
 	}
-	
-	public float findXorY(float x, int rand){
-		float result = 0;
-		if(rand == 0){
-			result = x*1600;
-		} else {
-			result = (0-x)*1600;
-		}
-		return result;
+	public int getWorldSeed(){
+		return this.seed;
 	}
 	
 	public void place(Item item, float x, float y) {
