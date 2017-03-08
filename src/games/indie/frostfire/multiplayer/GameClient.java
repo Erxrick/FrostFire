@@ -15,6 +15,8 @@ import games.indie.frostfire.multiplayer.packets.Packet00Login;
 import games.indie.frostfire.multiplayer.packets.Packet01Disconnect;
 import games.indie.frostfire.multiplayer.packets.Packet02Move;
 import games.indie.frostfire.multiplayer.packets.Packet03Seed;
+import games.indie.frostfire.multiplayer.packets.Packet04Damage;
+import games.indie.frostfire.multiplayer.packets.Packet05Death;
 import games.indie.frostfire.states.Gameplay;
 
 
@@ -79,8 +81,35 @@ public class GameClient extends Thread {
         	this.seed = seedpacket.getSeed();
         	System.out.println("this is the seed:" + seed);
         	game.makeWorld(seed);
+        	break;
+        case DAMAGE:
+        	Packet04Damage dmgpacket = new Packet04Damage(data);
+        	dmgEntity(dmgpacket);
+        	break;
+        case DEATH:
+        	Packet05Death deathpacket = new Packet05Death(data);
+        	killEntity(deathpacket);
+        	break;
         }
     }
+
+    private void killEntity(Packet05Death deathpacket) {
+    	  for (Entity entity : game.world.getEntities()) {
+    		  if(entity.getID() == deathpacket.getDeadEntity()) {
+  				game.world.remove(entity);
+  			}
+    	  }
+		
+	}
+
+	private void dmgEntity(Packet04Damage dmgpacket) {
+		for (Entity entity : game.world.getEntities()) {
+			if(entity.getID() == dmgpacket.getEntityDamaged()) {
+				System.out.println(dmgpacket.getEntityDamaged());
+				entity.setHealth(dmgpacket.entityHealth());
+			}
+		}		
+	}
 
     public void sendData(byte[] data) {
     

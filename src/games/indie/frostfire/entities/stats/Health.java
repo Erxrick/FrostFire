@@ -14,5 +14,11 @@ public class Health extends Stat {
 	protected void reachMin() {
 		entity.die();
 	}
+	public double getHealth() {
+		return this.currentValue;
+	}
+	public void setHp(double health) {
+		this.currentValue = health;
+	}
 
 }

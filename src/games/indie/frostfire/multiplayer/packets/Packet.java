@@ -6,7 +6,7 @@ import games.indie.frostfire.multiplayer.GameServer;
 public abstract class Packet {
 
     public static enum PacketTypes {
-        INVALID(-1), LOGIN(00), DISCONNECT(01), MOVE(02), SEED(03);
+        INVALID(-1), LOGIN(00), DISCONNECT(01), MOVE(02), SEED(03), DAMAGE(04), DEATH(05), DMGMP(06),DTHMP(07);
 
         private int packetId;
 
