@@ -50,7 +50,6 @@ public class PlayerMP extends Player {
 	
 	
 	
-	
 //	@Override
 //	public void setLocation(Coord location) {
 //		this.location = location;

@@ -8,12 +8,15 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 
+import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.multiplayer.packets.Packet;
 import games.indie.frostfire.multiplayer.packets.Packet.PacketTypes;
 import games.indie.frostfire.multiplayer.packets.Packet00Login;
 import games.indie.frostfire.multiplayer.packets.Packet01Disconnect;
 import games.indie.frostfire.multiplayer.packets.Packet02Move;
 import games.indie.frostfire.multiplayer.packets.Packet03Seed;
+import games.indie.frostfire.multiplayer.packets.Packet04Damage;
+import games.indie.frostfire.multiplayer.packets.Packet05Death;
 import games.indie.frostfire.states.Gameplay;
 import games.indie.frostfire.world.World;
 
@@ -78,12 +81,40 @@ public class GameServer extends Thread {
             this.removeConnection(packet2);
             break;
         case MOVE:
-          Packet02Move  packet3 = new Packet02Move(data);
+        	Packet02Move  packet3 = new Packet02Move(data);
             this.handleMove((packet3));
+            break;
+        case DAMAGE:
+        	Packet04Damage dmgpacket = new Packet04Damage(data);
+        	dmgEntity(dmgpacket);
+        	break;
+        case DEATH:
+        	Packet05Death deathpacket = new Packet05Death(data);
+        	killEntity(deathpacket);
+        	break;
         }
     }
 
-    public void addConnection(PlayerMP player, Packet00Login packet) {
+    private void killEntity(Packet05Death deathpacket) {
+    	  for (Entity entity : world.getEntities()) {
+    		  if(entity.getID() == deathpacket.getDeadEntity()) {
+  				world.remove(entity);
+  				sendDataToAllClients(deathpacket.getData());
+  			}
+    	  }
+		
+	}
+
+	private void dmgEntity(Packet04Damage dmgpacket) {
+		for (Entity entity : world.getEntities()) {
+			if(entity.getID() == dmgpacket.getEntityDamaged()) {
+				entity.setHealth(dmgpacket.entityHealth());
+				sendDataToAllClients(dmgpacket.getData());
+			}
+		}		
+	}
+
+	public void addConnection(PlayerMP player, Packet00Login packet) {
         boolean alreadyConnected = false;
         if(connectedPlayers.contains(player)) {
         	alreadyConnected = true;

@@ -4,8 +4,14 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
+import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.Sprite;
 import games.indie.frostfire.entities.stats.Health;
+import games.indie.frostfire.multiplayer.PlayerMP;
+import games.indie.frostfire.multiplayer.packets.Packet04Damage;
+import games.indie.frostfire.multiplayer.packets.Packet05Death;
+import games.indie.frostfire.multiplayer.packets.Packet06MPDamage;
+import games.indie.frostfire.multiplayer.packets.Packet07MPDeath;
 import games.indie.frostfire.world.Box;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
@@ -69,10 +75,33 @@ public abstract class Entity extends Sprite {
 		System.out.println(this + " DIED!");
 		//wriite a packet here for the server to know
 	//	System.out.println(this + " DIED!");
+		if(this instanceof PlayerMP) {
+			PlayerMP player = (PlayerMP) this;
+			Packet07MPDeath deathpacket = new Packet07MPDeath(player.getUsername());
+			deathpacket.writeData(FrostFire.multiplayer.getClient());
+		} else {
+		Packet05Death deathpacket = new Packet05Death(this.ID);
+		deathpacket.writeData(FrostFire.multiplayer.getClient());
+		}
 	}
 	
 	public void takeDamage(double damage) {
+		//send a damage packet here
 		health.affect(-damage);
+		if(this instanceof PlayerMP) {
+			PlayerMP player = (PlayerMP) this;
+			Packet06MPDamage dmgpacket = new Packet06MPDamage((player.getUsername()), this.getHealth());
+			dmgpacket.writeData(FrostFire.multiplayer.getClient());
+		} else {
+			Packet04Damage dmgpacket = new Packet04Damage(this.ID, this.getHealth());
+			dmgpacket.writeData(FrostFire.multiplayer.getClient());
+		}
+	}
+	public double getHealth() {
+		return this.health.getHealth();
+	}
+	public void setHealth(double health) {
+		this.health.setHp(health);
 	}
 
 }
