@@ -2,6 +2,8 @@ package games.indie.frostfire;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.util.HashMap;
 
 import org.newdawn.slick.Animation;
@@ -44,7 +46,8 @@ public class Resource {
 	}
 	
 	public static void loadImages() {
-		File[] startLocation = new File("res/images").listFiles();
+	//	File[] startLocation = new File("./res/images").listFiles();
+		File[] startLocation = new File("src/res/images").listFiles();
 		discoverImages(startLocation);
 	}
 	
@@ -59,14 +62,15 @@ public class Resource {
 	}
 	
 	public static void loadAudio() {
-		File[] startLocation = new File("res/audio").listFiles();
+	//	File[] startLocation = new File("./res/audio").listFiles();
+		File[] startLocation = new File("src/res/audio").listFiles();
 		discoverAudio(startLocation);
 	}
 	
 	public static void discoverAudio(File[] files) {
 	    for (File file : files) {
 	        if (file.isDirectory()) {
-	            discoverImages(file.listFiles());
+	            discoverAudio(file.listFiles());
 	        } else {
 	        	sounds.put(file.getName(), loadSound(file.getPath()));
 	        }

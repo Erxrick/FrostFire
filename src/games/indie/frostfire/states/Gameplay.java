@@ -33,9 +33,7 @@ public class Gameplay extends BasicGameState {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-		world = new World();
-		world.place(player, 0, 0);
-		Camera.setCenter(player.getCenterX(), player.getMinY());
+	
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
@@ -56,7 +54,7 @@ public class Gameplay extends BasicGameState {
 		player.update(delta);
 		player.control(gc.getInput());
 	//	System.out.println(this.player.getAction());
-		Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY(), this.player.getAction(), this.player.getDirection());
+		Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY());    //, this.player.getAction(), this.player.getDirection());
 		movePacket.writeData(FrostFire.multiplayer.getClient());
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
@@ -98,6 +96,13 @@ public class Gameplay extends BasicGameState {
 
 	public PlayerMP getPlayer() {
 		return this.player;
+	}
+	
+	public void makeWorld(int seed) {
+		System.out.println("this is the seed" + seed);
+		world = new World(seed);
+		world.place(player, 0, 0);
+		Camera.setCenter(player.getCenterX(), player.getMinY());
 	}
 
 }

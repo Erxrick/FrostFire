@@ -34,11 +34,11 @@ public class World {
 	public ArrayList<Item> onGround;
 	private int entityCount;
 	
-	public World() {
+	public World(int seed) {
 		topDown = new ZLayerSort();
 		entities = new CopyOnWriteArrayList<>();
 		onGround = new ArrayList<>();
-		generate(0);
+		generate(seed);
 	}
 	
 	public void generate(int seed) {
@@ -47,10 +47,10 @@ public class World {
 		for(float x=0;x<1;x+=0.01){
 			for(float y=0;y<1;y+=0.01){
 				double noise = Math.abs(p.noise2(x, y));
-				System.out.println(noise);
+		//		System.out.println(noise);
 				int posNeg = rand.nextInt(2);
 				if(rand.nextDouble()>0.33){
-					System.out.println("in entity statements");
+		//			System.out.println("in entity statements");
 					if(noise>0.4 && noise<0.49) {
 						place(new Crystal(), findXorY(x, posNeg), findXorY(y, posNeg));
 					} else if(noise>0.5 && noise<0.59) {
@@ -146,7 +146,7 @@ public class World {
 		return true;
 	}
 
-	public synchronized void movePlayer(long l, float x, float y, ActionType action, Direction direction) {
+	public synchronized void movePlayer(long l, float x, float y) {
 		int index = getPlayerMPIndex(l);
 		getEntities().get(index).setLocation(x, y);
 	//	System.out.println(action);

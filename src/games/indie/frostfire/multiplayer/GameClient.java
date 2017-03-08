@@ -14,6 +14,7 @@ import games.indie.frostfire.multiplayer.packets.Packet.PacketTypes;
 import games.indie.frostfire.multiplayer.packets.Packet00Login;
 import games.indie.frostfire.multiplayer.packets.Packet01Disconnect;
 import games.indie.frostfire.multiplayer.packets.Packet02Move;
+import games.indie.frostfire.multiplayer.packets.Packet03Seed;
 import games.indie.frostfire.states.Gameplay;
 
 
@@ -23,6 +24,7 @@ public class GameClient extends Thread {
     private InetAddress ipAddress;
     private DatagramSocket socket;
     private Gameplay game;
+    private int seed;
     
 
     public GameClient(Gameplay game, String ipAddress) {
@@ -71,6 +73,12 @@ public class GameClient extends Thread {
         case MOVE:
         	Packet02Move packet2 = new Packet02Move(data);
             handleMove(packet2);
+            break;
+        case SEED:
+        	Packet03Seed seedpacket = new Packet03Seed(data);
+        	this.seed = seedpacket.getSeed();
+        	System.out.println("this is the seed:" + seed);
+        	game.makeWorld(seed);
         }
     }
 
@@ -107,6 +115,6 @@ public class GameClient extends Thread {
     }
 
     private void handleMove(Packet02Move packet) {
-        this.game.world.movePlayer(packet.getUsername(), packet.getX(), packet.getY(), packet.getAction(), packet.getMovingDir());
+        this.game.world.movePlayer(packet.getUsername(), packet.getX(), packet.getY());      //, packet.getAction(), packet.getMovingDir());
     }
 }

@@ -23,11 +23,12 @@ public class StartMenu extends BasicGameState {
 	private Button host, join;
 	private Font text;
 	private TextField entry;
+	private boolean moveOn = false;
 
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		host = new Button(124, 48, "host-button");
 		join = new Button(128, 80, "join-button");
-		text = new AngelCodeFont("res/input.fnt", Resource.loadImage("res/input_0.png"));
+		text = new AngelCodeFont("input.fnt", Resource.loadImage("input_0.png"));
 		entry = new TextField(gc, text, 120, 114, 80, 16);
 		entry.setBackgroundColor(null);
 		entry.setBorderColor(null);
@@ -46,7 +47,7 @@ public class StartMenu extends BasicGameState {
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
-		if (gc.getInput().isKeyDown(Input.KEY_ENTER))
+		if (moveOn == true && gc.getInput().isKeyDown(Input.KEY_ENTER))
 			game.enterState(GameState.GAMEPLAY);
 	}
 
@@ -58,15 +59,17 @@ public class StartMenu extends BasicGameState {
 	public void mousePressed(int button, int x, int y) {
 		if (host.mousePressed(button, x/FrostFire.scale, y/FrostFire.scale)) {
 			hostGame(entry.getText());
+			moveOn = true;
 		} else if (join.mousePressed(button, x/FrostFire.scale, y/FrostFire.scale)) {
 			joinGame(entry.getText());
+			moveOn = true;
 		}
 	}
 	
 	private void hostGame(String seed) {
 		System.out.println("HOST GAME!");
-		System.out.println(seed);
-		FrostFire.multiplayer = new Multiplayer(new GameServer(FrostFire.gameplay), new GameClient(FrostFire.gameplay, "localhost"));
+	//	System.out.println(seed);
+		FrostFire.multiplayer = new Multiplayer(new GameServer(seed), new GameClient(FrostFire.gameplay, "localhost"));
 	}
 	
 	private void joinGame(String ipAddress) {

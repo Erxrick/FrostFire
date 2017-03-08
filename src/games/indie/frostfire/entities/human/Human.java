@@ -1,5 +1,6 @@
 package games.indie.frostfire.entities.human;
 
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -172,9 +173,9 @@ public class Human extends Creature {
 		// Forgive me father, for I know not what I do
 		String[] vertical = {"0", "1", "2", "1", "0", "1f", "2f", "1f"};
 		String[] horizonal = {"0", "1", "2", "3", "0", "4", "5", "6"};
-		SpriteSheet s = new SpriteSheet(Resource.loadImage("res/images/player/move-side.png"), 16, 16);
-		Animation moveUp = Resource.build("res/images/player/move-north.png", 16, vertical);
-		Animation moveDown = Resource.build("res/images/player/move-south.png", 16, vertical);
+		SpriteSheet s = new SpriteSheet(Resource.loadImage("images/player/move-side.png"), 16, 16);
+		Animation moveUp = Resource.build("images/player/move-north.png", 16, vertical);
+		Animation moveDown = Resource.build("images/player/move-south.png", 16, vertical);
 		Animation moveRight = Resource.build(s, 16, horizonal);
 		Animation moveLeft = Resource.flip(moveRight);
 		
