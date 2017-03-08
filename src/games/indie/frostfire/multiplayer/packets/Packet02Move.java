@@ -20,36 +20,36 @@ public class Packet02Move extends Packet {
         this.username = Long.parseLong(dataArray[0]);
         this.x = Float.parseFloat(dataArray[1]);
         this.y = Float.parseFloat(dataArray[2]);
-        this.action = getActionType(Integer.parseInt(dataArray[3]));
-        this.movingDir = getDirectionType(Double.parseDouble(dataArray[4]));
+//        this.action = getActionType(Byte.parseByte(dataArray[3]));
+//        this.movingDir = getDirectionType(Double.parseDouble(dataArray[4]));
  
     }
 
-    private Direction getDirectionType(double parseDouble) {
-    	for (Direction dir : Direction.values()) {
-			if(dir.getAngle() == parseDouble) {
-				return dir;
-			}
-		}
-		return null;
-	}
+//    private Direction getDirectionType(double parseDouble) {
+//    	for (Direction dir : Direction.values()) {
+//			if(dir.getAngle() == parseDouble) {
+//				return dir;
+//			}
+//		}
+//		return null;
+//	}
+//
+//	private ActionType getActionType(int parseByte) {
+//		for (ActionType action : ActionType.values()) {
+//			if(action.getNum() == parseByte) {
+//				return action;
+//			}
+//		}
+//		return null;
+//	}
 
-	private ActionType getActionType(int parseInt) {
-		for (ActionType action : ActionType.values()) {
-			if(action.getNum() == parseInt) {
-				return action;
-			}
-		}
-		return null;
-	}
-
-	public Packet02Move(long username, float x, float y, ActionType action, Direction movingDir) {
+	public Packet02Move(long username, float x, float y) { //, ActionType action, Direction movingDir) {
         super(02);
         this.username = username;
         this.x = x;
         this.y = y;
-        this.action = action;
-        this.movingDir = movingDir;
+//        this.action = action;
+//        this.movingDir = movingDir;
     }
 
     @Override
@@ -64,7 +64,8 @@ public class Packet02Move extends Packet {
 
     @Override
     public byte[] getData() {
-        return ("02" + this.username + "," + this.x + "," + this.y + "," + this.action.getNum() + "," + this.movingDir.getAngle()).getBytes();
+    //	System.out.println(this.action.getNum());
+        return ("02" + this.username + "," + this.x + "," + this.y).getBytes();          // + "," + this.action.getNum() + "," + this.movingDir.getAngle()).getBytes();
 
     }
 

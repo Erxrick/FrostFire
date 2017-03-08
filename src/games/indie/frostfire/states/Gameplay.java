@@ -12,6 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Entity;
+import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Consumable;
 import games.indie.frostfire.items.ConsumableType;
@@ -32,9 +33,7 @@ public class Gameplay extends BasicGameState {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
-		world = new World();
-		world.place(player, 0, 0);
-		Camera.setCenter(player.getCenterX(), player.getMinY());
+	
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
@@ -54,7 +53,8 @@ public class Gameplay extends BasicGameState {
 		world.update();
 		player.update(delta);
 		player.control(gc.getInput());
-		Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY(), this.player.getAction(), this.player.getDirection());
+	//	System.out.println(this.player.getAction());
+		Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY());    //, this.player.getAction(), this.player.getDirection());
 		movePacket.writeData(FrostFire.multiplayer.getClient());
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
@@ -96,6 +96,13 @@ public class Gameplay extends BasicGameState {
 
 	public PlayerMP getPlayer() {
 		return this.player;
+	}
+	
+	public void makeWorld(int seed) {
+		System.out.println("this is the seed" + seed);
+		world = new World(seed);
+		world.place(player, 0, 0);
+		Camera.setCenter(player.getCenterX(), player.getMinY());
 	}
 
 }

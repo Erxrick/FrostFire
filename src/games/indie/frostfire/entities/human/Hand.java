@@ -15,8 +15,8 @@ import games.indie.frostfire.motion.Punch;
 import games.indie.frostfire.world.Camera;
 
 public class Hand extends BodyPart implements Interactor {
-	
-	private Audio punchSound = Resource.loadSound("res/audio/punch.wav");
+//	private Audio punchSound = Resource.loadSound("audio/punch.wav");	
+	private Audio punchSound = Resource.loadSound("src/res/audio/punch.wav");
 	
 	protected Motion currentMotion;
 	protected Vector2f offset;

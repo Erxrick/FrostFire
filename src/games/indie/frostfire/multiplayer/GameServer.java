@@ -13,17 +13,28 @@ import games.indie.frostfire.multiplayer.packets.Packet.PacketTypes;
 import games.indie.frostfire.multiplayer.packets.Packet00Login;
 import games.indie.frostfire.multiplayer.packets.Packet01Disconnect;
 import games.indie.frostfire.multiplayer.packets.Packet02Move;
+import games.indie.frostfire.multiplayer.packets.Packet03Seed;
 import games.indie.frostfire.states.Gameplay;
+import games.indie.frostfire.world.World;
 
 
 public class GameServer extends Thread {
 
     private DatagramSocket socket;
-    private Gameplay game;
     private ArrayList<PlayerMP> connectedPlayers;
+    private int seed;
+    private World world;
+    private Packet03Seed seedpacket;
 
-    public GameServer(Gameplay game) {
-        this.game = game;
+    public GameServer(String seed) {
+        try {
+        	this.seed = Integer.parseInt(seed);   	
+        } catch (Exception e) {
+        	System.out.println("Not a valid seed, using default seed.");
+        	this.seed = 123;
+		}
+    	seedpacket = new Packet03Seed(this.seed);
+        world = new World(this.seed);
         connectedPlayers = new ArrayList<PlayerMP>();
         try {
             this.socket = new DatagramSocket(1331);
@@ -52,11 +63,13 @@ public class GameServer extends Thread {
         switch (type) {
         default:
         case INVALID:
+        	System.out.println("You done goofed");
             break;
         case LOGIN:
-          Packet00Login  packet1 = new Packet00Login(data);
+        	Packet00Login  packet1 = new Packet00Login(data);
             System.out.println("[" + address.getHostAddress() + ":" + port + "] " + (packet1).getUsername() + " has connected...");
-           PlayerMP player = new PlayerMP(10, 10, (packet1).getUsername(), address, port);
+            PlayerMP player = new PlayerMP(10, 10, (packet1).getUsername(), address, port);
+            sendData(seedpacket.getData(), address, port);
             this.addConnection(player, packet1);
             break;
         case DISCONNECT:

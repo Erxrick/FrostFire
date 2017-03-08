@@ -14,6 +14,7 @@ import games.indie.frostfire.multiplayer.packets.Packet.PacketTypes;
 import games.indie.frostfire.multiplayer.packets.Packet00Login;
 import games.indie.frostfire.multiplayer.packets.Packet01Disconnect;
 import games.indie.frostfire.multiplayer.packets.Packet02Move;
+import games.indie.frostfire.multiplayer.packets.Packet03Seed;
 import games.indie.frostfire.states.Gameplay;
 
 
@@ -23,6 +24,7 @@ public class GameClient extends Thread {
     private InetAddress ipAddress;
     private DatagramSocket socket;
     private Gameplay game;
+    private int seed;
     
 
     public GameClient(Gameplay game, String ipAddress) {
@@ -52,6 +54,7 @@ public class GameClient extends Thread {
 
     private void parsePacket(byte[] data, InetAddress address, int port) {
         String message = new String(data).trim();
+     //   System.out.println(message);
         PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
         switch (type) {
         default:
@@ -70,6 +73,12 @@ public class GameClient extends Thread {
         case MOVE:
         	Packet02Move packet2 = new Packet02Move(data);
             handleMove(packet2);
+            break;
+        case SEED:
+        	Packet03Seed seedpacket = new Packet03Seed(data);
+        	this.seed = seedpacket.getSeed();
+        	System.out.println("this is the seed:" + seed);
+        	game.makeWorld(seed);
         }
     }
 
@@ -93,17 +102,19 @@ public class GameClient extends Thread {
       List<Entity>  entit= game.world.getEntities();
       boolean inside = false;
       for (Entity entity : entit) {
-		if(entity instanceof PlayerMP && ((PlayerMP) entity).getUsername() == packet.getUsername()) 
+		if(entity instanceof PlayerMP && ((PlayerMP) entity).getUsername() == packet.getUsername()) {
 			inside = true;
+		}
       }
       if(inside == false) {
-      	game.world.place(player, 0, 0);
+     // 	game.world.place(player, 0, 0);
+      	game.world.place(player, 0f, 0f);
       }
       System.out.println("Handled Login");
       }
     }
 
     private void handleMove(Packet02Move packet) {
-        this.game.world.movePlayer(packet.getUsername(), packet.getX(), packet.getY(), packet.getAction(), packet.getMovingDir());
+        this.game.world.movePlayer(packet.getUsername(), packet.getX(), packet.getY());      //, packet.getAction(), packet.getMovingDir());
     }
 }

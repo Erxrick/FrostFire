@@ -17,9 +17,18 @@ public abstract class Entity extends Sprite {
 	protected Health health;
 	protected float direction;
 	protected World world;
+	private int ID;
 	
 	public Entity() {
 		health = new Health(this, 0, 100);
+	}
+	
+	public int getID() {
+		return ID;
+	}
+	
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 	
 	public World getWorld() {
@@ -59,7 +68,7 @@ public abstract class Entity extends Sprite {
 		world.getEntities().remove(this);
 		System.out.println(this + " DIED!");
 		//wriite a packet here for the server to know
-		System.out.println(this + " DIED!");
+	//	System.out.println(this + " DIED!");
 	}
 	
 	public void takeDamage(double damage) {
