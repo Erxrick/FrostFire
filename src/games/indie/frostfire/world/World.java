@@ -12,9 +12,15 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
-import games.indie.frostfire.entities.*;
+import games.indie.frostfire.entities.Bush;
+import games.indie.frostfire.entities.CocoPlant;
+import games.indie.frostfire.entities.Crystal;
+import games.indie.frostfire.entities.Entity;
+import games.indie.frostfire.entities.Interactor;
+import games.indie.frostfire.entities.Mushroom;
+import games.indie.frostfire.entities.Stone;
+import games.indie.frostfire.entities.Tree;
 import games.indie.frostfire.entities.human.Action.ActionType;
-import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.items.Item;
 import games.indie.frostfire.multiplayer.PlayerMP;
 
@@ -26,6 +32,7 @@ public class World {
 	private ZLayerSort topDown;
 	private List<Entity> entities;
 	public ArrayList<Item> onGround;
+	private int entityCount;
 	
 	public World() {
 		topDown = new ZLayerSort();
@@ -80,6 +87,8 @@ public class World {
 	public void place(Entity entity, float x, float y) {
 		entity.setLocation(x, y);
 		entity.setWorld(this);
+		entityCount++;
+		entity.setID(entityCount);
 		entities.add(entity);
 	}
 	
