@@ -23,8 +23,8 @@ public class UI extends ArrayList<UIComponent> {
 		int screen_midpoint = FrostFire.NATIVE_WIDTH/2;
 		int lift = FrostFire.NATIVE_HEIGHT - 18;
 		
-		BodySlot leftHand = new BodySlot(screen_midpoint - 56, lift, human.getLeftHand(), "left-hand");
-		BodySlot rightHand = new BodySlot(screen_midpoint + 40, lift, human.getRightHand(), "right-hand");
+		BodySlot leftHand = new BodySlot(screen_midpoint - 56, lift, human.getLeftHand(), "left-hand-slot");
+		BodySlot rightHand = new BodySlot(screen_midpoint + 40, lift, human.getRightHand(), "right-hand-slot");
 		BodySlot head = new BodySlot(screen_midpoint - 32, lift, human.getHead(), "head-slot");
 		BodySlot chest = new BodySlot(screen_midpoint - 17, lift, human.getChest(), "chest-slot");
 		BodySlot legs = new BodySlot(screen_midpoint + 1, lift, human.getLegs(), "legs-slot");

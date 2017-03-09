@@ -30,9 +30,9 @@ public class FrostFire extends StateBasedGame {
 	}
 
 	public static void main(String[] args) throws SlickException {
-		AppGameContainer game = new AppGameContainer(new FrostFire());
-		game.setDisplayMode(NATIVE_WIDTH * scale, NATIVE_HEIGHT * scale, true);
-		game.start();
+		AppGameContainer gc = new AppGameContainer(new FrostFire());
+		gc.setDisplayMode(NATIVE_WIDTH * scale, NATIVE_HEIGHT * scale, true);
+		gc.start();
 	}
 
 }

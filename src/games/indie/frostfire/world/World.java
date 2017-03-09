@@ -30,6 +30,7 @@ public class World {
 	public void generate(String seed) {
 		ProceduralGeneration god = new ProceduralGeneration(this);
 		god.generate(seed);
+		place(new Axe(), 0, 0);
 	}
 	
 	public void place(Item item, float x, float y) {

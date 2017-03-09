@@ -34,6 +34,11 @@ public class StartMenu extends BasicGameState {
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+		
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+			gc.exit();
+		}
+		
 		if (gc.getInput().isKeyDown(Input.KEY_ENTER)) {
 			start = true;
 		}
@@ -41,6 +46,7 @@ public class StartMenu extends BasicGameState {
 			((Gameplay) game.getState(GameState.GAMEPLAY)).getWorld().generate(enterSeed.getBox().getText());
 			game.enterState(GameState.GAMEPLAY);
 		}
+		enterSeed.blink(delta);
 	}
 
 	public int getID() {
@@ -51,6 +57,7 @@ public class StartMenu extends BasicGameState {
 	public void mousePressed(int button, int mouseX, int mouseY) {
 		mouseX /= FrostFire.scale;
 		mouseY /= FrostFire.scale;
+		enterSeed.mousePressed(button, mouseX, mouseY);
 		if (createWorld.mousePressed(button, mouseX, mouseY)) {
 			start = true;
 		}
