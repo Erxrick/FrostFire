@@ -33,6 +33,7 @@ public class World {
 	private List<Entity> entities;
 	public ArrayList<Item> onGround;
 	private int entityCount;
+	private ProceduralGeneration pG;
 	
 	public World(int seed) {
 		this.seed = seed;
