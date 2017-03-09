@@ -22,7 +22,7 @@ public class Gameplay extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		world = new World();
 		player = new Player();
-		world.place(player, 0, 0);
+		getWorld().place(player, 0, 0);
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
@@ -31,7 +31,7 @@ public class Gameplay extends BasicGameState {
 		screen.scale(FrostFire.scale, FrostFire.scale);
 		screen.setLineWidth(FrostFire.scale);
 		
-		world.draw(screen, debugDraw);
+		getWorld().draw(screen, debugDraw);
 		
 		player.getUI().draw();
 	}
@@ -42,7 +42,7 @@ public class Gameplay extends BasicGameState {
 			gc.exit();
 		}
 		
-		world.update(delta);
+		getWorld().update(delta);
 		player.control(gc.getInput());
 		
 		if (gc.getInput().isKeyPressed(Input.KEY_TAB)) {
@@ -92,6 +92,10 @@ public class Gameplay extends BasicGameState {
 
 	public int getID() {
 		return GameState.GAMEPLAY;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 }

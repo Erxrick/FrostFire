@@ -25,16 +25,11 @@ public class World {
 		topDown = new ZLayerSort();
 		entities = new ArrayList<>();
 		onGround = new ArrayList<>();
-		generate(0);
 	}
 	
-	public void generate(long seed) {
-		place(new Tree(), 80, 80);
-		onGround.add(new Axe());
-		place(new Bush(), 0, -64);
-		place(new Crystal(), -32, 32);
-		place(new Mushroom(), 32, 32);
-		place(new Stone(), 64, 32);
+	public void generate(String seed) {
+		ProceduralGeneration god = new ProceduralGeneration(this);
+		god.generate(seed);
 	}
 	
 	public void place(Item item, float x, float y) {

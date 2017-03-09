@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.newdawn.slick.AngelCodeFont;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -35,12 +36,10 @@ public class Resource {
 	}
 	
 	public static void load() {
-		System.out.println("Loading Images...");
 		images = new HashMap<>();
 		loadImages();
 		sounds = new HashMap<>();
 		loadAudio();
-		System.out.println("Finished Loading Resources");
 	}
 	
 	public static void loadImages() {
@@ -89,6 +88,15 @@ public class Resource {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static AngelCodeFont loadFont(String fntFile, Image image) {
+		try  {
+			return new AngelCodeFont(fntFile, image);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static Animation build(String path, int sprite_size, String...frames) {
