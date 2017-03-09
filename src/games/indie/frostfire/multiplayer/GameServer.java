@@ -18,6 +18,7 @@ import games.indie.frostfire.multiplayer.packets.Packet03Seed;
 import games.indie.frostfire.multiplayer.packets.Packet04Damage;
 import games.indie.frostfire.multiplayer.packets.Packet05Death;
 import games.indie.frostfire.states.Gameplay;
+import games.indie.frostfire.world.ProceduralGeneration;
 import games.indie.frostfire.world.World;
 
 
@@ -30,12 +31,8 @@ public class GameServer extends Thread {
     private Packet03Seed seedpacket;
 
     public GameServer(String seed) {
-        try {
-        	this.seed = Integer.parseInt(seed);   	
-        } catch (Exception e) {
-        	System.out.println("Not a valid seed, using default seed.");
-        	this.seed = 123;
-		}
+       
+        this.seed = ProceduralGeneration.seedValidation(seed);   	
     	seedpacket = new Packet03Seed(this.seed);
         world = new World(this.seed);
         connectedPlayers = new ArrayList<PlayerMP>();
