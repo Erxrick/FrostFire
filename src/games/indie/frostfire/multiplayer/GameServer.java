@@ -17,6 +17,8 @@ import games.indie.frostfire.multiplayer.packets.Packet02Move;
 import games.indie.frostfire.multiplayer.packets.Packet03Seed;
 import games.indie.frostfire.multiplayer.packets.Packet04Damage;
 import games.indie.frostfire.multiplayer.packets.Packet05Death;
+import games.indie.frostfire.multiplayer.packets.Packet06MPDamage;
+import games.indie.frostfire.multiplayer.packets.Packet07MPDeath;
 import games.indie.frostfire.states.Gameplay;
 import games.indie.frostfire.world.World;
 
@@ -92,6 +94,14 @@ public class GameServer extends Thread {
         	Packet05Death deathpacket = new Packet05Death(data);
         	killEntity(deathpacket);
         	break;
+        case DMGMP:
+        	Packet06MPDamage mpdamage = new Packet06MPDamage(data);
+        	dmgEntity(mpdamage);
+        	break;
+        case DTHMP:
+        	Packet07MPDeath mpdeath = new Packet07MPDeath(data);
+        	killEntity(mpdeath);
+        	break;
         }
     }
 
@@ -102,14 +112,44 @@ public class GameServer extends Thread {
   				sendDataToAllClients(deathpacket.getData());
   			}
     	  }
-		
+	}
+    private void killEntity(Packet07MPDeath deathpacket) {
+  	  for (Entity entity : world.getEntities()) {
+  		  if(entity instanceof PlayerMP) {
+  			  PlayerMP player = (PlayerMP) entity;
+	  		  if(player.getUsername() == deathpacket.getDeadMP()) {
+					world.remove(entity);
+					removeConnection(new Packet01Disconnect(player.getUsername()));
+					sendDataToAllClients(deathpacket.getData());
+				}
+  		  }
+  	  	}
 	}
 
 	private void dmgEntity(Packet04Damage dmgpacket) {
 		for (Entity entity : world.getEntities()) {
 			if(entity.getID() == dmgpacket.getEntityDamaged()) {
 				entity.setHealth(dmgpacket.entityHealth());
+				if(entity.getHealth() < 0) {
+					killEntity(new Packet05Death(entity.getID()));
+				} else {
 				sendDataToAllClients(dmgpacket.getData());
+				}
+			}
+		}
+	}		
+		private void dmgEntity(Packet06MPDamage dmgpacket) {
+			for (Entity entity : world.getEntities()) {
+		  		  if(entity instanceof PlayerMP) {
+		  			  PlayerMP player = (PlayerMP) entity;
+			  		  if(player.getUsername() == dmgpacket.getMPDamaged()) {
+			  			  entity.setHealth(dmgpacket.entityHealth());
+			  			if(player.getHealth() < 0) {
+							killEntity(new Packet07MPDeath(player.getUsername()));
+						} else {
+						sendDataToAllClients(dmgpacket.getData());
+						}
+			  		  }
 			}
 		}		
 	}

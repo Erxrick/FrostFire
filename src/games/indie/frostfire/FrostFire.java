@@ -16,6 +16,7 @@ public class FrostFire extends StateBasedGame {
 	public static int scale = 4;
 	public static Multiplayer multiplayer;	
 	public static Gameplay gameplay;
+	public static FrostFire game;
 	FrostFire() throws SlickException {
 		super("FrostFire");
 	}
@@ -34,9 +35,10 @@ public class FrostFire extends StateBasedGame {
 	}
 
 	public static void main(String[] args) throws SlickException {
-		AppGameContainer game = new AppGameContainer(new FrostFire());
-		game.setDisplayMode(NATIVE_WIDTH * scale, NATIVE_HEIGHT * scale, false);
-		game.start();
+		game = new FrostFire();
+		AppGameContainer gc = new AppGameContainer(game);
+		gc.setDisplayMode(NATIVE_WIDTH * scale, NATIVE_HEIGHT * scale, false);
+		gc.start();
 	}
 
 }

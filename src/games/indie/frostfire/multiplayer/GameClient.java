@@ -8,6 +8,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.entities.Entity;
 import games.indie.frostfire.multiplayer.packets.Packet;
 import games.indie.frostfire.multiplayer.packets.Packet.PacketTypes;
@@ -18,6 +19,7 @@ import games.indie.frostfire.multiplayer.packets.Packet03Seed;
 import games.indie.frostfire.multiplayer.packets.Packet04Damage;
 import games.indie.frostfire.multiplayer.packets.Packet05Death;
 import games.indie.frostfire.states.Gameplay;
+import games.indie.frostfire.states.StartMenu;
 
 
 
@@ -69,8 +71,13 @@ public class GameClient extends Thread {
         case DISCONNECT:
         	Packet01Disconnect packet1 = new Packet01Disconnect(data);
             System.out.println("[" + address.getHostAddress() + ":" + port + "] "+ (packet1).getUsername() + " has left the world...");
-           
-  //           game.world.removePlayerMP((packet1).getUsername());
+           if(packet1.getUsername() == game.getPlayer().getUsername()) {
+        	FrostFire.gameplay = new Gameplay();
+       		FrostFire.game.enterState(0);
+//       		FrostFire.game.addState(FrostFire.gameplay);
+       // 	   wipe frostfire states and redo them
+           }
+             game.world.removePlayerMP((packet1).getUsername());
             break;
         case MOVE:
         	Packet02Move packet2 = new Packet02Move(data);
@@ -93,19 +100,19 @@ public class GameClient extends Thread {
         }
     }
 
-    private void killEntity(Packet05Death deathpacket) {
+    private synchronized void killEntity(Packet05Death deathpacket) {
     	  for (Entity entity : game.world.getEntities()) {
     		  if(entity.getID() == deathpacket.getDeadEntity()) {
-  				game.world.remove(entity);
+  				entity.die();
   			}
     	  }
 		
 	}
 
-	private void dmgEntity(Packet04Damage dmgpacket) {
+	private synchronized void dmgEntity(Packet04Damage dmgpacket) {
 		for (Entity entity : game.world.getEntities()) {
 			if(entity.getID() == dmgpacket.getEntityDamaged()) {
-				System.out.println(dmgpacket.getEntityDamaged());
+			//	System.out.println(dmgpacket.getEntityDamaged());
 				entity.setHealth(dmgpacket.entityHealth());
 			}
 		}		

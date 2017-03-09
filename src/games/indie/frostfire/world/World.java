@@ -56,7 +56,7 @@ public class World {
 		onGround.add(item);
 	}
 	
-	public void place(Entity entity, float x, float y) {
+	public synchronized void place(Entity entity, float x, float y) {
 		entity.setLocation(x, y);
 		entity.setWorld(this);
 		entityCount++;
@@ -64,7 +64,7 @@ public class World {
 		entities.add(entity);
 	}
 	
-	public void remove(Entity e) {
+	public synchronized void remove(Entity e) {
 		entities.remove(e);
 	}
 	
@@ -120,8 +120,16 @@ public class World {
 
 	public synchronized void movePlayer(long l, float x, float y) {
 		int index = getPlayerMPIndex(l);
-		getEntities().get(index).setLocation(x, y);
-	//	System.out.println(action);
+		//try {
+		if(index < getEntities().size()) {
+			getEntities().get(index).setLocation(x, y);
+		} else {
+			
+		}
+//		} catch(ArrayIndexOutOfBoundsException e) {
+//			System.out.println("That player is dead");
+//		}
+		//	System.out.println(action);
 	//	((PlayerMP) getEntities().get(index)).setAction(action, direction);
 	}
 	

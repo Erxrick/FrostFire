@@ -70,10 +70,8 @@ public abstract class Entity extends Sprite {
 		collision = new Box(this, offset_x, offset_y, width, height);
 	}
 	
-	public void die() {
-		world.getEntities().remove(this);
+	public synchronized void die() {
 		System.out.println(this + " DIED!");
-		//wriite a packet here for the server to know
 	//	System.out.println(this + " DIED!");
 		if(this instanceof PlayerMP) {
 			PlayerMP player = (PlayerMP) this;
@@ -83,6 +81,7 @@ public abstract class Entity extends Sprite {
 		Packet05Death deathpacket = new Packet05Death(this.ID);
 		deathpacket.writeData(FrostFire.multiplayer.getClient());
 		}
+		world.getEntities().remove(this);
 	}
 	
 	public void takeDamage(double damage) {
