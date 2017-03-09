@@ -81,6 +81,6 @@ public class Head extends BodyPart {
 	}
 	
 	public Vector2f getRealOffset() {
-		return offset.sub(new Vector2f(0, 8));
+		return offset.copy().sub(new Vector2f(0, 8));
 	}
 }

@@ -1,5 +1,6 @@
 package games.indie.frostfire.entities.human;
 
+import games.indie.frostfire.Resource;
 import games.indie.frostfire.items.Item;
 
 public class BodyPart {
@@ -31,6 +32,7 @@ public class BodyPart {
 	}
 	
 	public void pickup(Item item) {
+		Resource.play("pickup");
 		if (hasItem()) {
 			if (canPickup(item)) {
 				equipped.setQuantity(equipped.getQuantity() + item.getQuantity());

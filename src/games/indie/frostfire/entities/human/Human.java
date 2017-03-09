@@ -74,7 +74,6 @@ public class Human extends Creature {
 		if (timeToPickup > 500) {
 			Item item = nearbyItems.poll();
 			if (pickup(item)) {
-				Resource.play("pickup");
 				world.onGround.remove(item);
 				timeToPickup = 0;
 			}

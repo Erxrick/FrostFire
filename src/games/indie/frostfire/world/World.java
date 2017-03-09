@@ -67,7 +67,7 @@ public class World {
 			Image showOnMap = item.getShow().copy();
 			showOnMap.setAlpha(.9f);
 			Vector2f position = camera.onScreen(item.getX(), item.getY());
-			screen.setColor(new Color(40, 85, 138));
+			screen.setColor(new Color(40, 85, 138, 100));
 			screen.fillOval(position.getX() + item.getWidth()/4, position.getY() + item.getHeight() + 2, 
 					item.getWidth()/2, item.getHeight()/4);
 			camera.draw(showOnMap, item.getX(), item.getY() + item.getHover());

@@ -33,6 +33,7 @@ public class BodySlot extends UIComponent {
 			if (button == 0) {
 				((Player) holder.getBody()).getUI().grab(holder.getEquipped());
 				holder.setEquipped(null);
+				Resource.getSound("click").playAsSoundEffect(1, 1, false);
 			} else if (button == 1) {
 				holder.getEquipped().stateChange(holder);
 			}
