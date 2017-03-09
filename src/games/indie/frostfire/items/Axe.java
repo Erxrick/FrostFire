@@ -1,5 +1,7 @@
 package games.indie.frostfire.items;
 
+import org.newdawn.slick.geom.Vector2f;
+
 import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.human.BodyPart;
 import games.indie.frostfire.entities.human.Hand;
@@ -9,6 +11,7 @@ public class Axe extends Tool {
 
 	public Axe() {
 		super(10, "axe");
+		setHoldingOffset(new Vector2f(0, 9));
 	}
 
 	public void stateChange(BodyPart holder) {

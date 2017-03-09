@@ -1,6 +1,8 @@
 package games.indie.frostfire.entities;
 
 import games.indie.frostfire.Resource;
+import games.indie.frostfire.items.Consumable;
+import games.indie.frostfire.items.ConsumableType;
 
 public class Mushroom extends Plant {
 	
@@ -10,6 +12,7 @@ public class Mushroom extends Plant {
 	}
 	
 	public void interaction(Interactor hand) {
+		world.place(new Consumable(ConsumableType.MUSHROOM), x, y);
 		Resource.getSound("hit-mushroom").playAsSoundEffect(1, 1, false);
 	}
 

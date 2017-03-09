@@ -20,8 +20,22 @@ public class BodyPart {
 		return equipped != null;
 	}
 	
+	public boolean canPickup(Item item) {
+		if (hasItem()) {
+			if (equipped.equals(item) && equipped.roomForAdditional(item.getQuantity())) {
+				return true;
+			}
+			return false;
+		}
+		return true;
+	}
+	
 	public void pickup(Item item) {
-		if (!hasItem()) {
+		if (hasItem()) {
+			if (canPickup(item)) {
+				equipped.setQuantity(equipped.getQuantity() + item.getQuantity());
+			}
+		} else {
 			this.setEquipped(item);
 		}
 	}

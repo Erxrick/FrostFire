@@ -15,13 +15,13 @@ import games.indie.frostfire.items.*;
 
 public class World {
 	
-	public static Camera camera = new Camera();
-	private long seed;
+	public Camera camera;
 	private ZLayerSort topDown;
-	public ArrayList<Entity> entities;
+	private ArrayList<Entity> entities;
 	public ArrayList<Item> onGround;
 	
 	public World() {
+		camera = new Camera();
 		topDown = new ZLayerSort();
 		entities = new ArrayList<>();
 		onGround = new ArrayList<>();
@@ -59,18 +59,21 @@ public class World {
 		}
 	}
 
-	public void draw(Graphics screen) {
+	public void draw(Graphics screen, boolean debug) {
 		for (Entity entity : entities) {
 			entity.draw();
 		}
 		for (Item item : onGround) {
 			Image showOnMap = item.getShow().copy();
 			showOnMap.setAlpha(.9f);
-			Vector2f position = Camera.onScreen(item.getX(), item.getY());
+			Vector2f position = camera.onScreen(item.getX(), item.getY());
 			screen.setColor(new Color(40, 85, 138));
 			screen.fillOval(position.getX() + item.getWidth()/4, position.getY() + item.getHeight() + 2, 
 					item.getWidth()/2, item.getHeight()/4);
-			Camera.draw(showOnMap, item.getX(), item.getY() + item.getHover());
+			camera.draw(showOnMap, item.getX(), item.getY() + item.getHover());
+		}
+		if (debug) {
+			debug_draw(screen);
 		}
 	}
 	
@@ -103,5 +106,11 @@ public class World {
 			}
 		}
 		return true;
+	}
+
+	public void debug_draw(Graphics screen) {
+		for (Entity entity : entities) {
+			entity.debug_draw(screen);
+		}
 	}
 }

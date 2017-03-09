@@ -1,8 +1,6 @@
 package games.indie.frostfire.user.ui;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-
+import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.human.BodyPart;
 import games.indie.frostfire.user.Player;
 
@@ -10,25 +8,27 @@ public class BodySlot extends UIComponent {
 	
 	private BodyPart holder;
 	
-	public BodySlot(int screen_x, int screen_y, BodyPart equip) {
-		super(screen_x, screen_y);
+	public BodySlot(int screenX, int screenY, BodyPart equip, String imageName) {
+		setIcon(Resource.getImage(imageName));
+		setLocation(screenX, screenY);
 		this.holder = equip;
 	}
 
 	public void draw() {
-		if (holder.getEquipped() != null) {
+		super.draw();
+		if (holder.hasItem()) {
 			holder.getEquipped().getIcon().draw(
-					screen_x + 8 - holder.getEquipped().getIcon().getWidth()/2,
-					screen_y + 8 - holder.getEquipped().getIcon().getHeight()/2);
+					x + 8 - holder.getEquipped().getIcon().getWidth()/2,
+					y + 8 - holder.getEquipped().getIcon().getHeight()/2);
+			int itemQuantity = holder.getEquipped().getQuantity();
+			if (itemQuantity > 1) {
+				UI.STACK_FONT.drawString(x - 2, y - 2, Integer.toString(itemQuantity));
+			}
 		}
 	}
-	
-	public boolean mouseOverSelf(int x, int y) {
-		return new Rectangle(screen_x, screen_y, 16, 16).contains(new Point(x, y));
-	}
 
-	public boolean mousePressed(int button, int x, int y) {
-		boolean clicked = mouseOverSelf(x, y);
+	public boolean mousePressed(int button, int mouseX, int mouseY) {
+		boolean clicked = isMouseOverSelf(mouseX, mouseY);
 		if (clicked && holder.hasItem()) {
 			if (button == 0) {
 				((Player) holder.getBody()).getUI().grab(holder.getEquipped());
@@ -40,12 +40,13 @@ public class BodySlot extends UIComponent {
 		return clicked;
 	}
 	
-	public boolean mouseReleased(int x, int y) {
-		boolean releasedOnSelf = mouseOverSelf(x, y);
-		if (releasedOnSelf) {
-			holder.setEquipped(((Player) holder.getBody()).getUI().getGrabbed());
+	public boolean mouseReleased(UI ui, int mouseX, int mouseY) {
+		boolean holderPickup = isMouseOverSelf(mouseX, mouseY) && holder.canPickup(ui.getGrabbed());
+		if (holderPickup) {
+			holder.pickup(ui.getGrabbed());
+			ui.setGrabbed(null);
 		}
-		return releasedOnSelf;
+		return holderPickup;
 	}
 
 }

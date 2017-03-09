@@ -10,7 +10,6 @@ import games.indie.frostfire.entities.Interactor;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.motion.Motion;
 import games.indie.frostfire.motion.Punch;
-import games.indie.frostfire.world.Camera;
 
 public class Hand extends BodyPart implements Interactor {
 	
@@ -68,14 +67,16 @@ public class Hand extends BodyPart implements Interactor {
 	
 	public void draw() {
 		if (getEquipped() != null) {
-			Camera.draw(getEquipped().getShow(), getLocation().add(body.getHead().getRealOffset().negate()).add(new Vector2f(0, 9)));
+			Vector2f actionOffset = body.getHead().getRealOffset().negate();
+			Vector2f actualLocation = getLocation().add(equipped.getHoldingOffset());
+			body.getWorld().camera.draw(equipped.getShow(), actionOffset.x + actualLocation.x, actionOffset.y + actualLocation.y);
 		}
 	}
 	
 	public void debug_draw(Graphics screen) {
 		if (interaction != null) {
 			screen.setColor(Color.red);
-			screen.draw(Camera.onScreen(interaction));
+			screen.draw(body.getWorld().camera.onScreen(interaction));
 		}
 	}
 

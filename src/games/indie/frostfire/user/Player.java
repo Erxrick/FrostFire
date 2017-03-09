@@ -5,11 +5,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.FrostFire;
-import games.indie.frostfire.entities.human.Human;
 import games.indie.frostfire.entities.human.Action.ActionType;
-import games.indie.frostfire.user.ui.UI;
 import games.indie.frostfire.entities.human.Hand;
-import games.indie.frostfire.world.Camera;
+import games.indie.frostfire.entities.human.Human;
+import games.indie.frostfire.user.ui.UI;
 import games.indie.frostfire.world.Direction;
 
 public class Player extends Human {
@@ -65,7 +64,7 @@ public class Player extends Human {
 	}
 	
 	public void updateHead() {
-		Vector2f position = Camera.onScreen(getCenterX(), getCenterY());
+		Vector2f position = world.camera.onScreen(getCenterX(), getCenterY());
 		head.setSightAngle(new Vector2f(
 				position.getX() - Mouse.getX()/FrostFire.scale, 
 				position.getY() - Mouse.getY()/FrostFire.scale).getTheta() - 180);
@@ -80,9 +79,9 @@ public class Player extends Human {
 	}
 	
 	public void update(int delta) {
-		Camera.setCenter(
+		world.camera.setCenter(
 				new Vector2f(getCenter()[0] - (FrostFire.NATIVE_WIDTH/2 - Mouse.getX()/FrostFire.scale)/30f,
-				minY - (FrostFire.NATIVE_HEIGHT/2 - Mouse.getY()/FrostFire.scale)/30f).add(Camera.getCenter()).scale(.5f));
+				minY - (FrostFire.NATIVE_HEIGHT/2 - Mouse.getY()/FrostFire.scale)/30f).add(world.camera.getCenter()).scale(.5f));
 		super.update(delta);
 	}
 	

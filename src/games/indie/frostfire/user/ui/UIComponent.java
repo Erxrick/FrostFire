@@ -1,25 +1,21 @@
 package games.indie.frostfire.user.ui;
 
-import games.indie.frostfire.Drawable;
+import org.newdawn.slick.geom.Rectangle;
 
-public abstract class UIComponent implements Drawable, Clickable {
+import games.indie.frostfire.Sprite;
+
+public abstract class UIComponent extends Sprite {
 	
-	protected int screen_x, screen_y;
-	
-	public UIComponent(int screen_x, int screen_y) {
-		this.screen_x = screen_x;
-		this.screen_y = screen_y;
+	public boolean isMouseOverSelf(int mouseX, int mouseY) {
+		return new Rectangle(x, y, width, height).contains(mouseX, mouseY);
 	}
 	
-	public boolean mouseOverSelf(int x, int y) {
-		return false;
+	public boolean mousePressed(int button, int mouseX, int mouseY) {
+		return isMouseOverSelf(mouseX, mouseY);
 	}
 	
-	public boolean mousePressed(int button, int x, int y) {
-		return false;
+	public boolean mouseReleased(UI ui, int mouseX, int mouseY) {
+		return isMouseOverSelf(mouseX, mouseY);
 	}
 	
-	public boolean mouseReleased(int x, int y) {
-		return false;
-	}
 }

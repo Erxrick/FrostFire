@@ -8,7 +8,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.human.Action.ActionType;
-import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
 public class Head extends BodyPart {
@@ -67,7 +66,7 @@ public class Head extends BodyPart {
 			offset.x += 1;
 		else if (body.getDirection() == Direction.WEST)
 			offset.x -= 1;
-		Camera.draw(headMap.get(Direction.eight(sightAngle)),
+		body.getWorld().camera.draw(headMap.get(Direction.eight(sightAngle)),
 				body.getX() + offset.getX(),
 				body.getY() + offset.getY());
 	}

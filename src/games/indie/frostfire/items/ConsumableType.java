@@ -1,7 +1,8 @@
 package games.indie.frostfire.items;
 
 public enum ConsumableType {
-	STRAWBERRY(1, "strawberry", 1, 5, 8);
+	STRAWBERRY("strawberry", 1, 5, 8),
+	MUSHROOM("shroom", -5, 10, 0);
 	
 	private int weight;
 	private String itemName;
@@ -9,8 +10,8 @@ public enum ConsumableType {
 	private float hungerChange;
 	private float thirstChange;
 	
-	private ConsumableType(int weight, String itemName, float healthChange, float hungerChange, float thirstChange) {
-		this.weight = weight;
+	private ConsumableType(String itemName, float healthChange, float hungerChange, float thirstChange) {
+		this.weight = 1;
 		this.itemName = itemName;
 		this.healthChange = healthChange;
 		this.hungerChange = hungerChange;

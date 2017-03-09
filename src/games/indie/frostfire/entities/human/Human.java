@@ -14,7 +14,6 @@ import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.entities.stats.Natural;
 import games.indie.frostfire.items.ConsumableType;
 import games.indie.frostfire.items.Item;
-import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 
 public class Human extends Creature {
@@ -35,7 +34,9 @@ public class Human extends Creature {
 	public Human() {
 		setSize(16, 16);
 		setCollision(2, -12, 12, 4);
-		loadActions();
+		if (actions == null) {
+			loadActions();
+		}
 		setAction(ActionType.IDLE, Direction.SOUTH);
 		setHunger(new Natural(0, 100, -.0001, getHealth()));
 		setThirst(new Natural(0, 100, -.0002, getHealth()));
@@ -81,10 +82,10 @@ public class Human extends Creature {
 	}
 	
 	private boolean pickup(Item item) {
-		if (!rightHand.hasItem()) {
+		if (rightHand.canPickup(item)) {
 			rightHand.pickup(item);
 			return true;
-		} else if (!leftHand.hasItem()) {
+		} else if (leftHand.canPickup(item)) {
 			leftHand.pickup(item);
 			return true;
 		}
@@ -111,11 +112,9 @@ public class Human extends Creature {
 			leftHand.getOffset().set(3, -12);
 			rightHand.getOffset().set(11, -12);
 			break;
-		case SOUTH:
+		default:
 			rightHand.getOffset().set(3, -12);
 			leftHand.getOffset().set(13, -12);
-			break;
-		default:
 		}
 		for (Action action : actions) {
 			if (action.equals(type, direction)) {
@@ -138,22 +137,22 @@ public class Human extends Creature {
 			rightHand.draw();
 			leftHand.draw();
 			head.draw();
-			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			break;
 		case EAST:
 			leftHand.draw();
-			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
 			rightHand.draw();
 			break;
 		case WEST:
 			rightHand.draw();
-			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
 			leftHand.draw();
 			break;
 		default:
-			Camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
 			rightHand.draw();
 			leftHand.draw();

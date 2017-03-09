@@ -9,53 +9,42 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import games.indie.frostfire.FrostFire;
-import games.indie.frostfire.entities.Entity;
-import games.indie.frostfire.items.Axe;
-import games.indie.frostfire.items.Consumable;
-import games.indie.frostfire.items.ConsumableType;
 import games.indie.frostfire.user.Player;
 import games.indie.frostfire.user.ui.UIComponent;
-import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.World;
 
 public class Gameplay extends BasicGameState {
 	
 	private Player player;
-	public World world;
+	private World world;
 	private boolean debugDraw = false;
-
-	public Gameplay() {
-	}
 	
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		world = new World();
 		player = new Player();
 		world.place(player, 0, 0);
-		Camera.setCenter(player.getCenterX(), player.getMinY());
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
+		
 		screen.setBackground(new Color(44, 141, 144));
 		screen.scale(FrostFire.scale, FrostFire.scale);
 		screen.setLineWidth(FrostFire.scale);
-		world.draw(screen);
-		if (debugDraw) {
-			for (Entity entity : world.entities) {
-				entity.debug_draw(screen);
-			}
-		}
+		
+		world.draw(screen, debugDraw);
+		
 		player.getUI().draw();
 	}
 
 	public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
+		
+		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+			gc.exit();
+		}
+		
 		world.update(delta);
 		player.control(gc.getInput());
-		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
-			gc.exit();
-		if (gc.getInput().isKeyPressed(Input.KEY_Z)) {
-			player.getRightHand().pickup(new Consumable(ConsumableType.STRAWBERRY));
-			player.getLeftHand().pickup(new Axe());
-		}
+		
 		if (gc.getInput().isKeyPressed(Input.KEY_TAB)) {
 			debugDraw = debugDraw ? false : true;
 		}
@@ -89,7 +78,7 @@ public class Gameplay extends BasicGameState {
 		if (player.getUI().getGrabbed() != null) {
 			boolean shouldDrop = true;
 			for (UIComponent component : player.getUI()) {
-				if (component.mouseReleased(x/FrostFire.scale, y/FrostFire.scale)) {
+				if (component.mouseReleased(player.getUI(), x/FrostFire.scale, y/FrostFire.scale)) {
 					player.getUI().grab(null);
 					shouldDrop = false;
 					break;
