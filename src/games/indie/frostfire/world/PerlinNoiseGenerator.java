@@ -43,7 +43,7 @@ public class PerlinNoiseGenerator
     private static final int DEFAULT_SEED = 100;
 
     /** Default sample size to work with */
-    private static final int DEFAULT_SAMPLE_SIZE = 512;
+    private static final int DEFAULT_SAMPLE_SIZE = 256;
 
     /** The log of 1/2 constant. Used Everywhere */
     private static final float LOG_HALF = (float)Math.log(0.5);
@@ -56,6 +56,8 @@ public class PerlinNoiseGenerator
     private float[][] g3;
     private float[][] g2;
     private float[] g1;
+    
+    private int seed;
 
 
     /**
@@ -90,7 +92,7 @@ public class PerlinNoiseGenerator
             p_imp[i] = p_imp[j];
             p_imp[j] = k;
         }
-
+        this.seed = seed;
         initPerlin1();
     }
 
@@ -591,6 +593,7 @@ public class PerlinNoiseGenerator
      */
     private void initPerlin1()
     {
+    	Random randDouble = new Random(seed);
         p = new int[B + B + 2];
         g3 = new float[B + B + 2][3];
         g2 = new float[B + B + 2][2];
@@ -601,21 +604,21 @@ public class PerlinNoiseGenerator
         {
             p[i] = i;
 
-            g1[i] = (float)(((Math.random() * Integer.MAX_VALUE) % (B + B)) - B) / B;
+            g1[i] = (float)(((randDouble.nextDouble() * Integer.MAX_VALUE) % (B + B)) - B) / B;
 
             for(j = 0; j < 2; j++)
-                g2[i][j] = (float)(((Math.random() * Integer.MAX_VALUE) % (B + B)) - B) / B;
+                g2[i][j] = (float)(((randDouble.nextDouble() * Integer.MAX_VALUE) % (B + B)) - B) / B;
             normalize2(g2[i]);
 
             for(j = 0; j < 3; j++)
-                g3[i][j] = (float)(((Math.random() * Integer.MAX_VALUE) % (B + B)) - B) / B;
+                g3[i][j] = (float)(((randDouble.nextDouble() * Integer.MAX_VALUE) % (B + B)) - B) / B;
             normalize3(g3[i]);
         }
 
         while(--i > 0)
         {
             k = p[i];
-            j = (int)((Math.random() * Integer.MAX_VALUE) % B);
+            j = (int)((randDouble.nextDouble() * Integer.MAX_VALUE) % B);
             p[i] = p[j];
             p[j] = k;
         }
