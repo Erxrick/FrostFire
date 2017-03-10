@@ -10,8 +10,9 @@ import games.indie.frostfire.states.*;
 public class FrostFire extends StateBasedGame {
 	
 	public static final int FPS = 60;
-	public static final int NATIVE_WIDTH = 320, NATIVE_HEIGHT = 180;
-	public static int scale = 8;
+	public static final int NATIVE_WIDTH = 640, NATIVE_HEIGHT = 360;
+	public static int scale = 4;
+	public static AppGameContainer gc;
 	
 	FrostFire() throws SlickException {
 		super("FrostFire");
@@ -30,7 +31,7 @@ public class FrostFire extends StateBasedGame {
 	}
 
 	public static void main(String[] args) throws SlickException {
-		AppGameContainer gc = new AppGameContainer(new FrostFire());
+		gc = new AppGameContainer(new FrostFire());
 		gc.setDisplayMode(NATIVE_WIDTH * scale, NATIVE_HEIGHT * scale, true);
 		gc.start();
 	}
