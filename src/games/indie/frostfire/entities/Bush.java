@@ -11,11 +11,20 @@ public class Bush extends Plant {
 	
 	protected Stack<Consumable> berries;
 	protected int time;
+	protected ConsumableType berryType;
 	
 	public Bush() {
 		setIcon(Resource.getImage("bush"));
 		setCollision(2, -10, 12, 6);
 		berries = new Stack<>();
+		double randomValue = Math.random();
+		if (randomValue < .1) {
+			berryType = ConsumableType.DARKBERRY;
+		} else if (randomValue < .4) {
+			berryType = ConsumableType.STRAWBERRY;
+		} else {
+			berryType = null;
+		}
 	}
 	
 	public void die() {
@@ -24,17 +33,19 @@ public class Bush extends Plant {
 	}
 	
 	public void update(int delta) {
-		time += delta;
-		if (shouldGrowBerry()) {
-			time = 0;
-			Consumable berry = new Consumable(ConsumableType.STRAWBERRY);
-			berry.setLocation(x + (int) (Math.random() * (width - berry.getWidth())), y - (int) (Math.random() * (height - berry.getHeight())));
-			berries.push(berry);
+		if (berryType != null) {
+			time += delta;
+			if (shouldGrowBerry()) {
+				time = 0;
+				Consumable berry = new Consumable(berryType);
+				berry.setLocation(x + (int) (Math.random() * (width - berry.getWidth())), y - (int) (Math.random() * (height - berry.getHeight())));
+				berries.push(berry);
+			}
 		}
 	}
 	
 	private boolean shouldGrowBerry() {
-		return time > 10000 && berries.size() < 3;
+		return time > 10 && berries.size() < 3;
 	}
 	
 	public void draw() {

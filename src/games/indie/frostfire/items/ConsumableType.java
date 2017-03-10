@@ -2,6 +2,7 @@ package games.indie.frostfire.items;
 
 public enum ConsumableType {
 	STRAWBERRY("strawberry", 1, 5, 8),
+	DARKBERRY("darkberry", -20, 5, 10),
 	MUSHROOM("shroom", -5, 10, 0);
 	
 	private int weight;
