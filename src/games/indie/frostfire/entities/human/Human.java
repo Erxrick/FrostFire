@@ -14,6 +14,7 @@ import games.indie.frostfire.entities.Creature;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.entities.stats.Natural;
 import games.indie.frostfire.items.Item;
+import games.indie.frostfire.states.Gameplay;
 import games.indie.frostfire.world.Camera;
 import games.indie.frostfire.world.Direction;
 

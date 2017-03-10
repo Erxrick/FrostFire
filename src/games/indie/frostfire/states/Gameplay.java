@@ -24,14 +24,24 @@ import games.indie.frostfire.world.World;
 
 public class Gameplay extends BasicGameState {
 	
-	private PlayerMP player;
+	private static PlayerMP player;
 	public World world;
+	public static boolean dead;
 	private boolean debugDraw = false;
 
 	public Gameplay() {
 		player = new PlayerMP(10, 10, ThreadLocalRandom.current().nextLong(123456), null, 0);		
+		dead = false;
 	}
 	
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
+	}
+
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 	
 	}
@@ -54,8 +64,10 @@ public class Gameplay extends BasicGameState {
 		player.update(delta);
 		player.control(gc.getInput());
 	//	System.out.println(this.player.getAction());
-		Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY());    //, this.player.getAction(), this.player.getDirection());
-		movePacket.writeData(FrostFire.multiplayer.getClient());
+		if(dead == false) {
+			Packet02Move movePacket = new Packet02Move(this.player.getUsername(), this.player.getX(), this.player.getY());    //, this.player.getAction(), this.player.getDirection());
+			movePacket.writeData(FrostFire.multiplayer.getClient());			
+		}
 		Camera.setCenter(player.getCenterX(), player.getMinY());
 		if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE))
 			gc.exit();
@@ -94,8 +106,8 @@ public class Gameplay extends BasicGameState {
 		return GameState.GAMEPLAY;
 	}
 
-	public PlayerMP getPlayer() {
-		return this.player;
+	public static PlayerMP getPlayer() {
+		return player;
 	}
 	
 	public void makeWorld(int seed) {

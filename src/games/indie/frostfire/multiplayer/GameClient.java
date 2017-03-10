@@ -71,13 +71,7 @@ public class GameClient extends Thread {
         case DISCONNECT:
         	Packet01Disconnect packet1 = new Packet01Disconnect(data);
             System.out.println("[" + address.getHostAddress() + ":" + port + "] "+ (packet1).getUsername() + " has left the world...");
-           if(packet1.getUsername() == game.getPlayer().getUsername()) {
-        	FrostFire.gameplay = new Gameplay();
-       		FrostFire.game.enterState(0);
-//       		FrostFire.game.addState(FrostFire.gameplay);
-       // 	   wipe frostfire states and redo them
-           }
-             game.world.removePlayerMP((packet1).getUsername());
+             game.world.removePlayerMP(packet1.getUsername());
             break;
         case MOVE:
         	Packet02Move packet2 = new Packet02Move(data);
@@ -112,7 +106,7 @@ public class GameClient extends Thread {
 	private synchronized void dmgEntity(Packet04Damage dmgpacket) {
 		for (Entity entity : game.world.getEntities()) {
 			if(entity.getID() == dmgpacket.getEntityDamaged()) {
-			//	System.out.println(dmgpacket.getEntityDamaged());
+				System.out.println(dmgpacket.getEntityDamaged());
 				entity.setHealth(dmgpacket.entityHealth());
 			}
 		}		

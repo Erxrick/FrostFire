@@ -28,6 +28,7 @@ public class GameServer extends Thread {
 
     private DatagramSocket socket;
     private ArrayList<PlayerMP> connectedPlayers;
+    private ArrayList<PlayerMP> deadpeople;
     private int seed;
     private World world;
     private Packet03Seed seedpacket;
@@ -38,6 +39,7 @@ public class GameServer extends Thread {
     	seedpacket = new Packet03Seed(this.seed);
         world = new World(this.seed);
         connectedPlayers = new ArrayList<PlayerMP>();
+        deadpeople = new ArrayList<>();
         try {
             this.socket = new DatagramSocket(1331);
         } catch (SocketException e) {
@@ -75,9 +77,9 @@ public class GameServer extends Thread {
             this.addConnection(player, packet1);
             break;
         case DISCONNECT:
-           Packet01Disconnect  packet2 = new Packet01Disconnect(data);
-            System.out.println("[" + address.getHostAddress() + ":" + port + "] " + (packet2).getUsername() + " has left...");
-            this.removeConnection(packet2);
+           Packet07MPDeath  packet2 = new Packet07MPDeath(data);
+            System.out.println("[" + address.getHostAddress() + ":" + port + "] " + packet2.getDeadMP() + " has left...");
+            this.killEntity(packet2);
             break;
         case MOVE:
         	Packet02Move  packet3 = new Packet02Move(data);
@@ -112,12 +114,15 @@ public class GameServer extends Thread {
 	}
     private void killEntity(Packet07MPDeath deathpacket) {
   	  for (Entity entity : world.getEntities()) {
+  		  System.out.println("part 1");
   		  if(entity instanceof PlayerMP) {
   			  PlayerMP player = (PlayerMP) entity;
 	  		  if(player.getUsername() == deathpacket.getDeadMP()) {
-					world.remove(entity);
+					world.removePlayerMP(deathpacket.getDeadMP());
+					System.out.println("Success");
 					removeConnection(new Packet01Disconnect(player.getUsername()));
-					sendDataToAllClients(deathpacket.getData());
+		//			sendDataToAllClients(deathpacket.getData());
+					deadpeople.add(player);
 				}
   		  }
   	  	}
@@ -152,7 +157,9 @@ public class GameServer extends Thread {
 	}
 
 	public void addConnection(PlayerMP player, Packet00Login packet) {
-        boolean alreadyConnected = false;
+       if(deadpeople.contains(player)) {
+       } else {
+		boolean alreadyConnected = false;
         if(connectedPlayers.contains(player)) {
         	alreadyConnected = true;
         } else {
@@ -179,10 +186,12 @@ public class GameServer extends Thread {
 	            }
         	}
         }
+        world.place(player, player.getX(), player.getY());
+       }
     }
 
     public void removeConnection(Packet01Disconnect packet) {
-        this.connectedPlayers.remove(getPlayerMPIndex(packet.getUsername()));
+    //    this.connectedPlayers.remove(getPlayerMPIndex(packet.getUsername()));
         packet.writeData(this);
     }
 
@@ -226,8 +235,9 @@ public class GameServer extends Thread {
         if (getPlayerMP(packet.getUsername()) != null) {
             int index = getPlayerMPIndex(packet.getUsername());
             PlayerMP player = this.connectedPlayers.get(index);    
-            
-            packet.writeData(this);
+            if(!deadpeople.contains(player)) {
+            	packet.writeData(this);
+            }
         }
     }
 

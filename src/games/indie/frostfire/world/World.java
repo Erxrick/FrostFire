@@ -23,6 +23,7 @@ import games.indie.frostfire.entities.Tree;
 import games.indie.frostfire.entities.human.Action.ActionType;
 import games.indie.frostfire.items.Item;
 import games.indie.frostfire.multiplayer.PlayerMP;
+import games.indie.frostfire.states.Gameplay;
 
 
 public class World {
@@ -137,7 +138,13 @@ public class World {
 	
 	
     public synchronized void removePlayerMP(long username) {
-        this.getEntities().remove(getPlayerMPIndex(username));
+    	try {
+    		if(username == Gameplay.getPlayer().getUsername())
+    			Gameplay.dead = true;
+    		this.getEntities().remove(getPlayerMPIndex(username));
+    	} catch(ArrayIndexOutOfBoundsException e) {
+    		System.out.println("Repeat Packet");
+    	}
     }
     
     private synchronized int getPlayerMPIndex(long username) {

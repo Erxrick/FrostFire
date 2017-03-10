@@ -8,5 +8,7 @@ public class TreeStump extends Entity {
 		setIcon(Resource.getImage("tree-stump"));
 		setCollision(2, -10, 12, 6);
 	}
-
+	public void die() {
+		super.die();
+	}
 }
