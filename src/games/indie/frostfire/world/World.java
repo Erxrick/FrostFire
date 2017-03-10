@@ -15,10 +15,10 @@ import games.indie.frostfire.items.*;
 
 public class World {
 	
-	public Camera camera;
+	private Camera camera;
 	private ZLayerSort topDown;
 	private ArrayList<Entity> entities;
-	public ArrayList<Item> onGround;
+	private ArrayList<Item> onGround;
 	
 	public World() {
 		camera = new Camera();
@@ -108,5 +108,13 @@ public class World {
 		for (Entity entity : entities) {
 			entity.debug_draw(screen);
 		}
+	}
+	
+	public Camera getCamera() {
+		return camera;
+	}
+	
+	public ArrayList<Item> getOnGround() {
+		return onGround;
 	}
 }

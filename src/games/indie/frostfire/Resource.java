@@ -47,6 +47,8 @@ public class Resource {
 		discoverImages(startLocation);
 	}
 	
+	//@@@@  “Recursion”
+	//@@@@  “File reading”
 	public static void discoverImages(File[] files) {
 	    for (File file : files) {
 	        if (file.isDirectory()) {

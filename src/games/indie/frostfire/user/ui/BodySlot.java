@@ -1,11 +1,7 @@
 package games.indie.frostfire.user.ui;
 
-import org.newdawn.slick.Input;
-
-import games.indie.frostfire.FrostFire;
 import games.indie.frostfire.Resource;
 import games.indie.frostfire.entities.human.BodyPart;
-import games.indie.frostfire.items.Item;
 import games.indie.frostfire.user.Player;
 
 public class BodySlot extends UIComponent {
@@ -35,15 +31,8 @@ public class BodySlot extends UIComponent {
 		boolean clicked = isMouseOverSelf(mouseX, mouseY);
 		if (clicked && holder.hasItem()) {
 			if (button == 0) {
-				Item itemToGrab;
-				if (FrostFire.gc.getInput().isKeyDown(Input.KEY_RSHIFT) || FrostFire.gc.getInput().isKeyDown(Input.KEY_LSHIFT) && holder.getEquipped().getQuantity() > 1) {
-					// TODO grab half
-					itemToGrab = null;
-				} else {
-					itemToGrab = holder.getEquipped();
-					holder.setEquipped(null);
-				}
-				((Player) holder.getBody()).getUI().grab(itemToGrab);
+				((Player) holder.getBody()).getUI().grab(holder.getEquipped());
+				holder.setEquipped(null);
 				Resource.getSound("click").playAsSoundEffect(1, 1, false);
 			} else if (button == 1) {
 				holder.getEquipped().stateChange(holder);

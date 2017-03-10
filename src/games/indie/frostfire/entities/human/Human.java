@@ -56,7 +56,7 @@ public class Human extends Creature {
 			getHunger().update(1000);
 			getThirst().update(1000);
 		}
-		for (Item item : world.onGround) {
+		for (Item item : world.getOnGround()) {
 			if (nearbyItems.contains(item)) {
 				if (!withinPickupRange(item)) {
 					nearbyItems.remove(item);
@@ -74,7 +74,7 @@ public class Human extends Creature {
 		if (timeToPickup > 500) {
 			Item item = nearbyItems.poll();
 			if (pickup(item)) {
-				world.onGround.remove(item);
+				world.getOnGround().remove(item);
 				timeToPickup = 0;
 			}
 		}
@@ -136,22 +136,22 @@ public class Human extends Creature {
 			rightHand.draw();
 			leftHand.draw();
 			head.draw();
-			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.getCamera().draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			break;
 		case EAST:
 			leftHand.draw();
-			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.getCamera().draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
 			rightHand.draw();
 			break;
 		case WEST:
 			rightHand.draw();
-			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.getCamera().draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
 			leftHand.draw();
 			break;
 		default:
-			world.camera.draw(currentAction.getAnimation().getCurrentFrame(), x, y);
+			world.getCamera().draw(currentAction.getAnimation().getCurrentFrame(), x, y);
 			head.draw();
 			rightHand.draw();
 			leftHand.draw();

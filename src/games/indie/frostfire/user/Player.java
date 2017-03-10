@@ -64,10 +64,10 @@ public class Player extends Human {
 	}
 	
 	public void updateHead() {
-		Vector2f position = world.camera.onScreen(getCenterX(), getCenterY());
+		Vector2f position = world.getCamera().onScreen(getCenterX(), getCenterY());
 		head.setSightAngle(new Vector2f(
-				position.getX() - Mouse.getX()/FrostFire.scale, 
-				position.getY() - Mouse.getY()/FrostFire.scale).getTheta() - 180);
+				position.getX() - Mouse.getX()/FrostFire.SCALE, 
+				position.getY() - Mouse.getY()/FrostFire.SCALE).getTheta() - 180);
 	}
 	
 	public UI getUI() {
@@ -79,9 +79,9 @@ public class Player extends Human {
 	}
 	
 	public void update(int delta) {
-		world.camera.setCenter(
-				new Vector2f(getCenter()[0] - (FrostFire.NATIVE_WIDTH/2 - Mouse.getX()/FrostFire.scale)/30f,
-				minY - (FrostFire.NATIVE_HEIGHT/2 - Mouse.getY()/FrostFire.scale)/30f).add(world.camera.getCenter()).scale(.5f));
+		world.getCamera().setCenter(
+				new Vector2f(getCenter()[0] - (FrostFire.NATIVE_WIDTH/2 - Mouse.getX()/FrostFire.SCALE)/30f,
+				minY - (FrostFire.NATIVE_HEIGHT/2 - Mouse.getY()/FrostFire.SCALE)/30f).add(world.getCamera().getCenter()).scale(.5f));
 		super.update(delta);
 	}
 	

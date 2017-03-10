@@ -44,7 +44,7 @@ public abstract class Entity extends Sprite {
 	}
 	
 	public void draw() {
-		world.camera.draw(icon, x, y);
+		world.getCamera().draw(icon, x, y);
 	}
 	
 	public String toString() {
@@ -53,10 +53,10 @@ public abstract class Entity extends Sprite {
 	
 	public void debug_draw(Graphics screen) {
 		screen.setColor(new Color(255, 255, 255, 30));
-		Vector2f position = world.camera.onScreen(x, y);
+		Vector2f position = world.getCamera().onScreen(x, y);
 		screen.fillRect(position.getX(), position.getY(), width, height);
 		screen.setColor(new Color(200, 100, 100, 150));
-		position = world.camera.onScreen(collision.getX(), collision.getY());
+		position = world.getCamera().onScreen(collision.getX(), collision.getY());
 		screen.fillRect(position.getX(), position.getY(), collision.getWidth(), collision.getHeight());
 	}
 

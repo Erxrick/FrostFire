@@ -2,6 +2,7 @@ package games.indie.frostfire.world;
 
 import org.newdawn.slick.geom.Vector2f;
 
+//@@@@ "An enum with custom data elements."
 /**
  * Hooray!
  * 

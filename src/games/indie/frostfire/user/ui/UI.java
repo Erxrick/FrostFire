@@ -42,7 +42,7 @@ public class UI extends ArrayList<UIComponent> {
 			component.draw();
 		}
 		if (getGrabbed() != null) {
-			getGrabbed().getIcon().draw(Mouse.getX()/FrostFire.scale, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.scale);
+			getGrabbed().getIcon().draw(Mouse.getX()/FrostFire.SCALE, FrostFire.NATIVE_HEIGHT - Mouse.getY()/FrostFire.SCALE);
 		}
 	}
 

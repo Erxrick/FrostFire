@@ -16,18 +16,18 @@ import games.indie.frostfire.user.ui.TextEntry;
 public class StartMenu extends BasicGameState {
 	
 	private Button createWorld;
-	private Image background;
 	private TextEntry enterSeed;
 	private boolean start;
+	private Image background;
 
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		createWorld = new Button(96, 64, "create-new-world");
-		background = Resource.getImage("menu-background");
 		enterSeed = new TextEntry(gc, 111, 111);
+		background = Resource.getImage("menu-background");
 	}
 
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
-		screen.scale(FrostFire.scale, FrostFire.scale);
+		screen.scale(FrostFire.SCALE, FrostFire.SCALE);
 		background.draw();
 		createWorld.draw();
 		enterSeed.draw(screen);
@@ -55,8 +55,8 @@ public class StartMenu extends BasicGameState {
 	
 	@Override
 	public void mousePressed(int button, int mouseX, int mouseY) {
-		mouseX /= FrostFire.scale;
-		mouseY /= FrostFire.scale;
+		mouseX /= FrostFire.SCALE;
+		mouseY /= FrostFire.SCALE;
 		enterSeed.mousePressed(button, mouseX, mouseY);
 		if (createWorld.mousePressed(button, mouseX, mouseY)) {
 			start = true;

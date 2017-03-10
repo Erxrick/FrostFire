@@ -28,8 +28,8 @@ public class Gameplay extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame game, Graphics screen) throws SlickException {
 		
 		screen.setBackground(new Color(44, 141, 144));
-		screen.scale(FrostFire.scale, FrostFire.scale);
-		screen.setLineWidth(FrostFire.scale);
+		screen.scale(FrostFire.SCALE, FrostFire.SCALE);
+		screen.setLineWidth(FrostFire.SCALE);
 		
 		getWorld().draw(screen, debugDraw);
 		
@@ -61,7 +61,7 @@ public class Gameplay extends BasicGameState {
 	public void mousePressed(int button, int x, int y) {
 		boolean punch = true;
 		for (UIComponent component : player.getUI()) {
-			if (component.mousePressed(button, x/FrostFire.scale, y/FrostFire.scale)) {
+			if (component.mousePressed(button, x/FrostFire.SCALE, y/FrostFire.SCALE)) {
 				punch = false;
 				break;
 			}
@@ -78,7 +78,7 @@ public class Gameplay extends BasicGameState {
 		if (player.getUI().getGrabbed() != null) {
 			boolean shouldDrop = true;
 			for (UIComponent component : player.getUI()) {
-				if (component.mouseReleased(player.getUI(), x/FrostFire.scale, y/FrostFire.scale)) {
+				if (component.mouseReleased(player.getUI(), x/FrostFire.SCALE, y/FrostFire.SCALE)) {
 					player.getUI().grab(null);
 					shouldDrop = false;
 					break;

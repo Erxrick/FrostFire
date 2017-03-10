@@ -66,7 +66,7 @@ public class Head extends BodyPart {
 			offset.x += 1;
 		else if (body.getDirection() == Direction.WEST)
 			offset.x -= 1;
-		body.getWorld().camera.draw(headMap.get(Direction.eight(sightAngle)),
+		body.getWorld().getCamera().draw(headMap.get(Direction.eight(sightAngle)),
 				body.getX() + offset.getX(),
 				body.getY() + offset.getY());
 	}

@@ -45,7 +45,7 @@ public class BodyPart {
 	public void dropItem() {
 		if (hasItem()) {
 			equipped.setLocation(body.getLocation());
-			body.getWorld().onGround.add(equipped);
+			body.getWorld().getOnGround().add(equipped);
 			setEquipped(null);
 		}
 	}

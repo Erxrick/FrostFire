@@ -40,7 +40,7 @@ public class Bush extends Plant {
 	public void draw() {
 		super.draw();
 		for (Consumable berry : berries) {
-			world.camera.draw(berry.getShow(), berry.getLocation());
+			world.getCamera().draw(berry.getShow(), berry.getLocation());
 		}
 	}
 	

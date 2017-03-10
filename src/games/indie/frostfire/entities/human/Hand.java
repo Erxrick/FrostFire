@@ -69,14 +69,14 @@ public class Hand extends BodyPart implements Interactor {
 		if (getEquipped() != null) {
 			Vector2f actionOffset = body.getHead().getRealOffset().negate();
 			Vector2f actualLocation = getLocation().add(equipped.getHoldingOffset());
-			body.getWorld().camera.draw(equipped.getShow(), actionOffset.x + actualLocation.x, actionOffset.y + actualLocation.y);
+			body.getWorld().getCamera().draw(equipped.getShow(), actionOffset.x + actualLocation.x, actionOffset.y + actualLocation.y);
 		}
 	}
 	
 	public void debug_draw(Graphics screen) {
 		if (interaction != null) {
 			screen.setColor(Color.red);
-			screen.draw(body.getWorld().camera.onScreen(interaction));
+			screen.draw(body.getWorld().getCamera().onScreen(interaction));
 		}
 	}
 

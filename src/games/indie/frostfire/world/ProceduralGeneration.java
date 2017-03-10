@@ -18,8 +18,6 @@ public class ProceduralGeneration {
 	private final int TILE_SIZE = 16;
 	private final int SPACING = TILE_SIZE * 100;
 	
-	private int mapWidth = 120, mapHeight = 90;
-	
 	public ProceduralGeneration(World world){
 		this.world = world;
 	}

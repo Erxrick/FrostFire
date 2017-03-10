@@ -14,6 +14,8 @@ package games.indie.frostfire.world;
 
 import java.util.Random;
 
+
+// We did not write this code, we're just using it like a library!
 /**
  * Computes Perlin Noise for three dimensions.
  * <p>
