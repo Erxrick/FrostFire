@@ -5,9 +5,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
-import games.indie.frostfire.entities.Entity;
-import games.indie.frostfire.entities.Interactor;
+import games.indie.frostfire.entities.*;
 import games.indie.frostfire.entities.human.Action.ActionType;
+import games.indie.frostfire.items.Axe;
 import games.indie.frostfire.motion.Motion;
 import games.indie.frostfire.motion.Punch;
 
@@ -84,11 +84,19 @@ public class Hand extends BodyPart implements Interactor {
 		return interaction;
 	}
 
-	public void interact(Entity e) {
-		e.interaction(this);
-		System.out.println("Interaction with " + e);
-		e.takeDamage(10);
-		endMotion();
+	public void interact(Entity entity) {
+		entity.interaction(this);
+		if (equipped instanceof Axe) {
+			if (entity instanceof Tree || entity instanceof TreeStump) {
+				entity.takeDamage(25);
+				endMotion();
+			} else {
+				entity.takeDamage(15);
+			}
+		} else {
+			entity.takeDamage(10);
+			endMotion();
+		}
 	}
 	
 	private void endMotion() {

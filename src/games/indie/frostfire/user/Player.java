@@ -2,7 +2,6 @@ package games.indie.frostfire.user;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 import games.indie.frostfire.FrostFire;
