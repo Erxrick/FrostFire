@@ -10,7 +10,7 @@ import games.indie.frostfire.motion.Swing;
 public class Axe extends Tool {
 
 	public Axe() {
-		super(14, "axe");
+		super(10, "axe");
 		setHoldingOffset(new Vector2f(0, 9));
 	}
 
